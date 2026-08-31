@@ -1,7 +1,7 @@
 import os
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
-from passlib.context import CryptContext
+import bcrypt
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
@@ -13,15 +13,17 @@ SECRET_KEY = "floodops_super_secret_hackathon_key_2026"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 1440  # Tokens last 24 hours
 
-# Password hashing tool
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/login")
 
 def hash_password(password: str):
-    return pwd_context.hash(password)
+    # Safely encode and truncate to 72 bytes to avoid modern bcrypt/passlib bugs on Python 3.13
+    pwd_bytes = password.encode('utf-8')[:72]
+    hashed = bcrypt.hashpw(pwd_bytes, bcrypt.gensalt())
+    return hashed.decode('utf-8')
 
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
+def verify_password(plain_password: str, hashed_password: str):
+    pwd_bytes = plain_password.encode('utf-8')[:72]
+    return bcrypt.checkpw(pwd_bytes, hashed_password.encode('utf-8'))
 
 def create_access_token(data: dict):
     to_encode = data.copy()
