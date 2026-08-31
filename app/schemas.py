@@ -1,6 +1,10 @@
-from pydantic import BaseModel
-from typing import Optional, List
+from pydantic import BaseModel, ConfigDict
+from typing import Optional, List, Dict, Any
 from datetime import datetime
+
+# ==========================================
+# EXISTING CORE SCHEMAS
+# ==========================================
 
 class ReportCreate(BaseModel):
     description: str
@@ -28,6 +32,7 @@ class BulkReportItem(BaseModel):
 
 class BulkReportUpload(BaseModel):
     reports: List[BulkReportItem]
+
 class RiskPredictionRequest(BaseModel):
     rainfall_mm: float
     rain_3d_sum: float
@@ -44,8 +49,40 @@ class RiskPredictionRequest(BaseModel):
 class ChatRequest(BaseModel):
     message: str
     session_id: str = "default"
+
 class VolunteerLocationUpdate(BaseModel):
     latitude: float
     longitude: float
     status: str = "available"  # available / busy / offline
     skills: Optional[str] = None  # e.g., "boat,medical,swimming"
+
+
+# ==========================================
+# NEW MULTI-AGENT & PREDICTION SCHEMAS
+# ==========================================
+
+class PredictionResponse(BaseModel):
+    id: int
+    district: str
+    risk_class: int
+    
+    model_config = ConfigDict(from_attributes=True)
+
+class AlertResponse(BaseModel):
+    id: int
+    district: str
+    alert_level: str
+    message: str
+    
+    model_config = ConfigDict(from_attributes=True)
+
+class AgentRunLogResponse(BaseModel):
+    id: int
+    run_id: str
+    district: str
+    status: str
+    coordinator_summary: str
+    execution_chain: List[Dict[str, Any]]
+    created_at: datetime
+
+    model_config = ConfigDict(from_attributes=True)

@@ -3,6 +3,7 @@ import os
 from contextlib import asynccontextmanager
 from typing import List
 
+from app.routers import agents
 from dotenv import load_dotenv
 from fastapi import Depends, FastAPI, HTTPException, Query, WebSocket, WebSocketDisconnect
 from fastapi.security import OAuth2PasswordRequestForm
@@ -14,12 +15,14 @@ import xgboost as xgb
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
 load_dotenv()
+
 import google.generativeai as genai
 import chromadb
-
 from . import auth, models, schemas
 from .database import engine, get_db
+
 scheduler = AsyncIOScheduler()
 
 def fetch_satellite_sar_data():
@@ -30,6 +33,7 @@ def fetch_satellite_sar_data():
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"🛰️ [{timestamp}] Fetching Copernicus Sentinel-1 SAR data for bounding box...")
     print("✅ SAR data sync complete. ML baseline updated.")
+
 xgb_model = None
 model_columns = None
 shap_explainer = None
@@ -44,14 +48,16 @@ def load_ml_assets():
         print("ML models and SHAP explainer loaded successfully.")
     except Exception as e:
         print(f"Warning: ML models not found. Phase 3 predictions will fail: {e}")
+
 google_api_key = os.getenv("GOOGLE_API_KEY")
 genai_model = None
 if google_api_key and not google_api_key.startswith("your"):
     try:
         genai.configure(api_key=google_api_key)
-        genai_model = genai.GenerativeModel('gemini-3.6-flash')
+        genai_model = genai.GenerativeModel('gemini-1.5-flash')
     except Exception as e:
         print(f"Failed to init Gemini: {e}")
+        
 try:
     chroma_client = chromadb.PersistentClient(path="./chroma_db")
     collection = chroma_client.get_collection(name="survival_manuals")
@@ -76,6 +82,7 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
+
 class ConnectionManager:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
@@ -111,6 +118,7 @@ async def dashboard_websocket(websocket: WebSocket):
 
 def trigger_verification_push(user_tokens: List[str], ticket_id: int):
     print(f"🔔 [FCM MOCK] Alerting {len(user_tokens)} nearby users to verify Ticket #{ticket_id}")
+
 def allocate_resources_for_sos(ticket_id: int, sos_description: str, latitude: float, longitude: float, db: Session):
     sos_point = f"SRID=4326;POINT({longitude} {latitude})"
     
@@ -145,7 +153,6 @@ def allocate_resources_for_sos(ticket_id: int, sos_description: str, latitude: f
         return matched_volunteer.id
 
     return None
-
 
 @app.get("/")
 async def root():
@@ -285,22 +292,30 @@ async def create_sos_reports_bulk(
 def get_all_reports(db: Session = Depends(get_db)):
     return db.query(models.Report).filter(models.Report.status == "verified").all()
 
+# --- OFFLINE MAPPING ENDPOINTS ---
+
 @app.get("/api/shelters/geojson")
 def get_shelters_geojson(db: Session = Depends(get_db)):
-    shelters = db.query(models.Shelter).all()
+    # Extract actual Longitude (X) and Latitude (Y) from PostGIS geometry
+    results = db.query(
+        models.Shelter,
+        func.ST_X(models.Shelter.location).label('lng'),
+        func.ST_Y(models.Shelter.location).label('lat')
+    ).all()
+    
     features = []
-    for s in shelters:
+    for shelter, lng, lat in results:
         feature = {
             "type": "Feature",
             "geometry": {
                 "type": "Point",
-                "coordinates": [0.0, 0.0]
+                "coordinates": [lng, lat] # GeoJSON strictly requires [Longitude, Latitude]
             },
             "properties": {
-                "id": s.id,
-                "name": s.name,
-                "capacity": s.capacity,
-                "current_occupancy": s.current_occupancy
+                "id": shelter.id,
+                "name": shelter.name,
+                "capacity": shelter.capacity,
+                "current_occupancy": shelter.current_occupancy
             }
         }
         features.append(feature)
@@ -309,6 +324,35 @@ def get_shelters_geojson(db: Session = Depends(get_db)):
         "type": "FeatureCollection",
         "features": features
     }
+
+@app.post("/api/dev/seed-shelters", tags=["Development"])
+def seed_dummy_shelters(db: Session = Depends(get_db)):
+    # Dummy locations scattered around New Delhi
+    dummy_data = [
+        {"name": "Connaught Place Safe Zone", "lat": 28.6304, "lng": 77.2177, "cap": 500},
+        {"name": "India Gate Relief Camp", "lat": 28.6129, "lng": 77.2295, "cap": 1200},
+        {"name": "Yamuna Sports Complex Shelter", "lat": 28.6550, "lng": 77.3072, "cap": 2500},
+        {"name": "Saket Community Hall", "lat": 28.5245, "lng": 77.2066, "cap": 300},
+        {"name": "Dwarka Sector 10 School", "lat": 28.5815, "lng": 77.0628, "cap": 850}
+    ]
+    
+    added = 0
+    for data in dummy_data:
+        exists = db.query(models.Shelter).filter(models.Shelter.name == data["name"]).first()
+        if not exists:
+            spatial_point = f"SRID=4326;POINT({data['lng']} {data['lat']})"
+            new_shelter = models.Shelter(
+                name=data["name"],
+                capacity=data["cap"],
+                current_occupancy=0,
+                location=spatial_point
+            )
+            db.add(new_shelter)
+            added += 1
+            
+    db.commit()
+    return {"message": f"Successfully seeded {added} new shelters.", "total_shelters": db.query(models.Shelter).count()}
+
 
 @app.post("/api/auth/register")
 def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
@@ -447,26 +491,6 @@ async def update_volunteer_location(
         "longitude": payload.longitude
     }
 
-
-@app.get("/api/volunteers/tasks")
-async def get_volunteer_tasks(
-    db: Session = Depends(get_db),
-    current_user: models.User = Depends(auth.get_current_user)
-):
-    if current_user.role != models.UserRole.volunteer:
-        raise HTTPException(status_code=403, detail="Only volunteers can view assigned tasks.")
-    
-    assigned_reports = db.query(models.Report).filter(
-        models.Report.assigned_volunteer_id == current_user.id
-    ).all()
-    
-    return {
-        "volunteer_id": current_user.id,
-        "status": current_user.status,
-        "assigned_tasks": assigned_reports
-    }
-
-
 @app.get("/api/volunteers/tasks")
 async def get_volunteer_tasks(
     db: Session = Depends(get_db),
@@ -501,12 +525,28 @@ async def update_fcm_token(
     db.commit()
     return {"status": "success", "message": "FCM token updated successfully."}
 
+
+# --- FIREBASE SETUP & EMERGENCY ROUTER ---
+
+import firebase_admin
+from firebase_admin import credentials, messaging
 from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel
-from firebase_admin import messaging
 import logging
 
-router = APIRouter(prefix="/api/emergency", tags=["Emergency Alerts"])
+# Initialize Firebase ONLY if it hasn't been initialized yet
+if not firebase_admin._apps:
+    try:
+        cred_path = os.getenv("FIREBASE_CRED_PATH")
+        if cred_path and os.path.exists(cred_path):
+            cred = credentials.Certificate(cred_path)
+            firebase_admin.initialize_app(cred)
+            print("✅ Firebase initialized successfully.")
+        else:
+            print("⚠️ FIREBASE_CRED_PATH missing. Masked calls will fail.")
+    except Exception as e:
+        print(f"⚠️ Firebase init failed: {e}")
+
+emergency_router = APIRouter(prefix="/api/emergency", tags=["Emergency Alerts"])
 logger = logging.getLogger(__name__)
 
 class MaskedCallAlertRequest(BaseModel):
@@ -516,7 +556,7 @@ class MaskedCallAlertRequest(BaseModel):
     zone_label: str             # e.g., "Sector 4 - Yamuna Floodplain"
     risk_level: str = "CRITICAL"
 
-@router.post("/trigger-masked-call")
+@emergency_router.post("/trigger-masked-call")
 async def trigger_masked_call(payload: MaskedCallAlertRequest):
     try:
         message = messaging.Message(
@@ -541,4 +581,6 @@ async def trigger_masked_call(payload: MaskedCallAlertRequest):
         logger.error(f"Error dispatching masked call alert: {e}")
         raise HTTPException(status_code=500, detail="Failed to dispatch call payload")
 
-    app.include_router(router)
+# Register all extra routers to the main app instance
+app.include_router(emergency_router)
+app.include_router(agents.router)
