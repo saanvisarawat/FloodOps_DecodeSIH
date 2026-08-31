@@ -514,3 +514,19 @@ async def get_volunteer_tasks(
         "status": current_user.status,
         "assigned_tasks": assigned_reports
     }
+
+from pydantic import BaseModel
+
+class FCMTokenRequest(BaseModel):
+    fcm_token: str
+
+@app.post("/api/users/fcm-token")
+async def update_fcm_token(
+    data: FCMTokenRequest,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    """Saves or updates the logged-in user's Firebase Cloud Messaging token"""
+    current_user.fcm_token = data.fcm_token
+    db.commit()
+    return {"status": "success", "message": "FCM token updated successfully."}
