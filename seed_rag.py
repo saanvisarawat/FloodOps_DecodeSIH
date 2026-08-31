@@ -2,8 +2,6 @@ import os
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_core.documents import Document
-
-# Initialize local embedding model (runs completely offline on CPU)
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
 survival_knowledge = [

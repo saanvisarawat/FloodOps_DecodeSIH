@@ -28,8 +28,6 @@ class BulkReportItem(BaseModel):
 
 class BulkReportUpload(BaseModel):
     reports: List[BulkReportItem]
-
-# --- Phase 3: AI Predictive Risk Schema ---
 class RiskPredictionRequest(BaseModel):
     rainfall_mm: float
     rain_3d_sum: float
@@ -46,8 +44,6 @@ class RiskPredictionRequest(BaseModel):
 class ChatRequest(BaseModel):
     message: str
     session_id: str = "default"
-
-# --- Phase 4: Volunteer Location & Tracking Schema ---
 class VolunteerLocationUpdate(BaseModel):
     latitude: float
     longitude: float

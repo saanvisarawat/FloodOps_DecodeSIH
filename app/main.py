@@ -14,18 +14,12 @@ import xgboost as xgb
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-
-# Load environment variables from .env file
 load_dotenv()
-
-# RAGbot Imports (Native, Zero LangChain)
 import google.generativeai as genai
 import chromadb
 
 from . import auth, models, schemas
 from .database import engine, get_db
-
-# --- Background Task Scheduler ---
 scheduler = AsyncIOScheduler()
 
 def fetch_satellite_sar_data():
@@ -36,8 +30,6 @@ def fetch_satellite_sar_data():
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     print(f"🛰️ [{timestamp}] Fetching Copernicus Sentinel-1 SAR data for bounding box...")
     print("✅ SAR data sync complete. ML baseline updated.")
-
-# --- AI Model & SHAP Explainer State ---
 xgb_model = None
 model_columns = None
 shap_explainer = None
@@ -45,22 +37,13 @@ shap_explainer = None
 def load_ml_assets():
     global xgb_model, model_columns, shap_explainer
     try:
-        # Load XGBoost natively from the JSON file
         xgb_model = xgb.XGBClassifier()
         xgb_model.load_model("ml_models/flood_xgb_model.json")
-        
-        # Load feature columns
         model_columns = joblib.load("ml_models/model_columns.pkl")
-        
-        # Initialize SHAP explainer
         shap_explainer = shap.TreeExplainer(xgb_model)
         print("ML models and SHAP explainer loaded successfully.")
     except Exception as e:
         print(f"Warning: ML models not found. Phase 3 predictions will fail: {e}")
-
-# --- Native RAGbot Setup (Zero LangChain) ---
-
-# 1. Configure Online Brain (Gemini Native)
 google_api_key = os.getenv("GOOGLE_API_KEY")
 genai_model = None
 if google_api_key and not google_api_key.startswith("your"):
@@ -69,8 +52,6 @@ if google_api_key and not google_api_key.startswith("your"):
         genai_model = genai.GenerativeModel('gemini-3.6-flash')
     except Exception as e:
         print(f"Failed to init Gemini: {e}")
-
-# 2. Configure Offline Search (Chroma Native)
 try:
     chroma_client = chromadb.PersistentClient(path="./chroma_db")
     collection = chroma_client.get_collection(name="survival_manuals")
@@ -95,8 +76,6 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
-
-# --- WebSocket connection manager for live Official dashboard ---
 class ConnectionManager:
     def __init__(self):
         self.active_connections: List[WebSocket] = []
@@ -132,10 +111,6 @@ async def dashboard_websocket(websocket: WebSocket):
 
 def trigger_verification_push(user_tokens: List[str], ticket_id: int):
     print(f"🔔 [FCM MOCK] Alerting {len(user_tokens)} nearby users to verify Ticket #{ticket_id}")
-
-
-# --- Phase 4: Resource Allocation Algorithm ---
-# --- Phase 4: Resource Allocation Algorithm ---
 def allocate_resources_for_sos(ticket_id: int, sos_description: str, latitude: float, longitude: float, db: Session):
     sos_point = f"SRID=4326;POINT({longitude} {latitude})"
     
@@ -157,10 +132,7 @@ def allocate_resources_for_sos(ticket_id: int, sos_description: str, latitude: f
     matched_volunteer = nearby_volunteers[0]  # Pick the closest/first available
 
     if matched_volunteer:
-        # Mark volunteer as busy so they don't get double-booked
         matched_volunteer.status = "busy"
-        
-        # Link the ticket to the volunteer and update status
         report = db.query(models.Report).filter(models.Report.id == ticket_id).first()
         if report:
             report.assigned_volunteer_id = matched_volunteer.id
@@ -200,8 +172,6 @@ async def create_sos_report(
     db.add(new_report)
     db.commit()
     db.refresh(new_report)
-
-    # --- TRIGGER RESOURCE ALLOCATION ALGORITHM ---
     assigned_volunteer_id = allocate_resources_for_sos(
         ticket_id=new_report.id,
         sos_description=new_report.description,
@@ -530,3 +500,45 @@ async def update_fcm_token(
     current_user.fcm_token = data.fcm_token
     db.commit()
     return {"status": "success", "message": "FCM token updated successfully."}
+
+from fastapi import APIRouter, HTTPException
+from pydantic import BaseModel
+from firebase_admin import messaging
+import logging
+
+router = APIRouter(prefix="/api/emergency", tags=["Emergency Alerts"])
+logger = logging.getLogger(__name__)
+
+class MaskedCallAlertRequest(BaseModel):
+    volunteer_fcm_token: str
+    sos_id: str
+    display_alias: str          # e.g., "Resident in Distress"
+    zone_label: str             # e.g., "Sector 4 - Yamuna Floodplain"
+    risk_level: str = "CRITICAL"
+
+@router.post("/trigger-masked-call")
+async def trigger_masked_call(payload: MaskedCallAlertRequest):
+    try:
+        message = messaging.Message(
+            data={
+                "type": "EMERGENCY_INCOMING_CALL",
+                "sos_id": payload.sos_id,
+                "caller_name": f"FloodOps SOS: {payload.display_alias}",
+                "handle_label": f"Alert Ref #{payload.sos_id[-6:]}",
+                "zone_label": payload.zone_label,
+                "risk_level": payload.risk_level,
+            },
+            token=payload.volunteer_fcm_token,
+            android=messaging.AndroidConfig(priority="high", ttl=0),
+            apns=messaging.APNSConfig(
+                headers={"apns-priority": "10", "apns-push-type": "background"},
+                payload=messaging.APNSPayload(aps=messaging.Aps(content_available=True))
+            )
+        )
+        response = messaging.send(message)
+        return {"status": "dispatched", "sos_id": payload.sos_id, "fcm_id": response}
+    except Exception as e:
+        logger.error(f"Error dispatching masked call alert: {e}")
+        raise HTTPException(status_code=500, detail="Failed to dispatch call payload")
+
+    app.include_router(router)

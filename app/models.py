@@ -18,15 +18,9 @@ class User(Base):
     email = Column(String, unique=True, index=True)
     hashed_password = Column(String)
     role = Column(Enum(UserRole), default=UserRole.citizen)
-    
-    # Track volunteer availability and skills
     status = Column(String, default="available")  # available, busy, offline
     skills = Column(String, nullable=True)        # e.g., "boat,medical,swimming"
-    
-    # Track user/volunteer location for spatial radius queries
     last_known_location = Column(Geometry(geometry_type='POINT', srid=4326), nullable=True)
-    
-    # Firebase device token to target push notifications
     fcm_token = Column(String, nullable=True)
     
     reports = relationship("Report", foreign_keys="[Report.user_id]", back_populates="owner")
@@ -42,14 +36,10 @@ class Report(Base):
     
     status = Column(String, default="pending") 
     client_timestamp = Column(DateTime(timezone=True), server_default=func.now())
-    
-    # 📍 POSTGIS UPGRADE: Stores coordinates as a searchable geographic point
     location = Column(Geometry(geometry_type='POINT', srid=4326))
     
     user_id = Column(Integer, ForeignKey("users.id"))
     owner = relationship("User", foreign_keys=[user_id], back_populates="reports")
-    
-    # NEW: Track which volunteer was assigned to this ticket via Phase 4 allocation engine
     assigned_volunteer_id = Column(Integer, ForeignKey("users.id"), nullable=True)
     assigned_volunteer = relationship("User", foreign_keys=[assigned_volunteer_id], back_populates="assigned_reports")
 
@@ -59,6 +49,4 @@ class Shelter(Base):
     name = Column(String)
     capacity = Column(Integer)
     current_occupancy = Column(Integer, default=0)
-    
-    # 📍 POSTGIS UPGRADE
     location = Column(Geometry(geometry_type='POINT', srid=4326))
