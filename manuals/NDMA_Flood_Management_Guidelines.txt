@@ -1,0 +1,2641 @@
+SOURCE: National Disaster Management Authority (NDMA), Government of India
+DOCUMENT: National Disaster Management Guidelines - Management of Floods (2008)
+ORIGINAL URL: https://nidm.gov.in/pdf/guidelines/floods.pdf
+STATUS: Official Government of India publication (public domain / government work)
+NOTE: This extract covers Chapter 1 (Floods - Status and Context) and Chapter 2
+(Institutional Framework and Financial Arrangements, through Section 2.3.9).
+The source PDF extraction was capped at this point - Chapters 3-10 and the
+annexures (covering prevention/mitigation measures, flood forecasting/warning,
+response, recovery, capacity building, financial arrangements etc.) are NOT
+included here. For the complete document, download directly from the URL above
+or from ndma.gov.in.
+======================================================================
+
+Management Guidelines
+Management of Floods
+
+National Disaster 
+Management Guidelines
+Management of Floods
+National Disaster Management Authority
+Government of India
+
+Summary of Action Points
+V
+Mission
+To minimise vulnerability to 
+floods and consequent loss of 
+lives, livelihood systems, property 
+and damage to infrastructure and 
+public utilities.
+
+Summary of Action Points
+VII
+Contents
+Mission V
+Contents VII
+Foreword XI
+Acknowledgements XIII
+Abbreviations XV
+Executive Summary XIX
+Overview of the Guidelines XXIX
+1 Floods-Status and Context 1
+1.1 The Flood Hazard 1
+1.2 Regions in the Country Prone to Floods 2
+1.3 Flooding/Drainage Congestion/Erosion in Andaman and Nicobar 3
+ Islands and Lakshadweep
+1.4 Flash Floods 3
+1.5 Areas Prone to Floods 4
+1.6 Damages Caused by Floods 4
+1.7 Drainage Congestion and Water-logging 5
+1.8 River Erosion 5
+1.9 Urban Flooding 6
+1.10 Littoral Drift in River Estuaries 6
+1.11 Snowmelt/Glacial Lake Outbursts, Formation and Subsequent Bursting 6
+ of Landslide Dams
+1.12 Monsoon/Cyclones/Cyclonic Circulations 7
+1.13 Cloudbursts 7
+1.14 International Dimensions of the Flood Hazard 7
+1.15 Past Initiatives of the Government of India 8
+1.16 Implementation of the Recommendations of the Experts’ 9
+ Committees/Working Groups/Task Forces
+National Disaster Management Guidelines: Management Of Floods
+VIII
+1.17 Achievements in Respect of Flood Management 10
+1.18 Gaps in Flood Management 10
+1.19 Approach to Guidelines 11
+1.20 Action Plan 13
+2 Institutional Framework and Financial Arrangements 14
+2.1 Constitutional Provisions 14
+2.2 National Institutions/Agencies 14
+2.3 State-level Organisations 20
+2.4 Techno-economic Appraisal of Flood Management Schemes 22
+2.5 Funding of Flood Management Schemes 22
+2.6 Flood Insurance 24
+2.7 Action Plan 25
+3 Flood Prevention, Preparedness and Mitigation 26
+3.1 Introduction 26
+3.2 Structural Measures for Flood Management 26
+3.3 Inspection, Rehabilitation and Maintenance 30
+3.4 Action Plan for Structural Measures 31
+3.5 Non-structural Measures 32
+3.6 Integrated Water Resources Management 32
+3.7 Action Plan for Non-structural Measures 33
+3.8 Medical Preparedness 34
+4 Flood Forecasting and Warning in India 36
+4.1 Concept 36
+4.2 Methodology 36
+4.3 The Central Water Commission’s Flood Forecasting Network in India 37
+4.4 Expansion and Modernisation of Flood Forecasting Services 38
+4.5 Coordination amongst the Central Water Commission, India 39
+ Meteorological Department and the States
+4.6 International Cooperation 39
+4.7 Action Plan for Flood Forecasting and Warning 41
+Contents
+Summary of Action Points
+IX
+5 Dams, Reservoirs and Other Water Storages 42
+5.1 Introduction 42
+5.2 Natural Detention Basins 42
+5.3 Dams and Reservoirs 42
+5.4 Regulation of Reservoirs 43
+5.5 Dam Safety Aspects 44
+5.6 Action Plan 45
+6 Regulation and Enforcement 46
+6.1 Flood Plain Zoning 46
+6.2 Incentives and Disincentives to States for Enacting and 48
+ Enforcement of Flood Plain Zoning Regulation
+6.3 Encroachment into the Waterways and Natural Drainage Lines 48
+6.4 Bye-laws for Buildings in Flood Prone Areas 48
+6.5 Legal Framework for Making Infrastructure Flood Resilient 48
+6.6 Survey of Flood Prone Areas 49
+6.7 Wetlands: Conservation and Restoration 50
+6.8 Watershed Management Including Catchment Area Treatment 50
+ and Afforestation
+6.9 Coordination and Enforcement 50
+6.10 Action Plan 51
+7 Capacity Development 52
+7.1 Flood Education 52
+7.2 Target Groups for Capacity Development 53
+7.3 Capacity Building of Professionals 53
+7.4 Training 53
+7.5 Research and Development 54
+7.6 Documentation 55
+7.7 Action Plan for Capacity Building 56
+8 Flood Response 57
+8.1 Introduction 57
+8.2 Emergency Search and Rescue 58
+8.3 Emergency Relief 58
+8.4 Incident Command System 59
+Contents
+National Disaster Management Guidelines: Management Of Floods
+X
+8.5 Community-based Disaster Preparedness and Response 59
+ Coordination among Various Organisations
+8.6 Involvement of the Corporate Sector 59
+8.7 Specialised Teams for Response 60
+8.8 Improving Flood Response 61
+8.9 Emergency Logistics 61
+8.10 Emergency Medical Response 62
+8.11 Action Plan for Strengthening Flood Response 63
+9 Implementation of Guidelines – Preparation of Flood Management Plans 64
+9.1 Flood Management Plans 64
+9.2 Flood Management Plans of Central Ministries and Departments 66
+9.3 Flood Management Plans of State Governments 66
+9.4 Flood Management Plans of Nodal Agencies 67
+9.5 Implementation of Flood Management Plans 67
+9.6 Action Plan 68
+10 Summary of Action Points 69
+ Annexures 86
+Annex-I/I Map Showing Flood Prone Areas 86
+Annex-I/II State-wise Break-up of Flood Prone Areas 87
+Annex-I/III Statement Showing Damage Due to Floods/Heavy Rains 89
+Annex-I/IV Estimate of Area Suffering from Drainage Congestion/Water -logging 91
+Annex-I/V Brief Particulars of Important Committees/Working Groups/Task Forces 92
+ on Flood Management Appointed by the Government of India
+Annex-I/VI Important Recommendations of the Rashtriya Barh Ayog as Identified 103
+ by the Experts Committee and Status of their Implementation
+Annex-I/VII State-wise Details of Achievements on Structural Measures 111
+Annex- IV/I Flowchart for Flood Forecasting and Early Warning 112
+Annex-V/I Case Study for Effectiveness of Hirakud Dam in Flood Moderation 113
+Annex-VI/I Model Bill for Flood Plain Zoning 116
+ Core Group on Management of Floods 126
+ Extended Core Group on Management of Floods 127
+ List of Persons who Contributed to the Development of the 129
+ Guidelines on Flood Management
+ Contact Us 135
+Contents
+Summary of Action Points
+XI
+Foreword
+India is highly vulnerable to floods and out of the total geographical area of 329 mha, more 
+than 40 mha is flood prone. Floods are recurrent phenomenon, which cause huge loss of lives 
+and damage to livelihood system, property, infrastructure and public utilities. It is a cause for 
+concern that the flood related damages are showing an increasing trend. The average annual 
+flood damage during the last 10 years (1996-2005) was Rs. 4745 crore as compared to Rs. 1805 
+crore, the corresponding average for the last 53 years. This can be attributed to many reasons 
+including rapid increase in population and urbanisation coupled with growing developmental and 
+economic activities in the flood plains and global warming. 
+From the past experience, it is observed that though the various Expert Committees/
+Working Groups headed by eminent dignitaries have made several useful recommendations/
+suggestions, these have mostly remained unimplemented, which is a cause of concern. These 
+guidelines have highlighted those recommendations and actions required to be taken on 
+them.
+While formulating these guidelines, we have involved 161 experts from various concerned 
+central ministries and departments, state governments, scientific and technical insitutions, 
+academics, professionals and eminent personalities from the society and non-governmental 
+organisations and tried to make the document as comprehensive as possible, so that it provides 
+the desired direction in the work to be done in flood management in the country. The central 
+ministries and state governments can accordingly make their Disaster Management plans 
+based on these guidelines, which will minimise the vulnerability to floods and ensure better 
+preparedness over a defined period of time.
+I express my deep appreciation of the commitment of various stakeholders for their 
+wholehearted support and cooperation in the preparation of these guidelines. I would also like 
+to commend the significant contribution made by the Ministry of Water Resources and Central 
+Water Commission and the members of the Core and the Extended Groups, for their long hours 
+of work in drafting and finalising the guidelines.
+Vice Chairman
+National Disaster Management Authority
+Government of India
+National Disaster Management Guidelines: Management Of Floods
+XII
+I also wish to express my sincere appreciation of the efforts of Dr. Mohan Kanda, Member, 
+NDMA, and his team for formulation and finalisation of these guidelines.
+New Delhi General NC Vij
+17 January, 2008 PVSM, UYSM, AVSM (Retd)
+ 
+Summary of Action Points
+XIII
+Acknowledgements
+I am thankful to the Core Group members for their unrelenting cooperation in the extensive 
+effort that went into the formulation of the National Guidelines for Flood Management by the 
+National Disaster Management Authority (NDMA). I would like to place on record the significant 
+contributions made by the Ministries of Water Resources, Earth Sciences, the Central Water 
+Commission, the India Meteorological Department, governments of the States and the administration 
+of the Union Territories from time to time.
+I express my sincere thanks to the representatives of the other central ministries and 
+departments concerned, representatives of the scientific and technical institutions, eminent 
+professionals, the National Institute of Disaster Management, non-governmental organisations 
+and the representatives of the Corporate Sector for their valuable inputs which helped us improve 
+the content and the presentation of this document. 
+The efforts of Shri S. K. Agrawal, Specialist (Floods), NDMA and former Member, CWC in 
+providing knowledge-based technical inputs to the core group and drafting the report, deserve 
+high appreciation.
+I thank Shri H.S Brahma, Additional Secretary and the staff of the NDMA for their cooperation. 
+My thanks are also due to my staff including Sarvashri G .V Satyanarayana, Dr. Pavan Kumar 
+Singh, M. Kankaji, Ms Sajneet Kaur, Sarvashri Anil Kumar and Mahipal Singh Khatana for their 
+help in organising the various workshops, meetings and preparation of this document. I also 
+thank Mr. Sanjay Shrivastva and Ms. Neena Gupta who have helped me in editing the report.
+Finally, I would like to express my gratitude to General N.C Vij, PVSM, UYSM, AVSM 
+(Retd.), Vice Chairman, NDMA, and all Members of the NDMA for their patient reading of 
+various drafts, constructive criticism, guidance and suggestions in formulating these guidelines.
+Member
+National Disaster Management Authority
+Government of India
+National Disaster Management Guidelines: Management Of Floods
+XIV
+It is hoped that this humble effort will prove useful to the Central Ministries and Departments, 
+the States and the Union territories in formulating effective Flood Management Plans that will 
+improve the management of this phenomenon in the future. 
+New Delhi Dr. Mohan Kanda, IAS (Retd.)
+17 January, 2008
+Summary of Action Points
+XV
+AICTE All India Council of Technical Education
+AIR All India Radio
+ALTM Air-born Laser Terrain Mapping
+ARMVs Accident Relief Medical Vans
+ARG Automatic Rain Gauge
+ATI Administrative Training Institute
+BCM Billion Cubic Meter
+BIS Bureau of Indian Standards
+BMTPC Building Materials and Technology Promotion Council, 
+BRO Border Roads Organisation
+CAT Catchment Area Treatment
+CBO Community Based Organisation
+CBRI Central Building Research Institute, Roorkee
+CBSE Central Board of Secondary Education
+CD Civil Defence
+CFCB Central Flood Control Board
+CFI Construction Federation of India
+COA Council of Architecture
+CPWD Central Public Works Department
+CRF Calamity Relief Fund
+CSR Corporate Social Responsibility 
+cumec cubic meter per second
+cusec cubic feet per second
+CWC Central Water Commission
+CWPRS Central Water and Power Research Station
+D Quarter ending December
+DAE Department of Atomic Energy, 
+DART Disaster Assistance Response Team
+DD Doordarshan
+Abbreviations
+National Disaster Management Guidelines: Management Of Floods
+XVI
+DDMA District Disaster Management Authority
+DEM Digital Elevation Model
+DI Drainage Improvement
+DM Disaster Management
+DMA Disaster Management Authority
+DMS Disaster Management Support
+DMP Disaster Management Plan
+DST Department of Science and Technology
+DPR Detailed Project Report
+DRM Disaster Risk Management
+DSS Decision Support System
+DVC Damodar Valley Corporation
+DWR Doppler Weather Radar
+EEP Emergency Evacuation Plan
+EOC Emergency Operations Centre
+EREC Earthquake Risk Evaluation Centre
+FF Flood Forecasting
+FF and W Flood Forecasting and Warning
+FM Flood Management
+FMO Flood Meteorological Office
+FMP Flood Management Plan
+FP Flood Protection
+FRL Full Reservoir Level
+J Quarter ending June
+GFCC Ganga Flood Control Commission
+GIS Geographical Information System
+GLOFs Glacial Lake Outburst Floods
+GOI Government of India
+GSI Geological Survey of India 
+ha Hectare
+HFL Highest Flood Level
+HPC High Power Committee on Disaster Management
+HSC Hazard Safety Cell
+Abbreviations
+Summary of Action Points
+XVII
+HUDCO Housing and Urban Development Corporation 
+ICS Incident Command System
+ISRO Indian Space Research Organisation
+IDNDR United Nations International Decade for Natural Disaster Reduction 
+IDRN Indian Disaster Resource Network
+IE(I) Institution of Engineers (India)
+IIT Indian Institute of Technology
+IMD India Meteorological Department
+IIA Indian Institute of Architects
+IWRM Integrated Water Resources Management 
+M Quarter ending March
+mha major accident hazard
+MEA Ministry of External Affairs
+MES Military Engineering Services
+MFR Medical First Responder
+MHA Ministry of Home Affairs
+mha million hectares
+MHRD Ministry of Human Resource Development 
+MOA Ministry of Agriculture
+MOD Ministry of Defence
+MOES Ministry of Earth Sciences
+MOHFW Ministry of Health and Family Welfare
+MOR Ministry of Railways
+MOWR Ministry of Water Resources
+MOSRTH Ministry of Shipping, Road Transport and Highways
+MWL Maximum Water Level
+NCC National Cadet Corps
+NCDM National Committee on Disaster Management 
+NCMP National Common Minimum Programme
+NCMRWF National Centre of Medium Range Weather Forecasting
+NDMA National Disaster Management Authority
+NR National Reserve
+NDRF National Disaster Response Force
+Abbreviations
+National Disaster Management Guidelines: Management Of Floods
+XVIII
+NEC National Executive Committee 
+NFMI National Flood Management Institute
+NGO Non-governmental Organisation
+NHAI National Highways Authority of India
+NIC National Informatics Centre
+NIDM National Institute of Disaster Management
+NIT National Institute of Technology 
+NRSA National Remote Sensing Agency
+NSS National Service Scheme
+NWA National Water Academy
+NWP National Water Policy
+NYKS Nehru Yuvak Kendra Sangathan
+PRI Panchayati Raj Institution
+PVO Private Voluntary Organisation
+QRMT Quick Reaction Medical Team
+RBA Rashtriya Barh Ayog
+RF Rainfall
+RM River Management
+RMC Regional Meteorological Centre
+RR Rehabilitation and Resettlement 
+RRC Regional Resource Centre
+S Quarter ending September
+SDMA State Disaster Management Authority
+SOI Survey of India
+SOP Standard Operating Procedure
+SW South-west
+TAC Technical Advisory Committee
+TF Task Force
+UGC University Grants Commission
+ULB Urban Local Body
+UNDP United Nations Development Programme
+WL Water Level
+WAPCOS Water and Power Consulting Services India Ltd
+Abbreviations
+Summary of Action Points
+XIX
+Introduction 
+Following the enactment of the Disaster 
+Management Act, 2005, (DM Act, 2005) the 
+Government of India (GOI) constituted the National 
+Disaster Management Authority (NDMA) as the 
+apex body for Disaster Management (DM) in India 
+with the mandate, inter alia, for laying down policies 
+and guidelines on DM. At the national level, there 
+is to be a paradigm shift from the erstwhile reliefcentric and post-event syndrome to pro-active 
+prevention-, mitigation- and preparedness-driven 
+DM. These efforts will conserve developmental 
+gains and also minimise loss of lives, livelihood 
+systems and property. These Guidelines have been 
+evolved by the NDMA, through a nine-step process. 
+This approach ensures that all contemporary 
+knowledge, experience and information are taken 
+on board, clear destinations are identified, and 
+road maps drawn with milestones duly marked off 
+through a wide consultative process, involving all 
+the stakeholders. Recognising the gravity of the risk 
+and vulnerability of India to floods, the NDMA, soon 
+after its constitution initiated a series of consultations 
+with the various stakeholders to develop Guidelines 
+for strengthening the existing arrangements for flood 
+preparedness, mitigation, and post-flood emergency 
+response, relief, rehabilitation and reconstruction. 
+Senior representatives from the Central Ministries/
+Departments and the state governments, related 
+agencies, academics and professionals attended 
+these meetings. The meetings acknowledged that, 
+while several significant initiatives had been taken 
+by government agencies in the past for addressing 
+the risk and vulnerability of India to floods, it is 
+necessary to undertake measures for the evolution 
+of a holistic and integrated strategy to address 
+the critical factors that accentuate flood risk. On 
+the basis of these deliberations, the NDMA has 
+prepared these Guidelines for Flood Management 
+(FM), to assist the ministries and departments of 
+the GOI, the state governments and other agencies 
+in preparing Flood Management plans (FMPs).
+Vulnerability to Floods
+Floods have been a recurrent phenomenon 
+in India and cause huge losses to lives, properties, 
+livelihood systems, infrastructure and public utilities. 
+India’s high risk and vulnerability is highlighted by 
+the fact that 40 million hectares out of a geographical 
+area of 3290 lakh hectares is prone to floods. On 
+an average every year, 75 lakh hectares of land 
+is affected, 1600 lives are lost and the damage 
+caused to crops, houses and public utilities is Rs. 
+1805 crores due to floods. The maximum number 
+of lives (11,316) were lost in the year 1977. The 
+frequency of major floods is more than once in five 
+years. Floods have also occurred in areas, which 
+were earlier not considered flood prone. An effort 
+has been made in these Guidelines to cover the 
+entire gamut of Flood Management. Eighty per 
+cent of the precipitation takes place in the monsoon 
+months from June to September. The rivers bring 
+heavy sediment load from the catchments. These, 
+coupled with inadequate carrying capacity of the 
+rivers are responsible for causing floods, drainage 
+congestion and erosion of river-banks. Cyclones, 
+cyclonic circulations and cloud bursts cause flash 
+floods and lead to huge losses. The fact that some 
+of the rivers causing damage in India originate in 
+neighboring countries, adds another complex 
+dimension to the problem. Continuing and largescale loss of lives and damage to public and private 
+property due to floods indicate that we are still to 
+develop an effective response to floods. These 
+Executive Summary
+National Disaster Management Guidelines: Management Of Floods
+XX
+Guidelines have been prepared to enable the 
+various implementers and stakeholder agencies to 
+address effectively the critical areas for minimising 
+flood damages.
+Urban Flooding
+Flooding in the cities and the towns is a recent 
+phenomenon caused by increasing incidence of 
+heavy rainfall in a short period of time, indiscriminate 
+encroachment of waterways, inadequate capacity 
+of drains and lack of maintenance of the drainage 
+infrastructure. Keeping in view the fact that the 
+problem is becoming more severe and losses are 
+mounting every year, the subject of urban flooding 
+has been recognised by the NDMA as one meriting 
+exclusive attention and separate guidelines for its 
+management are being prepared and will be issued 
+soon. 
+Action Plans at Various Levels
+These Guidelines have been drawn up in the 
+context of a rigorous risk management framework 
+to ensure the effectiveness of action plans that are 
+developed by various agencies. All key agencies, 
+including the central ministries, and departments, 
+state governments, local bodies including Panchayati 
+Raj Institutions (PRIs), and Urban Local Bodies 
+(ULBs) like metropolitan development authorities, 
+municipal corporations, municipal councils and 
+district authorities will develop detailed FMPs 
+based on these Guidelines. State governments 
+and local authorities will play an important role in 
+the formulation and effective implementation of 
+such action plans. The communities and other 
+stakeholders will play an important part in ensuring 
+compliance to the regulations and their effective 
+enforcement. The State Disaster Management 
+Authorities (SDMAs) will be responsible for reviewing 
+and monitoring the implementation of the action 
+plans at the state-level. 
+The Objectives of the Guidelines
+These Guidelines rest on the following 
+objectives aimed at increasing the efficacy of the 
+FMPs, which will be prepared at various levels:
+1. Shifting the focus to preparedness by 
+implementing, in a time-bound manner, 
+an optimal combination of technoeconomically viable, socially acceptable 
+and eco-friendly structural and nonstructural measures of FM.
+2. Ensuring regular monitoring of the 
+effectiveness and sustainability of various 
+structures and taking appropriate measures 
+for their restoration and strengthening.
+3. Continuous modernisation of flood 
+forecasting, early warning and decision 
+support systems.
+4. Ensuring the incorporation of flood resistant 
+features in the design and construction of 
+new structures in the flood prone areas. 
+5. Drawing up time-bound plans for the flood 
+proofing of strategic and public utility 
+structures in flood prone areas.
+6. Improving the awareness and preparedness 
+of all stakeholders in the flood prone 
+areas.
+7. Introducing appropriate capacity 
+development interventions for effective 
+FM (including education, training, capacity 
+building, research and development, and 
+documentation.)
+8. Improving the compliance regime through 
+appropriate mechanisms.
+9. Strengthening the emergency response 
+capabilities.
+Executive Summary
+Summary of Action Points
+XXI
+Earlier Initiatives of the Government of 
+India
+Following the unprecedented floods of 1954, 
+the then Union Minister for Planning, Irrigation and 
+Power placed before Parliament on 3 September 
+1954, the statements on floods which set the 
+objective of reducing the menace of floods. Later on, 
+in a subsequent statement in Parliament on 27 July 
+1956, the emphasis was laid on doing all that was 
+possible to contain floods in the country. Since then 
+the government has taken various initiatives and set 
+up a number of committees to study the problem 
+and recommend several remedial measures. The 
+most important ones are the High Level Committee 
+on Floods (1957), the Ministers Committee on Flood 
+Control (1964), the Rashtriya Barh Ayog (1980) and 
+Task Force on Flood Management/Erosion Control 
+(2004). 
+Institutional Framework
+As per the constitutional provisions, FM is a 
+state subject and as such the primary responsibility 
+for flood management lies with the states. The 
+central government has taken various initiatives and 
+set up a number of organisations dealing with the 
+floods. The most notable one is the enactment of 
+the National Disaster Management Act, December 
+2005 and setting up of the NDMA, which has been 
+assigned to deal with all types of disasters including 
+the floods. The National Executive Committee 
+(NEC) with the Secretary of GOI of the ministry or 
+department having administrative control of the 
+subject of the DM as the Chairman and Secretaries 
+of other ministries concerned and the Chief of the 
+Integrated Defence Staff to the Chairman Chiefs of 
+the Staff Committee (CISC) as Members, will assist 
+the NDMA in the discharge of its functions and ensure 
+compliance of the directions issued by the central 
+government apart from preparing the National 
+Disaster Management Plan. The state governments 
+are to set up State Disaster Management Authorities 
+(SDMAs) and State Executive Committees (SECs) 
+to perform similar functions at the state level. These 
+are in addition to existing organisations dealing with 
+the floods in the states. 
+There is a need to set up a central organisation 
+to lay down policy and implement FM measures in 
+consultation with the states and other stakeholders 
+as floods are not confined to one state and flooding 
+in one state leads to flooding in adjoining states. 
+Accordingly, it has been proposed to set up River 
+Basin Organisations to deal with the management 
+of water resources at river basin level. It is also 
+proposed to set up a National Flood Management 
+Institute (NFMI) at an appropriate location in one 
+of the flood prone states, to impart training to 
+engineers, administrators, personnel of the police 
+departments, Non-governmental Organisations 
+(NGOs) and Community Based Orgnisations 
+(CBOs) etc. 
+Flood Prevention, Preparedness and 
+Mitigation
+Floods being the most common natural 
+disaster, people have, out of experience, devised 
+many ways of coping with them. However, 
+encroachments into the flood plains over the years 
+has aggravated the flood problem and a need to 
+take effective and sustained FM measures has 
+been felt. Various measures, structural and nonstructural, have been taken by the central and state 
+governments and as a result, considerable protection 
+has been provided to the people. However, more 
+efforts are required in this direction and there is a 
+need to put in place a techno-legal regime to make 
+structures flood-proof and regulate the activities in 
+the flood plains of the rivers. Flood forecasting and 
+warning and Decision Support System (DSS) will be 
+established on a scientific basis taking into account 
+the latest technological developments in the world.
+Executive Summary
+National Disaster Management Guidelines: Management Of Floods
+XXII
+Capacity Development and Flood Response
+The central government and the state 
+governments are required to take steps for capacity 
+development for taking effective and sustainable 
+preventive, preparatory and mitigative measures in 
+pre-floods stage and effective and prompt response 
+during- and post-floods stages. Appropriate 
+recommendations have been made in this regard.
+Activities for Minimising Flood Risk and 
+Losses
+The activities proposed to be undertaken 
+aim at minimising the flood risk and losses and are 
+to be implemented in three phases in addition to 
+recurring activities.
+Phase-I 
+These activities include identification and 
+marking of flood prone areas on maps, preparation 
+of close contour and flood vulnerability maps, 
+formulating plans for expansion and modernisation of 
+flood forecasting and warning systems, identification 
+of priority flood protection and drainage improvement 
+works, identification of reservoirs for review and 
+modification of operation manuals and rule curves 
+and undertaking special studies on problems of 
+river erosion. These will be initiated immediately and 
+efforts will be made to complete them in a phased 
+manner with the last of these activities scheduled for 
+completion by January 2010. 
+Phase-II 
+These include implementation of the schemes 
+for expansion and modernisation of the flood 
+forecasting and warning network, execution of flood 
+protection and drainage improvement schemes, 
+modification and adoption of revised reservoir
+operation manuals, enactment and enforcement 
+of flood plain zoning regulations and planning and 
+preparation of Detailed Project Reports (DPRs) 
+for storage reservoirs and implementation of 
+the schemes for real-time collection of hydrometeorological data on rivers in Nepal, Bhutan and 
+China. These activities, which aim at implementation 
+of FMPs, will commence immediately after the 
+completion of the link activities of Phase-I and will 
+be completed by March 2012.
+Phase-III 
+Implementation of activities, which include 
+construction of dams and catchment area treatment 
+(CAT) works in India as well as neighboring countries, 
+is likely to take considerable time as they entail major 
+environmental, social, inter-state and international 
+implications. These need careful study and interaction 
+with the stakeholders. It is envisaged that all feasible 
+schemes will be completed by the year 2025.
+Recurring Activities
+These activities which include inspection of 
+dams, embankments and other structural measures, 
+execution of restoration and strengthening works 
+and expansion and modernisation of flood 
+forecasting and warning systems, are to be taken 
+on a regular basis for ensuring the effectiveness and 
+sustainability of various measures for minimising 
+flood risk.
+The relevance and status of various activities 
+will be continuously monitored and reviewed. 
+The activities will be modified, if felt necessary. 
+The preparedness of the central ministries and 
+departments concerned and the state governments 
+will be reviewed in April/May every year and 
+appropriate corrective measures will be taken 
+before the commencement of the monsoon. A 
+post-monsoon review will be held every year in 
+November/December so as to finalise the action
+Executive Summary
+Summary of Action Points
+XXIII
+plan for preparatory measures to be implemented 
+before the onset of the next monsoon. 
+Flood Management Plans
+It is expected that based on these guidelines 
+the central ministries and departments concerned 
+and the state governments will prepare their FMPs 
+which will be holistic, participatory, inclusive, ecofriendly and gender-sensitive in nature and the 
+implementation of which will result in a flood- resilient 
+India. The plans will focus on the community and 
+the collective efforts of the government and NGOs.
+Important Milestones in the Road-map 
+for the Implementation of the Guidelines
+Phase – I (Works to Commence Immediately)
+•	 Mechanismforjointformulationofforecasts
+by the CWC/IMD/NRSA/states-May 2008.
+•	 Identification of flood prone areas (villages/
+blocks/tehsils/districts) and marking on 
+national, state and district level maps by 
+the Central Water Commission (CWC)/
+Ganga Flood Control Commission 
+(GFCC)/Brahmaputra Board and the state 
+governments in collaboration with the 
+National Remote Sensing Agency (NRSA) 
+and Survey of India (SOI) - June 2008.
+•	 Finalisation of plans for expansion and
+modernisation of flood forecasting and 
+warning systems and development of DSS 
+for management of floods by the CWC, 
+India Meteorological Department (IMD) 
+and the state governments - June 2008.
+•	 Making an assessment of the area
+suffering from drainage congestion by the 
+state governments- June 2008.
+•	 Makingan assessment of the area suffering
+from erosion by the state governmentsJune 2008.
+•	 Categorization of flood disaster by NDMA/
+SDMAs- June 2008.
+•	 Introduction of module on FM in education
+in schools/technical institutions/defence 
+forces/academies, Administrative Training 
+Institutes (ATIs) etc., by the Ministry 
+of Human Resources Development 
+(MHRD), Ministry of Defence (MOD), 
+Ministry of Home Affairs (MHA), state 
+governments/SDMAs- June 2008.
+•	 Documentation of floods by state
+governments- June 2008.
+•	 Identification of reservoirs for reviewing
+and modifying the operation manuals/
+rule curves by the state governments in 
+consultation with the CWC, GFCC and 
+Brahmaputra Board – June 2008.
+•	 Amendment of building bye-laws to make
+future buildings in flood prone areas floodsafe by the state governments/SDMAs and 
+ULBs-June 2008. 
+•	 Establishing a mechanism for intra-state
+coordination by the state governments/
+SDMAs-June 2008.
+•	 Establishinga mechanism forjoint operation
+for reservoirs on inter-state rivers by the 
+state governments/SDMAs – June 2008.
+•	 Establishing a system for monitoring of
+landslides causing blockages in the rivers, 
+by the CWC/NRSA/ state governments/ 
+SDMAs-December 2008. 
+•	 Preparation of FM plans by the central
+ministries and departments- December 
+2008.
+Executive Summary
+National Disaster Management Guidelines: Management Of Floods
+XXIV
+•	 Preparation of FM plans by the state
+governments/SDMAs- December 2008.
+•	 Notification of regulation for prohibiting
+reclamation of wetlands and natural 
+depressions by the state governments/
+SDMAs- December 2008.
+•	 Carrying out special studies on problem
+of erosion on the rivers Brahmaputra, 
+Mahananda and Gandak by the NDMA in 
+collaboration with the state governments 
+and the CWC/GFCC/Brahmaputra Board 
+– March 2009.
+•	 Approval and beginning of implementation
+of National Flood Mitigation Project by the 
+NDMA/state governments – March 2009.
+•	 Construction of flood shelters by the state
+governments/SDMAs - March 2009.
+•	 Identification and preparation of proposals
+and implementation of priority Flood 
+Protection and Drainage Improvement (FP 
+and DI) works (embankments, anti erosion 
+measures, drainage improvement works 
+and sea walls/coastal protection works) 
+by the state governments in consultation 
+with the CWC/GFCC/Brahmaputra Board 
+– June 2009.
+•	 Preparation of maps to a scale of 1:10,000
+with contours at an interval of 0.5 m/1.0 m 
+and digital elevation model of the flood 
+prone areas by the NRSA and SOI using 
+satellite data and Air-borne Laser Terrain 
+Mapping (ALTM) - June 2010.
+•	 Preparation of flood vulnerability/flood
+hazard maps by the CWC, GFCC and the 
+Brahmaputra Board in collaboration with 
+NRSA - January 2010.
+Phase–II (Works to Commence on Completion of Link Activities in Phase–I)
+•	 Institutionalising the role of CBOs, NGOs,
+Women’s Groups, Youth Organisations, 
+Corporate Houses and other stake 
+holders in flood response by the SDMAs/
+Distric Disaster Management Authorities 
+(DDMAs)-June 2008. 
+•	 Reorganisation /reorientation of fire and
+emergency services, police forces, Civil 
+Defence Organisations (CDOs), home 
+guards for flood response by the SDMAs/
+DDMAs-June 2008. 
+•	 Raising and operationalising StateDisaster
+Response Forces (SDRFs) by the SDMAsJune 2008. 
+•	 Strengthening/restructuring of the GFCC
+by the Ministry of Water Resources 
+(MOWR)–September 2008.
+•	 Strengthening/restructuring of the
+Brahmaputra Board by the MOWR– 
+September 2008.
+•	 Enactment and enforcement of the flood
+plain zoning regulation by the state 
+governments – December 2008.
+•	 Developing Integrated Water Resources
+Management (IWRM) models for intrastate rivers by the state governmentsMarch 2009.
+•	 Establishing a system for forecasting of
+flash floods by IMD - September 2009.
+•	 Developing basin wise IWRM models for
+inter-state rivers by the CWC and state 
+governments-September 2009.
+Executive Summary
+Summary of Action Points
+XXV
+•	 Notification of modified operation manuals/
+rule curves of reservoirs identified 
+under Phase – I and implementation of 
+arrangements for inflow forecasts by the 
+state governments and CWC – December 
+2009.
+•	 Implementation of the scheme on
+expansion and modernisation of the flood 
+forecasting network and development of 
+the DSS by the CWC, IMD and the state 
+governments-March 2010.
+•	 Finalising Memoranda of Understandings
+(MOUs) and implementation of the 
+network for collection and exchange 
+of hydro meteorological data including 
+strengthening and modernisation of 
+existing networks on rivers originating in 
+Nepal, Bhutan and China by the MOWR 
+and Ministry of External Affairs (MEA)– 
+March 2010.
+•	 Setting up of National Flood Management
+Institute (NFMI) by the MOWR/NDMA – 
+June2010.
+•	 Examining adequacy and if required,
+increasing the waterways of bridges/
+culverts under roads and railways 
+embankments by the Ministry of Shipping, 
+Road Transport and Highways (MOSRTH), 
+Ministry of Railways (MOR), Ministry 
+of Defence (MOD), National Highways 
+Authority of India (NHAI), Border 
+Road Organisation (BRO) and state 
+governments-June 2010. 
+•	 Studies and consultations and finalization
+of the proposal for flood insurance by the 
+MOWR in collaboration with the Ministry of 
+Finance (MOF), insurance companies and 
+state governments and implementation of 
+a pilot project – December 2008 and on 
+large scale-June 2010.
+•	 Preparation of DM plans for reservoirs by
+the state governments – December 2010.
+•	 Making public utility buildings/installations
+flood-safe by the GOI, state governments 
+and ULBs/PRIs-December 2010. 
+•	 Establishing river basin organisations by
+the MOWR and state governments-June 
+2010.
+•	 Preparation of DPRs for storage reservoirs
+in India by the state governments/central 
+organisations – December 2010 and in 
+Bhutan and Nepal-March 2012.
+•	 Preparation of DPRs for long-term FP and
+DI measures such as embankments, antierosion measures, drainage improvement 
+works, and sea walls/coastal protection 
+works by the state governments/central 
+organisations – December 2008 and 
+completion of the works-March 2012.
+Phase – III (Commences with Completion of Link Activities in Phase – II)
+•	 Water shed management, Catchment Area
+Treatment (CAT) and afforestation schemes 
+in critical areas by the state governments/
+central organisations-March 2012. 
+•	 Construction of storage reservoirs by the
+state governments/central organisations – 
+December 2017.
+•	 Negotiations with Nepal and Bhutan for
+construction of reservoirs, watershed 
+management, CAT and afforestation 
+measures in their territories and preparation 
+of DPRs and implementation of the 
+schemes by the GOI and the governments 
+of Nepal and Bhutan- December 2025.
+Executive Summary
+National Disaster Management Guidelines: Management Of Floods
+XXVI
+Recurring Activities
+•	 Inspections of dams, embankments
+and other structural measures by the 
+state governments – twice every year, 
+once before monsoon (April-May) and 
+second time after monsoon (NovemberDecember).
+•	 Restoration/strengthening works by the
+state governments–every year.
+•	 Monitoring of structural measures–by the
+state governments–throughout the year 
+with special attention during monsoon.
+•	 Expansion and modernisation of flood
+forecasting and warning network and 
+DSS for flood management as and when 
+required.
+Important Aspects of the Guidelines
+While all the activities under the Guidelines 
+are important for minimising flood risk and loss of 
+lives and properties, the issues which need special 
+attention are the following:
+•	 Indiscriminate encroachment of the flood
+plains of the rivers and waterways of natural 
+and man-made drainage channels and 
+reclamation of ponds, chaurs, lakes and 
+depressions have led to increased flood 
+risk to lives and properties. The regulation 
+of developmental activities in these areas 
+and an appropriate techno-legal regime 
+based on the model bill circulated by the 
+CWC, is an urgent necessity.
+•	 The change in priority in use of storage
+space of the multi-purpose reservoirs 
+for irrigation, hydropower, drinking and 
+industrial water supply by ignoring flood 
+moderation has led to large scale flooding. 
+The operation manuals and rule curves of all 
+the reservoirs will be reviewed and modified 
+to give priority to flood moderation.
+•	 Flood forecasting and warning is a
+non-structural measure, which aims 
+at minimising losses and enabling the 
+agencies concerned to plan rescue and 
+relief measures. The efforts of the CWC, 
+IMD, NRSA and the state governments will 
+be integrated and a mechanism developed 
+wherein during the monsoon, the 
+representatives of all these organisations 
+and the basin states work together in 
+formulation and dissemination of reliable 
+forecasts and warning.
+ The national vision is to minimise the 
+vulnerability to floods and the consequent loss of 
+lives, livelihood systems, property and damage 
+to infrastructure and public utilities and to build a 
+safer India by developing a holistic, proactive, multidisaster and technology driven strategy for DM. 
+This is to be achieved through a combination of 
+preventive, mitigative and preparatory measures to 
+generate a prompt and efficient response after the 
+occurrence of floods. The entire process will focus 
+on the community and will be sustained through the 
+collective efforts of the government and NGOs.
+The value of these guidelines will lie essentially, 
+in the efficacy of the FMPs that will consequently 
+be made and implemented by the central ministries 
+and departments and the state governments.
+The central government and the state 
+governments will provide necessary resources, 
+both financial and managerial for creating adequate 
+structures at all levels to take measures required to 
+minimise risk and vulnerability to floods 
+Floods and famines have ravaged mankind 
+from time immemorial and a vast store of knowledge 
+Executive Summary
+Summary of Action Points
+XXVII
+and experience is available on handling these 
+disasters. An attempt has been made in these 
+Guidelines to build on this precious heritage while, 
+simultaneously, factoring in the benefits of modern 
+technology and scientific advantages apart from 
+emphasising the value of concerted action and 
+sustained efforts at mitigation. 
+Schedule of Completion of Action 
+Points
+The time lines proposed for the implementation 
+of various activities in the guidelines are considered 
+both important and desirable , especially in the 
+case of those non-structural measures for which 
+no clearances are required from central or other 
+agencies. Precise schedules for structural measures 
+will, however, be evolved in the FMPs that will follow 
+at the level of central ministries/states duly taking 
+into account the availability of financial, technical 
+and managerial resources. In case of compelling 
+circumstances warranting a change, consultation 
+with NDMA will be undertaken, well in advance, for 
+any adjustment, on a case to case basis.
+Executive Summary
+
+Summary of Action Points
+XXIX
+General
+It has been recognised that, while floods 
+cannot be prevented, they can certainly be managed 
+to minimise loss of lives, livelihood systems, property 
+and damage to infrastructure and public utilities. 
+Various measures for management of floods will 
+ultimately lead to reduction in vulnerability to floods. 
+These guidelines on FM have been prepared keeping 
+this reality in mind. Sustained efforts are required to 
+address the problem to reduce the impact of floods 
+in the short term and flood risk in the medium and 
+the long term. So far the response to floods has 
+been reactive in nature and has focused on rescue 
+and relief in the post-flood situation. Preparatory, 
+preventive and mitigative aspects of the FM have 
+not received due attention. With the enactment of 
+the DM Act, 2005 and the constitution of the NDMA, 
+there has been a paradigm shift from the reactive 
+response-centric regime where most of the efforts 
+and resources were used for providing emergency 
+response and relief after floods, to an approach 
+that lays greater emphasis on efforts and resources 
+for strengthening preparedness and mitigation 
+through appropriate intervention apart from 
+consolidating capacity for emergency response. 
+This shift in approach is expected to be achieved 
+with the active participation of the communities 
+and the other stakeholders in all aspects of FM. 
+The guidelines cover all aspects of FM and aim 
+at increasing the efficacy of the FMPs that will be 
+prepared by various key agencies including the 
+central ministries and departments concerned, 
+state governments, districts authorities, local bodies 
+(both rural and urban), including PRIs, metropolitan 
+development authorities, municipal corporations, 
+municipal councils etc. The implementation of the 
+FMPs prepared by them will result in a safer country 
+capable of managing the floods effectively and thus 
+promote the economic development of the flood 
+prone areas in the country.
+Structure of the Guidelines
+These Guidelines have been divided into 10 
+chapters. 
+Floods: Status and Context
+The first chapter is general in nature. The 
+nature and extent of the flood problem in the country, 
+various initiatives taken by the GOI in managing 
+them, the actions required for a reasonable and 
+reliable assessment of the problem and collection 
+of the data for the studies leading to systematic and 
+scientific planning and implementation of various 
+interventions to manage floods are briefly described 
+therein. 
+Institutional Framework and Financial 
+Arrangements
+The second chapter titled ‘Institutional 
+Framework and Financial Arrangements’ outlines 
+the existing and proposed institutions to deal with 
+the problem of floods and manage them effectively. 
+It also deals with the financial system in place and 
+arrangements that are proposed for meeting the 
+requirement of funds for implementation of the 
+various proposed interventions and FM measures, 
+both structural and non-structural.
+Prevention, Preparedness and Mitigation
+The third chapter on flood prevention, preparedOverview of the Guidlines
+National Disaster Management Guidelines: Management Of Floods
+XXX
+ness and mitigation presents an outline of the various types of structural and non-structural measures 
+for managing the floods. Action plans for their implementation have also been prepared.
+Flood Forecasting and Warning
+Flood forecasting and warning (FF and W) 
+is an important measure for minimising loss of 
+lives and properties and assists the authorities 
+concerned, in prompt and effective response 
+during and after floods. These aspects have been 
+dealt with in the fourth chapter and the action plan 
+for the strengthening and modernisation of existing 
+FF and W network as well as development of a DSS 
+for management of floods has been drawn.
+Dams, Reservoirs and Other Water Storages
+Dams, reservoirs and other water storages, 
+both natural and man-made, are an effective means 
+for reducing the flood peaks in the rivers. The 
+important role played by them in flood moderation 
+and comprehensive mechanism for operation and 
+regulation of reservoirs, which takes into account 
+the international, inter-state and inter-regional 
+aspects, have been dealt with in the fifth chapter. As 
+large dams and reservoirs have potential for huge 
+damage guidelines for ensuring safety thereof have 
+also been detailed therein.
+Regulation and Enforcement
+Unplanned and unregulated developmental 
+activities in the flood plains of the rivers and 
+encroachments into the waterways have led to 
+increase in flood losses as well as flood risk. The 
+colossal loss of lives and property due to the 
+flooding of the towns and cities and the areas which 
+get flooded almost every alternate year is a recent 
+phenomenon and effective steps are required for 
+regulating unplanned growth in the flood plains and 
+preventing encroachment in the waterways. These 
+aspects have been dealt with in the sixth chapter 
+titled ‘Regulation and Enforcement’. The measures 
+for making the structures and buildings capable of 
+withstanding the floods and serving as temporary 
+shelters for the flood affected people have also 
+been dealt with in this chapter. The coordination 
+required among the various agencies and state 
+governments for effective FM in inter-state rivers and 
+among various stakeholders for effective response 
+has also been highlighted.
+Capacity Development
+The seventh chapter on capacity development 
+covers the aspects of education, training, research 
+and development and documentation with respect 
+to FM. The proposals for strengthening the existing 
+systems are also given therein. An action plan for 
+capacity development has also been formulated.
+Flood Response
+An effective and prompt response to floods 
+is very important for minimising the loss of lives 
+and properties and providing immediate relief 
+to the affected people. The role of communities 
+and NGOs is vital in search, rescue and relief 
+operations. Immediate medical assistance to 
+the affected people and steps for prevention of 
+outbreak of epidemics after the floods are essential 
+components of flood response. As per provisions of 
+the DM Act, 2005, the GOI has constituted National 
+Disaster Response Force (NDRF) for the purpose of 
+specialised response to disasters. Over and above 
+this, a mechanism for coordinated approach and 
+efforts are required for effective response. All these 
+aspects have been covered in the eighth chapter 
+titled ‘Flood Response’.
+Overview of the Guidlines
+Summary of Action Points
+XXXI
+Implementation of Guidelines-Flood 
+Management Plans
+The NEC has been entrusted with the 
+responsibility of preparing the National Plan for 
+DM and getting it approved by the NDMA. These 
+guidelines on FM will assist various stakeholders i.e. 
+central ministries/ departments, state governments/
+SDMAs, PRIs, and ULBs, DDMAs, NGOs and the 
+communities at large, in the preparation of FMPs 
+which, in turn, will form the basis for preparing the 
+national flood management and overall DM plan. 
+The factors to be taken into account while preparing 
+FMPs and aspects for implementation thereof have 
+been dealt with in the ninth chapter.
+Summary of Action Points
+The last chapter of the Guidelines lists out 
+various action points to be implemented by central 
+ministries and departments concerned and the 
+state governments/SDMAs/DDMAs. There are, 
+in all, 94 action points which will assist them in 
+the formulation of FMPs and the implementation 
+thereof will result in effective management of floods 
+in India.
+Overview of the Guidlines
+Floods-Status and Context
+1
+1.1 The Flood Hazard
+1.1.1 Floods-A Natural Disaster
+Floods have been recurrent phenomena in India 
+from time immemorial. Almost every year floods of 
+varying magnitude affect some parts of the country 
+or the other. Different regions of the country have 
+different climates and rainfall patterns and, therefore, 
+while some parts face devastating floods, other 
+parts may, at the same time, experience drought 
+conditions. The monsoon regime is a regular 
+phenomenon. Year-to-year variations occur with 
+regard to the onset of the monsoon, its progress 
+over the Indian landmass, and the amount of rainfall 
+distribution. In some years the variation is quite 
+significant. Nevertheless, there is a fundamental 
+regularity and dependability about the monsoon 
+that sets the seasonal rhythms of life, although it 
+also causes unfortunate losses across much of this 
+part of the world. The annual precipitation including 
+snowfall over India is estimated at 4,00,000 crore 
+cubic meters (4,000 Billion Cubic Meters [BCM]) with 
+the seasonal rainfall in the monsoons being of the 
+order of 3,00,000 crore cubic meters (3,000 BCM). 
+The Indian subcontinent receives maximum rainfall 
+during the south-west (SW) monsoon (summer 
+monsoon) for a period of about 100 days, starting 
+from the first week of June to the end September. 
+Normal area-weighed rainfall over the Indian land 
+mass is 89 cms during this period. Around 80 per 
+cent of the annual total rainfall over India occurs 
+in the SW monsoon season. The balance (20 per 
+cent) rainfall is mainly due to convective activities 
+Floods-Status and Context 1
+in the pre-monsoon period (March-June) in the 
+form of local storms/thunderstorms, cyclones and 
+post-monsoon cyclones (October-mid December). 
+Winter rains/snowfall over the northern part of India 
+caused by western disturbances and the northeast (NE) monsoon in the state of Tamil Nadu and 
+adjoining region also contribute to the total rainfall. 
+The normal annual rainfall varies from less than 600 
+mms in the north-western part to over 2,500 mms 
+in the north-eastern part. It varies from about 1,200 
+mms in the north to 2,900 mms in the south.
+1.1.2 Causes of Floods
+Inadequate capacity of the rivers to contain 
+within their banks the high flows brought down from 
+the upper catchment areas following heavy rainfall, 
+leads to flooding. The tendency to occupy the 
+flood plains has been a serious concern over the 
+years. Because of the varying rainfall distribution, 
+many a time, areas which are not traditionally 
+prone to floods also experience severe inundation. 
+Areas with poor drainage facilities get flooded by 
+accumulation of water from heavy rainfall. Excess 
+irrigation water applied to command areas and 
+increase in ground water levels due to seepage 
+from canals and irrigated fields also are factors 
+that accentuate the problem of water-logging. The 
+problem is exacerbated by factors such as silting of 
+the riverbeds, reduction in the carrying capacity of 
+river channels, erosion of beds and banks leading 
+to changes in river courses, obstructions to flow 
+due to landslides, synchronisation of floods in the 
+main and tributary rivers and retardation due to tidal 
+effects.
+National Disaster Management Guidelines - Management of Floods
+2
+1.1.3 Flood Dimensions
+Floods have different dimensions - inundation 
+due to spills over the banks, drainage congestion 
+due to poor drainage characteristics and erosion 
+due to changes in water courses. 
+1.1.4 Flood Prone Area’s Estimate
+According to the estimate of the National 
+Commission on Floods, the area prone to floods 
+in the country is of the order of 400 lakh hectares. 
+It is considered that 80 per cent of it, i.e., 320 lakh 
+hectares can be provided with a reasonable degree 
+of protection.
+1.2 Regions in the Country Prone to 
+Floods
+India can be broadly divided into the following 
+four regions for a study of flood hazard. In 
+addition the Andaman and Nicobar Islands and 
+Lakshadweep have peculiar characteristics, which 
+result in drainage congestion, flooding and erosion 
+in coastal areas, as described in Para 1.3.
+1.2.1 The Brahmaputra River Region:
+This region consists of the rivers Brahmaputra 
+and Barak and their tributaries, and covers the 
+states of Assam, Arunachal Pradesh, Meghalaya, 
+Mizoram, Manipur, Tripura, Nagaland, Sikkim and 
+the northern parts of West Bengal. The catchments 
+of these rivers receive very heavy rainfall ranging 
+from 1100 mms. to 6350 mms which occurs mostly 
+during the months of May-June to September. As 
+a result, floods in this region are severe and quite 
+frequent. Further the hills, where these rivers 
+originate, are fragile and susceptible to erosion and 
+thereby cause exceptionally high silt discharge in 
+the rivers. In addition, the region is subject to severe 
+and frequent earthquakes, which cause numerous 
+landslides in the hills and upset the regime of the 
+rivers. The predominant problems in this region are 
+cloud bursts followed by flash floods, soil erosion 
+in the watershed and bank erosion along the rivers, 
+flooding caused by the spilling of rivers over their 
+banks, drainage congestion and the tendency of 
+some of the rivers to change their courses. The 
+plain areas of the region suffer from the inundation 
+caused by spilling of the Brahmaputra.
+1.2.2 The Ganga River Region:
+The river Ganga has many tributaries, the 
+important ones being Yamuna, Sone, Ghaghra, 
+Raphti, Gandak, Burhi Gandak, Bagmati, Kamla 
+Balan, Adhwara group of rivers, Kosi and the 
+Mahananda. It covers the states of Uttarakhand, 
+Uttar Pradesh, Jharkand, Bihar, south and central 
+parts of West Bengal, Punjab, parts of Haryana, 
+Himachal Pradesh, Rajasthan, Madhya Pradesh 
+and Delhi. The normal annual rainfall in this region 
+varies from about 600 mms to 1900 mms of which 
+more than 80 per cent occurs during the SW 
+monsoon. The rainfall increases from west to east 
+and from south to north. The flood problem is mostly 
+confined to the areas on the northern bank of the 
+river Ganga. Most of the damage is caused by the 
+northern tributaries of the Ganga. They spill over 
+their banks and change their courses frequently. 
+Even though the Ganga is a mighty river carrying 
+huge discharges of 57,000 to 85,000 cubic meter 
+per second, the inundation and erosion problems 
+are confined to relatively few places. In general, 
+the flood problem increases from the west to the 
+east and from south to north. In the north-western 
+parts of the region, there is the problem of drainage 
+congestion. The drainage problem also exists in 
+the southern parts of West Bengal. The flooding 
+and erosion problem is serious in the states of 
+Uttar Pradesh, Bihar and West Bengal. In recent 
+years, the states of Rajasthan and Madhya Pradesh 
+have also experienced some incidents of heavy 
+floods. The problem of flooding and drainage 
+congestion is getting accentuated due to large-
+Floods-Status and Context
+3
+scale encroachment of flood plains of the rivers for 
+habitation and various developmental activities.
+1.2.3 The North-west River Region:
+The main rivers in this region are the Indus, 
+Sutlej, Beas, Ravi, Chenab and Jhelum. These 
+rivers are the tributaries of the Indus. They carry 
+quite substantial discharges during the monsoon 
+and also large volumes of sediment. They change 
+their courses frequently and leave behind vast 
+tracts of sandy waste. This region covers the 
+states of Jammu and Kashmir, Punjab and parts 
+of Himachal Pradesh, Haryana and Rajasthan. 
+Compared to the Ganga and the Brahmaputra river 
+regions, the flood problem is relatively less in this 
+region. The major problem is that of inadequate 
+surface drainage which causes inundation and 
+water-logging over vast areas. Indiscriminate use 
+of water for irrigation and development of low-lying 
+areas and depressions has created problem of 
+drainage congestion and water logging.
+1.2.4 The Central India and Deccan Region:
+Important rivers in this region are the Narmada, 
+Tapi, Mahanadi, Godavari, Krishna and Cauvery. 
+These rivers have mostly well defined and stable 
+courses. They have adequate capacities within the 
+natural banks to carry the flood discharge except in 
+the delta area. The lower reaches of the important 
+rivers on the east coast have been embanked, thus 
+largely eliminating the flood problem. However the 
+embankments need to be raised and strengthened 
+to latest standards to continue to provide protection 
+against floods and erosion. This region covers the 
+states of Andhra Pradesh, Karnataka, Tamil Nadu, 
+Kerala, Orissa, Maharashtra, Gujarat and parts of 
+Madhya Pradesh. The region does not have serious 
+flood problem except that some of the rivers in 
+Orissa State namely Mahanadi, Brahmini, Baitarni, 
+and Subarnarekha are prone to floods every
+year. The delta and coastal areas of the states on 
+the east coast periodically face flood and drainage 
+problems in the wake of monsoon depression and 
+cyclonic storms. The problem is accentuated when 
+the floods synchronize with high tide. The rivers 
+Tapi and Narmada, are occasionally in high floods 
+affecting areas in the lower reaches in Gujarat.
+1.3 Flooding/Drainage Congestion/
+Erosion in Andaman and Nicobar 
+Islands and Lakshadweep 
+The Andaman and Nicobar archipelago consists 
+of 572 islands, islets and coral rocks spreading over 
+a stretch of 726 Km in the Bay of Bengal, out of 
+which, 38 are inhabited. The population has settled 
+in the plain table areas all along the coastline. The 
+islands may be categorised as heavy rainfall area 
+with average annual rainfall of 318 cms. The coastline 
+of the islands is deeply indented and broken by 
+creeks, backwaters and lagoons on both sides. 
+When incessant rains synchronise with high tide, 
+the settlements along the coastline and creeks go 
+under water. Some areas/islands have poor natural 
+drainage caused by peculiar geographical features 
+and soil characteristics. These are vulnerable to 
+flooding in case of heavy downpour. Storm surges, 
+associated with cyclones, also cause inundation 
+and erosion in areas along the sea coast.
+Lakshadweep, a group of Islands, is located 
+200-300 km off the coast of Kerala in the Arabian 
+sea. The total geographical area is 32 sq km. Out of 
+the 36 islands, 11 are inhabited. The average annual 
+rainfall varies from 1100-1850 mm. The islands are 
+affected by sea erosion and inundation in times of 
+high tides.
+1.4 Flash Floods
+Flash floods are characterised by very fast 
+rise and recession of flow of small volume and high
+National Disaster Management Guidelines - Management of Floods
+4
+discharge, which causes high damages because 
+of suddenness. This occurs in hilly and not too 
+hilly regions and sloping lands where heavy rainfall 
+and thunderstorms or cloudbursts are common. 
+Depression and cyclonic storms in the coastal areas 
+of Orissa, West Bengal, Andhra Pradesh, Karnataka, 
+and Tamil Nadu also cause flash floods. Arunachal 
+Pradesh, Assam, Orissa, Himachal Pradesh, 
+Uttarakhand, the Western Ghats in Maharastra and 
+Kerala are more vulnerable to flash floods caused 
+by cloud bursts. Sudden release of waters from 
+upstream reservoirs, breaches in landslide dams 
+and embankments on the banks of the rivers leads 
+to disastrous floods. Severe floods in Himachal 
+Pradesh in August 2000 and June 2005, and in 
+Arunachal Pradesh in 2000 are a few examples of 
+flash floods caused by breaches in landslide dams. 
+Floods in Assam, Bihar, Uttar Pradesh, Orissa and 
+Andhra Pradesh are generally caused by breaches 
+in embankments. Incidents of high intensity rainfall 
+over short durations, which cause flash floods even 
+in the area where rains are rare phenomena, are on 
+the rise and the problem needs to be tackled in a 
+scientific manner.
+i) Flash floods forecasting and warning 
+systems using Doppler radars will be 
+installed by the India Meteorological 
+Department (IMD) by September 2009.
+ii) As a preventive measure, the inhabitation 
+of low-lying areas along the rivers, nallas 
+and drains will be regulated by the state 
+governments/State Disaster Management 
+Authorities (SDMAs)/District Disaster 
+Management Authorities (DDMAs).
+iii) Landslides and blockages in rivers will be 
+monitored by the Central Water Commission 
+(CWC)/National Remote Sensing Agency 
+(NRSA)/state governments/SDMAs with 
+the help of satellite imageries and in case 
+of their occurrence, warning systems will 
+be set up to reduce losses. If possible,
+appropriate structural measures to eliminate 
+the damage in case of sudden collapse of 
+the blockages will also be taken up.
+1.5 Area Prone to Floods
+The details of annual damage due to floods 
+are available from the year 1953 onwards. The 
+maximum area affected due to floods in any one of 
+the years under consideration which has not been 
+effectively protected, is taken as the area liable 
+to flood in that state. Considering all such figures 
+for all the States for the period from 1953 to 1978, 
+the Rashtriya Barh Ayog (RBA) has assessed the 
+total area liable to flood in the country as 400 lakh 
+hectares. About 80 per cent of this, i.e., 320 lakh 
+hectares areas could be provided with reasonable 
+degree of protection. The severity of the problem 
+can be appreciated that this area constitutes about 
+1/8th of the total geographical area of the country. 
+In recent years, areas not prone to floods are also 
+getting flooded. An indicative map showing flood 
+prone areas in India is given in Annex– I/I. The Statewise break up of areas prone to floods is given in 
+Annex– I/II. In recent years, areas once considered 
+free from floods are also getting flooded. 
+The Ministry of Water Resources (MOWR) and 
+the state governments/SDMAs/DDMAs concerned 
+will urgently undertake identification of areas prone 
+to floods along with names of villages/talukas or 
+tehsils/districts in a scientific manner in collaboration 
+with the NRSA and Survey of India( SOI).
+1.6 Damages Caused by Floods
+More than the loss of life and damage to
+property, the sense of insecurity and fear in the 
+minds of people living in the flood plains is a cause 
+of great concern. The after effects of floods such 
+as the agony of survivors, spread of epidemics, non 
+availability of drinking water, essential commodities 
+and medicines, loss of the dwellings etc. make 
+floods the most feared among the natural disasters 
+Floods-Status and Context
+5
+faced by mankind. Heavy flood damages had 
+occurred in the country during the monsoons of the 
+years 1955, 1971, 1973, 1977, 1978, 1980, 1984, 
+1988, 1989, 1998 and 2004. Highlights of the flood 
+damages are given below:
+Maximum Average
+Area affected 
+(in lakh hectares)
+ 175 (1978) 75.1 
+Crop area affected 
+(in lakh hectares)
+101.5 (1988) 35.1 
+Population affected 
+(in crores)
+7.045 (1978) 3.284 
+Houses damaged 
+(in lakhs)
+35.1 (1978) 12.2
+Cattle heads lost 618248 (1979) 94830 
+Human lives lost 11316 (1977) 1587 
+Damage to public 
+utilities (in Rs. 
+crores)
+ 5604.46 (1998) 820.67 
+Total damages (in 
+Rs. crores)
+ 8864.54 (1998) 1805.18 
+A statement showing flood damage during the 
+1953 to 2005 is given in Annex– I/III.
+There is lack of documentation on floods 
+and flood damage. The state governments will 
+ensure that each and every flood event is properly 
+documented and flood damage assessment is 
+made on a scientific basis with the help of latest 
+technological advancements in the field of remote 
+sensing through satellites etc.
+1.7 Drainage Congestion and Waterlogging
+An area is said to be waterlogged when the 
+water table rises to an extent that the soil pores in the 
+root zone of a crop become saturated, resulting in 
+restriction of the normal circulation of air, decline in 
+the level of oxygen and increase in the level of carbon 
+dioxide. Drainage congestion and consequent 
+water-logging may be either due to surface flooding 
+or rise in water table, as a result of excess inflow 
+as compared to outflow which may be either on 
+account of excess rain and/ or over-irrigation. 
+Various agencies/ committees/commissions have 
+studied the problem and assessed the area liable 
+to water-logging in the country. The Irrigation 
+Commission (1972) estimated the total area 
+liable to water-logging in the country as 48.4 lakh 
+hectares. The National Commission on Agriculture 
+(1976) estimated total waterlogged area as 60 lakh 
+hectares. The Ministry of Agriculture (MOA) made a 
+reassessment in 1984-85 and revised the estimate 
+of the area suffering from drainage congestion and 
+water logging as 85.3 lakh hectares. As per latest 
+figures reported by the states, the total area prone 
+to water logging/drainage congestion is 90 lakh 
+hectares. State wise breakup is at Annex-I/IV.
+The MOWR along with the MOA and the state 
+governments will, by the end of March 2008, make 
+a scientific assessment of the area suffering from 
+drainage congestion and water-logging.
+1.8 River Erosion
+The erosion of banks by the rivers and the 
+consequent loss of life and property are major 
+problems. Rivers tend to erode their beds and 
+banks in the hilly regions resulting in the deepening 
+and widening of rivers. When a river enters the flood 
+plains, it shows a tendency to braid and develop 
+number of channels causing silting of the riverbed, 
+change in course and bank erosion. In the plains, a 
+river shows a meandering tendency with meanders 
+moving downstream causing erosion on the 
+concave and deposition on the convex side and cut 
+offs. This causes large-scale bank erosion. In deltaic 
+reaches near the outfall into sea, the river divides 
+itself into a number of branches resulting in bank 
+erosion. Thus bank erosion and consequent loss 
+National Disaster Management Guidelines - Management of Floods
+6
+of land and properties is a constant phenomenon 
+all along the course of the river. The study of the 
+problem and remedial measures for training of the 
+river into defined channel has gained importance 
+due to increase in population pressure and want 
+of alternative sources of livelihood for the people 
+whose land and properties are lost to rivers. 
+The MOWR along with the state governments 
+will undertake river-wise studies of the problem of 
+erosion and estimate the area liable to erosion by 
+rivers, identify vulnerable spots and plan remedial 
+measures to protect such areas. Latest technological 
+developments for low cost measures, such as 
+reinforced cement concrete (RCC) porcupines, will 
+be considered while planning such measures. 
+1.9 Urban Flooding
+Historically, civilisations have developed along 
+river courses. Towns have grown faster on account 
+of increase/influx of population. Owing to lack of 
+regulation/control, there has been considerable 
+encroachment of flood plains. Damages become 
+serious as a result of inadequate capacity of 
+storm water drainage system. The problem of 
+urban flooding has become serious as evidenced 
+by the floods in Mumbai, Bangalore, Chennai, 
+Vadodara, Ahmedabad, Surat, Kolkata, Hyderabad, 
+Visakhapatnam and Vijayawada. The National 
+Disaster Management Authority (NDMA) has, in 
+recognition of the dimensions, this phenomenon 
+has acquired, identified urban flooding as a distinct 
+discipline, in regard to the management of which 
+separate guidelines will be formulated and issued 
+soon.
+1.10 Littoral Drift in River Estuaries
+The flood problems of deltaic regions are 
+attributed to various causes like flatter slope of drains 
+and back flow due to tides. Littoral drift of sand in 
+the form of sand dunes formation and consequent 
+choking of outfalls of rivers into the sea is one of the 
+causes for flood in deltaic regions. The Biccavole 
+and Tulabhaga drains in the Godavari eastern delta 
+and the Panchanadi, Lower Kowsika, Vasalatippa 
+and Kunavaram drains in Godavari central delta are 
+some of the problem reaches.
+Straight cuts into the sea with a view to make 
+the slope steeper in outfall reaches are sometimes 
+considered as an effective measure to overcome 
+the problem. These measures must be taken only 
+after an intensive study on the mathematical and 
+hydraulic models is carried out so as to avoid the 
+risk of increased flooding in case of high tides, 
+cyclonic storms and tsunamis.
+1.11 Snow-melt/Glacial Lake Outbursts, 
+Formation and Subsequent Bursting of Landslide Dams
+Snowmelt is a gradual process and usually 
+does not cause major floods. Glacial melt is usually 
+slower than snowmelt and is not capable of causing 
+severe flood. But sometimes glaciers hold large 
+quantity of bounded water, which may be suddenly 
+released with melting of ice block resulting into 
+Glacial Lake Outburst Floods (GLOFs). The rivers 
+originating from the Himalayas in the northern 
+part of the country, which are also fed by snowmelt from glaciers, are prone to flash floods. In 
+1929, the outburst of the Chong Khundam glacier 
+(Karakoram) caused a flood peak of over 22,000 
+m3 / second at Attock. Glacial outburst is one of the 
+suspected reasons for the flash flood experienced 
+in Sutlej River on the night intervening 31July and 
+1 August 2000. The blockage in the course of the 
+Parechu in China (Tibet) caused by the landslide in 
+2004 gave way in 2005 and caused severe flooding 
+and damage to infrastructure in Himachal Pradesh. 
+While the guidelines for landslides will be issued 
+by the NDMA separately the MOWR/CWC and the 
+state governments will, in collaboration with NRSA, 
+Floods-Status and Context
+7
+monitor the hilly areas liable to snow avalanches, 
+blockages in rivers due to landslides etc for such 
+events and in the case of their occurrences, install 
+warning systems for reducing the loss of life and 
+property in the areas likely to be affected. They will 
+also take remedial structural measures, if feasible, 
+for averting the danger.
+1.12 Monsoon/Cyclones/Cyclonic Circulations 
+Floods in the Indian river basins are also caused 
+by rainstorms which are generally associated 
+with low-pressure systems like well-marked lows, 
+depressions or tropical cyclones. During the past 
+100 years, over 1000 tropical cyclones, depressions 
+and low-pressure systems originating in the Bay of 
+Bengal and Arabian Sea moved across the Indian 
+subcontinent. Nearly 466 cyclones of which about 
+40 per cent were severe, affected the country during 
+the past century. The passage of such storms in 
+quick succession over a river basin invariably leads 
+to severe floods. Parts of the country, mainly the 
+coastal areas of Andhra Pradesh, Assam, Orissa, 
+Tamil Nadu and West Bengal, experience such 
+cyclones leading to extensive flooding. The flood 
+caused by the super cyclone combined with a huge 
+storm surge during October 1999 in the coastal belt 
+of Orissa was the worst in recent history. 
+Guidelines on this subject will be issued 
+separately by the NDMA.
+1.13 Cloudbursts
+Due to peculiar climatic conditions, some parts 
+of the country experience sudden unprecedented 
+heavy rain known as cloud bursts. Principal rain 
+bearing meteorological systems that lead to short 
+duration heavy rainfall and which may also cause 
+floods are:
+(i) monsoon depressions.
+(ii) fluctuations in the intensity and location 
+of the monsoon trough over the plains of 
+India.
+(iii) a mid-troposphere circulation/low pressure 
+off the coasts of India particularly over 
+Gujarat.
+(iv) off shore vortices.
+Apart from these, land-based lows or 
+depressions during monsoon cyclones and 
+persistence of low pressure areas over adjoining 
+coastal areas may sometimes lead to floods. 
+Hilly areas in Himachal Pradesh, Uttarakhand, 
+the northern areas of West Bengal, Sikkim, 
+Arunachal Pradesh, Manipur, Mizoram, Meghalaya, 
+Nagaland and Tripura and the coastal areas in the 
+states of West Bengal, Orissa, Andhra Pradesh, 
+Tamil Nadu, Karnataka, Kerala, Maharashtra and 
+Gujarat and Union Territories (UTs) of Andaman 
+and Nicobar Islands and Lakhshadweep are more 
+prone to such phenomena. Such events have also 
+occurred in the states of Rajasthan, Chattisgarh, 
+Madhya Pradesh and Uttar Pradesh.
+The IMD and CWC in association with 
+state governments will develop forecasting and 
+warning systems in areas prone to floods caused 
+by cloudbursts.
+1.14 International Dimensions of the 
+Flood Hazard
+The rivers originating in China, Nepal and Bhutan 
+cause severe floods in the states of Uttar Pradesh, 
+Bihar, West Bengal, Arunachal Pradesh and Assam. 
+For flood management (FM), cooperation with the 
+neighbouring countries viz. China(Tibet), Nepal and 
+Bhutan is essential. 
+Negotiations upon issues such as establishment 
+of hydro-meteorological stations and transmission of 
+National Disaster Management Guidelines - Management of Floods
+8
+their data to India on a real time basis, afforestation, 
+catchment area treatment (CAT) works and 
+construction of reservoirs will be expedited by the 
+MOWR and Ministry of External Affairs (MEA).
+1.15 Past Initiatives of the Government 
+of India
+The Government of India (GOI) has taken a 
+number of initiatives in the field of FM and appointed 
+many committees/working groups/task forces from 
+time to time to look into the problem of floods and 
+suggest remedial measures for their management. 
+It has also issued a number of policy statements 
+in this regard. Some of the important committees/
+working groups/task forces appointed and the policy 
+statements made by the GOI are listed as follows:
+•	 The Policy Statement – 1954 and
+Supplementary Statement -1956.
+•	 The High Level Committee on Floods –
+1957 and Policy Statement of – 1958.
+•	 The Ministers’ Committee on Flood Control
+- 1964.
+•	 The Working Groups on Flood Control for
+the Five-Year Plans.
+•	 The Rashtriya Barh Ayog – 1980.
+•	 The Pritam Singh Committee Report –
+1980.
+•	 The National Water Policy -1987.
+•	 The Report of the Committee on Flood
+Management in the North-Eastern States 
+– 1988.
+•	 The Report of the Committee on FM in the
+states of Bihar, West Bengal, Uttar Pradesh 
+and Orissa – 1988.
+•	 The Regional Task Forces -1996.
+•	 The Experts’ Committee for Bank Erosion
+Problem of River Ganga-Padma in the 
+Districts of Malda and Murshidabad in 
+West Bengal -1996. 
+•	 The National Commission for Integrated
+Water Resources Development Plan 
+-1999.
+•	 The Expert Group for Flood Management
+in Uttar Pradesh and Bihar – 1999.
+•	 The Working Group on Flood Control
+Programme for the Tenth Five-Year Plan –
+2001.
+•	 Report of the Committee on Silting of
+Rivers in India – 2002.
+•	 National Water Policy – 2002.
+•	 The Expert Committee to Review the
+Implementation of the Recommendations 
+of Rashtriya Barh Ayog – 2003. 
+•	 The Committee for Identification of critical
+Anti-Erosion Schemes of Ganga Basin 
+States for Inclusion in centrally sponsored 
+scheme to be implemented during Tenth 
+Plan – 2003.
+•	 Report of the Technical Group on Flood
+and Erosion Problems of North Bengal –
+July 2004. 
+•	 The Task Force on Flood Management/
+Erosion Control -2004.
+While the Policy Statement -1954 was the first 
+major initiative by the GOI taken up after the floods of 
+1954, other important committees appointed by the 
+Government of India are the High Level Committee 
+Floods-Status and Context
+9
+on Floods-1957, the Ministers’ Committee on Flood
+Control-1964, the Rashtriya Barh Ayog-1980 and the 
+Task Force on Flood Management/Erosion Control 
+-2004. Brief particulars relating to the reports of 
+these Committees are in Annex-I/V
+1.16 Implementation of the Recommendations of the Experts’ Committees/Working Groups/Task 
+Forces
+The implementation of the recommendations 
+of various committees/ working groups/task forces 
+has been rather slow and action on a majority of 
+them has not been taken or at best taken partially 
+due to various administrative, social, financial and 
+political reasons. After the Policy Statement of 
+1954 and Supplementary Statement of 1956, High 
+Level Committee on Flood Control-1957, Ministers’
+Committee on Floods-1964 were the important 
+initiatives taken by the GOI. The GOI set up the RBA 
+in 1976 to study in depth the approach towards 
+programmes of flood control measures, their 
+effectiveness and recommend future measures 
+and the National policy to be followed so as to 
+progressively mitigate the resultant damage from 
+floods. The RBA, looked into the problem of floods 
+in the whole of the country in a most comprehensive 
+manner. It took into account the recommendations 
+of the various past committees and the status of 
+implementation thereof and submitted its report in 
+1980. The report contained 207 recommendations, 
+implementation of which has been reviewed from 
+time to time. The latest one was by the Experts’
+Committee under the Chairmanship of Shri. R. 
+Rangachari former Member, CWC in 2003. It 
+noted that the implementation has been slow and 
+identified 40 recommendations, which need to be 
+followed. These are given in Annex-I/VI. The brief 
+details of the most important ones, which need to 
+be followed, are as follows:- 
+•	 Flood damage assessment be made on a 
+realistic and scientific basis and recorded 
+basin-/sub-basin-wise.
+•	 Performance evaluation of a large number
+of FM schemes be carried out and their 
+impact on the socio economic development 
+of the protected area be assessed.
+•	 The use of flood plains be regulated and
+a suitable legislation for flood plain zoning 
+be enacted and enforced.
+•	 WaterResourcesplanningandconstruction
+be basin wise and basin organisations be 
+set up.
+•	 Storages in various forms is an important
+component of the package of measures 
+for FM and flood space in reservoirs be 
+provided to the extent feasible and flood 
+control not relegated to a non- priority 
+activity as against competing water 
+requirements for hydropower and Irrigation 
+purposes.
+•	 International dimensions of problem of
+floods be kept in mind and the GOI should 
+play an important role in the matter. 
+•	 Requisite funds be made available for
+construction of new and maintenance of 
+existing works.
+•	 Emphasis be laid on research, education
+and training on FM. 
+The Task Force on Flood Control/Erosion 
+Control considered the status of implementation 
+of recommendations of all the past committees/
+working groups/ task forces and submitted its 
+report to the MOWR in December 2004. The MOWR 
+is in the process of taking appropriate action on its 
+various recommendations.
+National Disaster Management Guidelines - Management of Floods
+10
+ The MOWR and the CWC will, in collaboration 
+with the state governments, closely monitor the 
+implementation of the recommendations of the 
+Experts Committee to review the implementation of 
+the recommendations of the RBA-2003 and the Task 
+Force on Flood Management/Erosion Control-2004.
+1.17 Achievements in Respect of Flood 
+Management.
+1.17.1 Structural Measures
+Since 1954, 33,928 km of new embankments 
+and 38,809 km of drainage channels have been 
+constructed in the country. In addition, 2,450 
+town protection works have been completed and 
+4,721 villages have been raised above flood levels. 
+Barring occasional breaches in embankments, 
+these works have given reasonable protection to an 
+area of about 18.22 million hectares. The state-wise 
+progress of FM works is given in Annex-I/VII
+1.17.2 Non-structural Measures
+The MOWR and CWC had circulated in 1975, 
+the draft bill for flood plain zoning regulations to the 
+state governments for enactment and enforcement. 
+However their response is not satisfactory. Rajasthan 
+and Manipur are the only states which have passed 
+the bill but steps for its enforcement have not been 
+taken.
+The CWC has established a flood forecasting 
+system comprising 175 stations on all major interstate rivers and is implementing the scheme for 
+its modernisation and expansion. The MOWR had 
+launched a centrally sponsored scheme for raising 
+of villages/construction of ring bunds etc, in U.P. and 
+Bihar. The scheme was, however, discontinued in the 
+Tenth Plan pending evaluation of the performance 
+of the works executed under it.
+1.18 Gaps in Flood Management 
+•	 Non-availability of close contour maps and
+digital elevation models of flood prone 
+areas are impediments to make reliable 
+forecasts of the area likely to be inundated 
+corresponding to expected river water 
+levels.
+•	 Flood forecasting and warning (FF and W)
+network of the CWC, though developed 
+on scientific basis, does not cover all the 
+flood prone rivers and rivulets. Most of the 
+state governments do not have their own 
+reliable FF and W networks.
+•	 Even the FF and W network of the CWC is
+mostly based on hydro-meteorological data 
+recorded by observers and communicated 
+by wireless and/or telephone. Very few river 
+basins have been covered with automatic 
+sensors for observations and telemetry 
+system for communication of data.
+•	 Though web-based system of
+communication of forecasts has been 
+developed by the CWC in the last two-three 
+years, it is yet to be made fully functional.
+•	 Flood plain zoning regulations have not
+been enacted and enforced by most of the 
+states, although a draft bill was circulated 
+to them by the MOWR and CWC in 1975 
+and in spite of such recommendations of 
+various committees/ task forces/ working 
+groups etc.
+•	 Implementation of the flood proofing
+measures such as raising of villages, 
+constructions of floods shelters, making 
+public utility installations flood safe 
+by the state governments, is far from 
+satisfactory.
+Floods-Status and Context
+11
+•	 Operation of reservoirs is often carried out
+disregarding flood moderation aspects 
+and there is lack of flow of information 
+among the basin-states resulting in gaps 
+in preparedness on their part to face 
+incoming floods.
+•	 There is also a lack of inflow forecasting
+systems for the reservoirs resulting in 
+sudden release of large quantity of water 
+causing floods in the downstream. Dam 
+safety aspects are also often not given due 
+importance by the state governments.
+•	 Though sufficient progress has been
+made in respect of structural measures of 
+flood management and an area of 182.2 
+lakh hectare has been provided with 
+reasonable degree of protection against 
+floods, the remaining flood prone area is 
+yet to be protected.
+•	 Rivers erode a significant amount of land
+every year. Conventional anti-erosion 
+measures often induce erosion in the 
+upstream and downstream or on the 
+opposite bank of the river and these require 
+high investment. There is a need to evolve 
+economical and eco-friendly measure for 
+prevention of river-erosion. 
+•	 The flood response system lacks
+public participation. There is also lack 
+of awareness among the people about 
+simple ways of safeguarding their lives 
+and properties during floods. They are 
+also not aware of the role they can play in 
+the preparedness, mitigation, rescue and 
+relief during floods.
+•	 Flood management measures are
+generally planned on an adhoc basis to 
+give immediate relief on public demand. 
+The problem and impact of the measures 
+adopted especially the embankments and 
+anti-erosion works in adjoining areas is 
+not comprehensively studied on scientific 
+basis.
+•	 There is no proper documentation about
+floods, their impact and the manner 
+in which these were tackled. Proper 
+documentation will go a long way in 
+improving the preparedness, mitigation 
+and response system.
+1.19 Approach to Guidelines
+•	 Though sufficient knowledge about floods
+and their management is available with 
+different orgnisations and the communities 
+and the problem of floods has been 
+studied by a number of committees, task 
+forces, working groups and commissions 
+and recommendations have been made 
+about the measures for their management, 
+yet there are no set guidelines to be 
+followed by the various central ministries 
+and departments, state governments and 
+other stakeholders, on the basis of which, 
+they can formulate their flood management 
+plans (FMPs). These guidelines have been 
+formulated to address this gap. 
+•	 With the enactment of the Disaster
+Management (DM) Act in December 2005 
+and constitution of the NDMA, there has 
+been a paradigm shift from erstwhile 
+relief-centric approach to the entire DM 
+continuum with equal emphasis being 
+given on preparedness, prevention and 
+mitigation along with response and relief. 
+•	 The FM guidelines emphasis on measures
+for preparedness, prevention, mitigation in 
+the pre-floods stage and on prompt and 
+effective response, relief and recovery 
+during – and post floods stages.
+National Disaster Management Guidelines - Management of Floods
+12
+•	 The emphasis of the state governments
+has so far been on structural measures 
+of FM requiring huge investment and long 
+gestation period. They have not given due 
+importance to non-structural measures, 
+which are very effective in reducing loss of 
+life and properties and do not require huge 
+investment and can be implemented in a 
+short time. These guidelines emphasise 
+on their time bound implementation by the 
+central ministries and departments and 
+the state governments.
+•	 The guidelines recogonise the fact that
+there is a lack of coordination among the 
+agencies of the central government and 
+the state governments as well as among 
+the various departments of the state 
+government. These also recognise lack 
+of institutional framework for coordinating 
+the efforts of various agencies and 
+lay emphasis on setting up basin-wise 
+organisations for FM and a National Flood 
+Management Institute (NFMI) for training, 
+education and research in FM. The 
+mechanisms for inter-state and intra-state 
+coordination have also been proposed.
+•	 The financial aspects for implementation
+of FMPs by the central ministries and 
+departments and the state governments 
+have also been covered in the guidelines.
+•	 The guidelines have been evolved with the
+active participation of all the stakeholders 
+i.e the central ministries and departments, 
+the state governments, academics, 
+experts, NGOs, corporate sector and 
+eminent people.
+•	 The timelines proposed for the
+implementation of various activities in the 
+guidelines are considered both important 
+and desirable, especially in case of those 
+non-structural measures for which no 
+clearances are required from central or other 
+agencies. Precise schedules for structural 
+measures will, however, be evolved in 
+the FMPs that will be formulated at the 
+central ministries/states level duly taking 
+into account the availability of financial, 
+technical and managerial resources. In case 
+of compelling circumstances warranting 
+a change, consultation with NDMA will 
+be undertaken, well in advance, for any 
+adjustment, on a case to case basis.
+•	 The guidelines will lead to the formulation
+of FMPs by the central ministries and 
+departments, the state governments and 
+other stakeholders, implementation of 
+which is expected to assist the process 
+of minimising vulnerability to floods 
+and consequent loss of lives, livelihood 
+systems, property and damage to 
+infrastructure and public utilities and thus 
+make India flood resilient.
+Floods-Status and Context
+13
+1.20 Action Plan
+National Disaster Management Guidelines - Management of Floods
+14
+Institutional Framework and 2 Financial Arrangements
+2.1 Constitutional Provisions
+The subject of flood control, unlike irrigation, 
+does not figure as such in any of the three legislative 
+lists included in the Constitution of India. However, 
+Drainage and Embankments, are the two measures 
+specifically mentioned in entry 17 of List II (State 
+List), reproduced below:
+‘Water, that is to say, water supplies, irrigation 
+and canals, drainage and embankments, water 
+storage and water power subject to the provision of 
+entry 56 of List I (Union List).’
+Entry 56 of List I (Union List) reads as 
+follows:
+‘Regulation and development of inter-State 
+rivers and river valleys to the extent to which such 
+regulation and development under the control of 
+the Union is declared by Parliament by law to be 
+expedient in the public interest.’
+The primary responsibility for flood control thus 
+lies with the states. 
+2.2 National Institutions/Agencies
+2.2.1 National Disaster Management Authority
+The Disaster Management Act, 2005 (DM 
+Act,2005) lays down institutional, legal, financial 
+and coordination mechanisms at the national, 
+state, district and local levels. The new institutional 
+framework will ensure operationalisation of the 
+national desire for a paradigm shift in DM from a 
+post event and relief-centric syndrome to a regime 
+that lays greater emphasis on preparedness, 
+prevention and mitigation, leading to a more prompt 
+and effective response to disasters.
+The NDMA, as the main body under the GOI, 
+has the responsibility of laying down policies, 
+plans and guidelines for DM and coordinating their 
+enforcement and implementation for ensuring a 
+timely and effective response to disasters. It will 
+approve the national DM plan prepared by the 
+National Executive Committee (NEC) and plans of 
+the central ministries and departments. The NDMA 
+may take such other measures, as it may consider 
+necessary, for the prevention of disasters, or 
+mitigation, or preparedness and capacity building, 
+for dealing with a threatening disaster situation 
+or disaster. Its statutory functions include the 
+responsibility to:
+a) lay down policies on DM;
+b) approve the national plan and the plans 
+prepared by the central ministries/
+departments in accordance with the 
+national plan;
+c) lay down guidelines to be followed by the 
+state authorities in drawing up the state 
+plans;
+d) lay down guidelines to be followed by the 
+different central ministries/departments for 
+the purpose of integrating the measures 
+for prevention of disaster or the mitigation 
+of its effects in their development plans 
+and projects;
+Institutional Framework and Financial Arrangements
+15
+e) coordinate the enforcement and 
+implementation of the policy and plan for 
+DM;
+f) recommend provision of funds for the 
+purpose of mitigation;
+g) provide such support to other countries 
+affected by major disasters as may be 
+determined by the central government;
+h) take such other measures for the 
+prevention of disaster, or its mitigation, or 
+preparedness and capacity building for 
+dealing with a threatening disaster situation 
+or disaster as it may consider necessary;
+i) lay down broad policies and guidelines for 
+the functioning of the National Institute of 
+Disaster Management(NIDM);
+j) authorise the concerned department or 
+authority to make emergency procurement 
+of provisions or materials for rescue and 
+relief in a threatening disaster situation or 
+disaster;
+k) exercise general superintendence, 
+direction and control of the National 
+Disaster Response Force (NDRF), 
+constituted under the Act for the purpose 
+of specialist response to a threatening 
+disaster situation or disaster;
+l) recommend guidelines for the minimum 
+standards of relief to be provided to the 
+persons affected by disasters.
+In essence, the NDMA will concentrate on 
+prevention, preparedness, mitigation, rehabilitation, 
+reconstruction and recovery and also formulate 
+appropriate policies and guidelines for effective
+and synergised national disaster response and 
+relief. It will also coordinate the enforcement and 
+implementation of policies and plans.
+2.2.2 National Executive Committee
+The National Executive Committee (NEC) 
+comprises the secretary to the GOl in the ministry 
+or department having administrative control of 
+the subject of DM, as the chairperson and the 
+secretaries to the GOl in the ministries/departments 
+of Agriculture, Atomic Energy, Defence, Drinking 
+Water Supply, Environment and Forests, Finance 
+(Expenditure), Health, Power, Rural Development, 
+Science and Technology, Space, Communications, 
+Urban Development, Water Resources and the 
+Chief of the Integrated Defence Staff to Chairman of 
+the Chiefs of Staff Committee as members. It is the 
+executive committee of the NDMA, and is statutorily 
+mandated to assist the Authority in the discharge 
+of its functions and ensure compliance of the 
+directions issued by the central government, apart 
+from preparing the National Plan and securing its 
+approval by the NDMA and performing such other 
+functions as required by the NDMA. Based on the 
+policy and guidelines, the NEC will be responsible 
+for preparing the national plan, getting it approved 
+by the NDMA and then operationalising it. The NEC 
+will also require any department or agency of the 
+government to make available such men or material 
+resources for the purposes of handling threatening 
+disasters, emergency response, rescue and relief, 
+as required by the NDMA. It will coordinate the 
+response in the event of any threatening disaster 
+situation or disaster. It will also perform such other 
+functions as the NDMA may require it to perform.
+2.2.3 National Disaster Response Force
+For the purpose of specialised response to a 
+threatening disaster situation or disasters both natural 
+and man-made, the DM Act, 2005 has mandated 
+the creation of a National Disaster Response Force 
+(NDRF). The general superintendence, direction and 
+control of this force shall be vested in and exercised 
+by the NDMA and the command and supervision 
+of the NDRF shall vest in an officer to be appointed 
+National Disaster Management Guidelines - Management of Floods
+16
+by the central government as the Director General 
+of the NDRF.
+2.2.4 Central Government 
+In accordance with the provisions of the DM 
+Act 2005, the central government will take all such 
+measures, as it deems necessary or expedient, for 
+the purpose of DM and will coordinate actions of all 
+agencies. It will ensure that central ministries and 
+departments integrate measures for the prevention 
+and mitigation of disasters into their developmental 
+plans and projects, make appropriate allocation 
+of funds for pre-disaster requirements and take 
+necessary measures for preparedness to effectively 
+respond to any disaster situation or disaster. As FM 
+is a multi-disciplinary process, all central ministries 
+and departments concerned will play a key role in 
+assisting the NDMA in the discharge of its functions. 
+The nodal ministry for the disaster management 
+is the Ministry of Home Affairs (MHA), the MOWR 
+along with other department is responsible for 
+the technical aspects of FM besides others. The 
+Ministries of Agriculture, Civil Aviation, Environment 
+and Forests, Health, Space, Earth Sciences, 
+Mines, Railways etc. also have important role in 
+management of floods in their respective fields.
+2.2.5 National Institute of Disaster Management 
+The National Institute of Disaster Management 
+(NIDM), which functions within the framework of 
+the broad policy and guidelines laid down by the 
+NDMA, has capacity development as one of its 
+major responsibilities, along with training, research, 
+documentation and the development of a national 
+level information base. 
+It will network with other knowledge-based 
+institutions and assist in imparting training to trainers, 
+DM officials, etc. It will also be responsible for 
+synthesising research activities and will be geared 
+towards emerging as a ‘centre of excellence’ at the 
+national and international levels.
+2.2.6 The Central Flood Control Board 
+(CFCB)/Irrigation Ministers Conference
+In 1954, when for the first time the flood 
+programme in the country attracted the serious 
+attention of the GOI, the Central Flood Control Board 
+(CFCB) was constituted to draw up a comprehensive 
+plan of flood control with the following functions: -
+(i) to lay down general principles and 
+policies in connection with flood control 
+measures;
+(ii) to consider and approve master plans for 
+flood control submitted by the states/river 
+commission; and
+(iii) to arrange for necessary assistance in 
+connection with planning and execution of 
+flood control works.
+As a follow-up to a decision of the CFCB in 
+1954, a Flood Wing was added to the then Central 
+Water and Power Commission; the Flood Wing 
+served as the Secretariat of the CFCB.
+In 1977, it was decided to merge the CFCB 
+with the Conference of State Ministers of Irrigation. 
+The first meeting after the amalgamation of the 
+CFCB with the ministers’ conference was held in 
+February 1979; thereafter the meeting has been 
+held almost every year.
+2.2.7 Central Water Commission
+The Central Water Commission (CWC) is an 
+apex agency in the field of water resources including 
+flood management in India. The River Management 
+Wing headed by the Member (RM) and ex-officio 
+Institutional Framework and Financial Arrangements
+17
+Additional Secretary to the Government of India 
+looks after FM in the country excepting the Ganga 
+and the Brahmaputra river basins for which the 
+GOI has created separate organisations. Member 
+(RM) is required to advise the MOWR and also look 
+after policy issues and other aspects of the FM 
+in the whole country including the Ganga and the 
+Brahmaputra basins. This wing is also responsible 
+for flood forecasting and the hydrological 
+observations’ network in the country. It has offices 
+under its control throughout India for performing 
+these functions.
+The MOWR will strengthen and equip 
+appropriately the RM wing of CWC. 
+2.2.8 Ganga Flood Control Commission/
+Ganga Flood Control Board
+The Ganga Flood Control Commission (GFCC) 
+was set up by GOI in 1972 for the preparation of 
+comprehensive plan of flood control for Ganga basin 
+and to draw out a phased coordinated programme 
+for the implementation of works. It has also been 
+assigned the work of monitoring and appraisal of 
+FM schemes of Ganga basin states. The Task Force 
+on Flood Management/Erosion control – 2004 has 
+recommended its strengthening to enable it to play 
+a more effective role in FM in the Ganga basin. 
+The MOWR will take steps for strengthening 
+the GFCC appropriately. 
+2.2.9 Brahmaputra Board/High Powered 
+Review Board 
+ Floods and erosion in the Brahmaputra and 
+Barak basins are regional problems. Both, the 
+Brahmaputra and the Barak and most of their major 
+tributaries are inter-state as they flow in more than 
+one state. The Brahmaputra Board was set up by 
+the GOI as a statutory body, under the Brahmaputra 
+Board Act, 1980. The Board was to perform such 
+functions and exercise such powers as the central 
+government may specify from time to time by 
+notification in the official Gazette. It has been given 
+the task of carrying out surveys and investigations 
+in the Brahmaputra valley and preparing a Master 
+Plan for control of floods, bank erosion and 
+improvement of drainage, planning and integrated 
+implementation of measures for control of floods 
+and bank erosion in the Brahmaputra and Bark 
+valleys. The Board, with the approval of the central 
+government, is also to take up the construction of 
+multipurpose dams and works connected therewith 
+proposed in the Master Plan and operate such 
+dams and works. The Board consists of four fulltime members i.e chairman, vice-chairman, general 
+manager and financial advisor to be appointed by the 
+GOI and part-time members one each to represent 
+respectively the state governments of Assam, 
+Meghalaya, Nagaland, Mizoram, Sikkim, Manipur, 
+Tripura, Arunachal Pradesh and West Bengal and 
+the central ministries dealing with Water Resources, 
+Transport, Agriculture, Power and Finance and the 
+central government departments namely the CWC, 
+the Central Electricity Authority(CEA), the Geological 
+Survey of India(GSI) and the IMD. The Task Force 
+on Flood Management/Erosion control – 2004 has 
+recommended its restructuring/strengthening. 
+The MOWR will take immediate action for 
+restructuring/strengthening of the Brahmaputra 
+Board. 
+2.2.10 India Meteorological Department 
+The IMD established in 1875, is responsible 
+for the National Meteorological Service and the 
+principal government agency in all matters relating 
+to meteorology, seismology and allied subjects. 
+The IMD is mandated as follows:
+•	 To take meteorological observations
+and to provide current and forecast 
+National Disaster Management Guidelines - Management of Floods
+18
+meteorological information for optimum 
+operation of weather-sensitive activities like 
+agriculture, irrigation, shipping, aviation, 
+offshore oil explorations, etc. 
+•	 Towarnagainstsevereweatherphenomena
+like tropical cyclones, northwesterly dust 
+storms, heavy rains and snow, cold and 
+heat waves, etc., which cause destruction 
+of life and property. 
+•	 To provide meteorological statistics
+required for agriculture, water resource 
+management, industries, oil exploration 
+and other nation building activities. 
+•	 To conduct and promote research in
+meteorology and allied disciplines. 
+•	 To detect and locate earthquakes and to
+evaluate seismicity in different parts of the 
+country for development projects.
+For the convenience of administrative 
+and technical control, there are six Regional 
+Meteorological Centres (RMCs) located at 
+Mumbai, Chennai, New Delhi, Kolkata, Nagpur and 
+Guwahati. Under each RMC, there are different 
+types of operational units such as meteorological 
+centres at state capitals, forecasting offices, agrometeorological advisory service centres, flood 
+meteorological offices (FMOs) and area cyclone 
+warning centres. 
+2.2.11 National Centre for Medium Range 
+Weather Forecasting 
+The National Centre for Medium Range 
+Weather Forecasting (NCMRWF) is the premier 
+institution in India under the Department of Science 
+and Technology (DST) to provide medium range 
+weather forecasts through deterministic methods 
+and to render agro advisory services (AAS) to the 
+farmers. The centre offers research opportunities in 
+numerical weather prediction, diagnostic studies, 
+crop weather modeling and computer science.
+2.2.12 National Remote Sensing Agency 
+The Department of Space has established 
+a Decision Support Centre (DSC) at National 
+Remote Sensing Agency (NRSA) under the Indian 
+Space Research Organisation’s (ISRO) disaster 
+management support (DMS) programme. DSC is 
+an operational service provider for space-enabled 
+inputs together with other important data layers for its 
+use in disaster management by the central ministries 
+and departments and the state governments in predisaster, during disaster and post-disaster phases. 
+A VSAT based satellite communication network 
+has been put in place for online transfer of spaceenabled inputs to the concerned state and central 
+government user departments. The DSC has the 
+provision to mobilise aircraft for obtaining aerial 
+data. At present, the DSC is addressing natural 
+disasters viz. floods, cyclone, drought, forest fires, 
+earthquakes and landslides. Besides these, it also 
+provides support services for specific events such 
+as tsunami impact assessment, monitoring of 
+landslide and manmade lakes in the remote areas 
+of India and adjoining areas of other countries. Near 
+real information on the extent of flood inundation 
+derived from space data are made available to the 
+NDMA, MHA, CWC and state agencies for planning 
+relief and rescue operations.
+The DSC is also working on preparation of maps 
+showing hazard zonation. Flood hazard zone maps 
+for the Brahmaputra river in Assam were prepared. 
+Similar maps are also being prepared for Bihar. The 
+NRSA also prepares maps in river configuration 
+and bank erosion. It also maps flood controls works 
+such as embankments and spurs along selected 
+river reaches and provides this information the 
+concerned departments.
+The DSC aims at building a comprehensive
+geo-spatial database of the disaster vulnerable 
+Institutional Framework and Financial Arrangements
+19
+regions of the country. As for the 60 odd flood and 
+cyclone prone districts a digital database on a scale 
+of 1:50,000 was developed.
+Capability has been established for acquisition 
+of close contour information. Planning is being done 
+for systematic acquisition, in a phased manner, of 
+close contour information over chronic flood prone 
+areas.
+2.2.13 National Flood Management Institute
+Various Institutes and academic institutions 
+deal with different aspects of water resources. The 
+MOWR has established the National Water Academy 
+(NWA) at Pune under the administrative control of 
+the CWC for training the working professionals of 
+CWC and the states in different aspects of water 
+resources including FM.
+There is, however, no national or state level 
+institution dealing with all facets of FM exclusively 
+and in a holistic and comprehensive manner. 
+Such an Institute is required as it can serve the 
+purpose of imparting training to the engineers and 
+administrators of the central government and the 
+state governments in all fields of FM. It can, in a 
+subsequent phase, train personnel belonging to the 
+police departments, civil defence, home guards, the 
+SDMAs, non-governmental organisations(NGOs) and 
+also public representatives in flood fighting, rescue 
+and relief. It can also undertake activities to create 
+awareness among all the stakeholders about their 
+role in handling flood events and promote adaptive 
+research relating to FM measures including FF&W. 
+It will work in close collaboration with other Institutes 
+of the central government and state governments, 
+especially the institutes proposed for management 
+of cyclone disasters and training of NDRF. 
+The MOWR in close collaboration with the 
+NDMA will establish a National Flood Management 
+Institute (NFMI) as a centre of excellence with experts 
+as its faculty and having state-of-the-art equipment 
+at an appropriate location, in one of the flood prone 
+states. The institute will be functional by the end of 
+December 2010. Till then the NWA will undertake 
+these activities in addition to its current functions.
+2.2.14 River Basin Organisations-Interstate Coordination 
+FM being a state subject, each state 
+government has naturally been dealing with 
+it separately and in its own best interests. 
+Implications of the measures taken by one state for 
+the states located in the upstream or downstream 
+have not often been taken into cognisance. It 
+has been felt that FM needs to be dealt with in a 
+comprehensive way especially on rivers that are 
+international/interstate in nature. The rivers Ganga, 
+Brahmaputra, Indus etc. originate in neighboring 
+countries and information is required from these 
+countries for the effective management of floodrelated disasters. These rivers, after entering 
+India, flow through many states before out falling 
+into the sea. In between, they are joined by many 
+tributaries, flowing through more than one state. 
+The rivers, which are confined within India, also 
+originate in one state and then flow through other 
+states before out falling into the sea.
+Various committees/task forces/working 
+groups appointed by the GOI to look into the problem 
+of floods and FM have highlighted the need for basin 
+approach to FM. The RBA, the Experts Committee 
+on the implementation of the recommendations 
+of the RBA, the sub-group on FM for the Eleventh 
+Five-Year Plan, etc. have expressed the need for the 
+establishment of a central organisation to deal with 
+the problem of floods in a comprehensive manner.
+The MOWR has set up the Brahmaputra Board 
+and GFCC to look after FM in Brahmaputra and
+National Disaster Management Guidelines - Management of Floods
+20
+the Ganga river basins respectively. The MOWR in 
+consultation with the state governments, will take 
+appropriate action in regard to the establishment of 
+such organisations in other flood prone river basins 
+and in strengthening of the CWC, Brahmaputra 
+Board and GFCC.
+2.3 State-level Organisations
+2.3.1 Disaster Management Departments/
+Commissioners 
+Disaster Management departments/
+Commissioners in the states deal with rescue/relief 
+operations during floods. 
+2.3.2 State Disaster Management Authority 
+At the state level, the State Disaster Management 
+Authority (SDMA), headed by the chief minister will 
+be established by the state governments to lay 
+down policies and plans for DM in the state. It will, 
+inter-alia, approve the state plan in accordance with 
+the guidelines laid down by the NDMA, coordinate 
+the implementation of the state plan, recommend 
+provision of funds for mitigation and preparedness 
+measures and review the developmental plans of 
+the different departments of the state to ensure 
+the integration of prevention, preparedness and 
+mitigation measures. 
+2.3.3 State Executive Committee 
+All state governments will appoint experts 
+in FM in the faculty of their administrative training 
+institutes, which will collaborate with the NFMI in 
+organising the training of personnel in the field of FM.
+Every state government will constitute a State 
+Executive Committee (SEC) to assist the SDMA 
+in the performance of its functions. The SEC 
+will be headed by the chief secretary to the 
+state government and coordinate and monitor 
+the implementation of the national policy, the 
+national plan and the state plan. It will also provide 
+information to the NDMA relating to different 
+aspects of DM.
+2.3.4 State Flood Control Boards/State 
+Flood Control Technical Advisory 
+Committees
+Flood being a state subject, FM schemes are 
+planned and executed by the State governments. 
+The role of the central government is advisory, 
+catalytic and promotional in nature. The states have 
+to investigate, plan, construct, maintain and operate 
+all flood works. Flood Control Boards were set up in 
+some of the states along with the CFCB.
+2.3.5 Irrigation/Water Resources/Flood 
+Control Departments
+The nodal organization is the Irrigation 
+Department, which may or may not have a separate 
+wing dealing with flood control in some states. 
+The Public Works Department (PWD) deals with 
+all the public works including flood control. In the 
+state of West Bengal the Irrigation and Waterways 
+Directorate under the Irrigation and Waterways 
+Department, deals with irrigation, waterways and 
+flood control. The Ministers’ Committee on Flood 
+Control, 1964, had stated ‘that at least in the States 
+with serious flood problems, proper flood control 
+departments should be organized under a Chief 
+Engineer with appropriate number of regular field 
+circles and divisions to look after investigations, 
+construction and maintenance of flood control 
+works as distinct from the regular Department’.
+2.3.6 District Disaster Management Authority 
+At the cutting edge level, the District Disaster 
+Management Authority (DDMA) headed by the 
+District Magistrate, with the elected representative 
+of the local authority as the co-chairperson, will act 
+Institutional Framework and Financial Arrangements
+21
+as the planning, coordinating and implementing 
+body for DM and take all necessary measures for 
+the purposes of DM in the district in accordance with 
+the guidelines laid down by the NDMA and SDMA. It 
+will, inter-alia prepare the district DM plan including 
+the response plan for the district, coordinate and 
+monitor the implementation of the national policy, 
+the state policy, the national plan, the state plan and 
+the district plan and ensure that the guidelines for 
+prevention, mitigation, preparedness and response 
+measures laid down by the NDMA and the SDMA 
+are followed by all departments of the government 
+at the district level and the local authorities in the 
+district. 
+2.3.7 Local Authorities
+ These include Panchayati Raj Institutions 
+(PRIs) and Urban Local Bodies (ULBs), such as 
+municipal corporations, municipalities, district and 
+cantonment boards and town planning authorities 
+for control and management of civic services. 
+PRIs and ULBs will ensure capacity building of 
+their officers and employees in DM, carry out 
+relief, rehabilitation and reconstruction activities 
+in the affected areas and will prepare DM plans in 
+consonance with the guidelines of the NDMA, SDMAs 
+and DDMAs. 
+2.3.8 State Disaster Response Force
+For the purpose of a specialised response to 
+a threatening disaster situation or disasters both 
+natural and man-made, the DM Act, 2005 has 
+mandated the creation of a NDRF . To augment 
+their capacities, all state governments/SDMAs will 
+organise, from within their armed police force, 
+adequate personnel for the constitution of State 
+Disaster Response Force (SDRF) with appropriate 
+disaster response capabilities. Under the aegis of 
+the NDMA, the states will raise the SDRF. 
+2.3.9 Intra-state Multi-sectoral Coordination
+While the state irrigation/water resources/flood 
+control departments are responsible for planning, 
+implementation and operation and maintenance 
+of structural measures of FM in the state, civil 
+authorities at the district/taluka/block/village level 
+are responsible for search, rescue and relief. 
+Further, the activities of one department, such as the 
+construction of roads by the PWD, or railway lines 
+by the Ministry of Railways (MOR), urbanisation/
+industrialisation regulated by the ULBs and town 
+and country planning organisations etc can affect 
+the vulnerability of an area to floods and drainage 
+congestion. The floods in the Krishna basin in 
+2005 are a case in point. It is therefore important 
+that a mechanism is established for ensuring 
+coordination among the various departments of 
+state governments. In most of the flood prone states, 
+State Flood Control Advisory Committees have 
+been constituted with representatives of the v
