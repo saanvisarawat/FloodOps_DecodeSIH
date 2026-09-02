@@ -3,9 +3,15 @@ import os
 from contextlib import asynccontextmanager
 from typing import List
 
-from app.routers import agents
+import asyncio
+from .data_ingestion import (
+    kerala_live_cache,
+    fetch_open_meteo_data,
+    scrape_kseb_dam_levels
+)
+
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, HTTPException, Query, WebSocket, WebSocketDisconnect
+from fastapi import Depends, FastAPI, HTTPException, Query, WebSocket, WebSocketDisconnect, Form, Response
 from fastapi.security import OAuth2PasswordRequestForm
 import joblib
 import numpy as np
@@ -65,15 +71,85 @@ except Exception as e:
     print(f"Chroma DB not found or empty: {e}")
     collection = None
 
+async def run_kerala_flood_pipeline():
+    """Background Job: Pulls live weather & dams, executes ML model, updates cache."""
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    print(f"🔄 [{timestamp}] Running Kerala Flood Intelligence Pipeline...")
+
+    live_weather = await fetch_open_meteo_data()
+    live_dams = await scrape_kseb_dam_levels()
+
+    # Static district features (Elevation, slope, river proximity per teammate brief)
+ # Static district features for all 14 Kerala districts
+    static_features = {
+        "Thiruvananthapuram": {"mean_elevation_m": 45.0, "mean_slope_deg": 3.2, "dist_nearest_river_km": 1.2, "impervious_surface_pct": 35.0, "historical_flood_count": 5, "rain_3d_sum": 20.0, "rain_7d_sum": 65.0, "rain_15d_sum": 140.0, "days_since_last_flood": 200.0, "state_norm": "KERALA"},
+        "Kollam": {"mean_elevation_m": 25.0, "mean_slope_deg": 2.5, "dist_nearest_river_km": 0.9, "impervious_surface_pct": 28.0, "historical_flood_count": 6, "rain_3d_sum": 25.0, "rain_7d_sum": 70.0, "rain_15d_sum": 150.0, "days_since_last_flood": 180.0, "state_norm": "KERALA"},
+        "Pathanamthitta": {"mean_elevation_m": 120.0, "mean_slope_deg": 6.5, "dist_nearest_river_km": 0.8, "impervious_surface_pct": 14.0, "historical_flood_count": 9, "rain_3d_sum": 40.0, "rain_7d_sum": 95.0, "rain_15d_sum": 210.0, "days_since_last_flood": 220.0, "state_norm": "KERALA"},
+        "Alappuzha": {"mean_elevation_m": 2.0, "mean_slope_deg": 0.5, "dist_nearest_river_km": 0.1, "impervious_surface_pct": 20.0, "historical_flood_count": 15, "rain_3d_sum": 35.0, "rain_7d_sum": 80.0, "rain_15d_sum": 170.0, "days_since_last_flood": 90.0, "state_norm": "KERALA"},
+        "Kottayam": {"mean_elevation_m": 35.0, "mean_slope_deg": 2.8, "dist_nearest_river_km": 0.6, "impervious_surface_pct": 22.0, "historical_flood_count": 11, "rain_3d_sum": 38.0, "rain_7d_sum": 85.0, "rain_15d_sum": 180.0, "days_since_last_flood": 110.0, "state_norm": "KERALA"},
+        "Idukki": {"mean_elevation_m": 1200.0, "mean_slope_deg": 15.2, "dist_nearest_river_km": 1.1, "impervious_surface_pct": 5.5, "historical_flood_count": 8, "rain_3d_sum": 45.0, "rain_7d_sum": 110.0, "rain_15d_sum": 230.0, "days_since_last_flood": 340.0, "state_norm": "KERALA"},
+        "Ernakulam": {"mean_elevation_m": 15.0, "mean_slope_deg": 2.1, "dist_nearest_river_km": 0.5, "impervious_surface_pct": 45.2, "historical_flood_count": 12, "rain_3d_sum": 30.0, "rain_7d_sum": 85.0, "rain_15d_sum": 190.0, "days_since_last_flood": 120.0, "state_norm": "KERALA"},
+        "Thrissur": {"mean_elevation_m": 30.0, "mean_slope_deg": 2.9, "dist_nearest_river_km": 1.0, "impervious_surface_pct": 32.0, "historical_flood_count": 10, "rain_3d_sum": 32.0, "rain_7d_sum": 88.0, "rain_15d_sum": 185.0, "days_since_last_flood": 130.0, "state_norm": "KERALA"},
+        "Palakkad": {"mean_elevation_m": 90.0, "mean_slope_deg": 4.5, "dist_nearest_river_km": 1.5, "impervious_surface_pct": 18.0, "historical_flood_count": 7, "rain_3d_sum": 28.0, "rain_7d_sum": 75.0, "rain_15d_sum": 160.0, "days_since_last_flood": 150.0, "state_norm": "KERALA"},
+        "Malappuram": {"mean_elevation_m": 60.0, "mean_slope_deg": 3.8, "dist_nearest_river_km": 1.2, "impervious_surface_pct": 25.0, "historical_flood_count": 9, "rain_3d_sum": 40.0, "rain_7d_sum": 100.0, "rain_15d_sum": 200.0, "days_since_last_flood": 140.0, "state_norm": "KERALA"},
+        "Kozhikode": {"mean_elevation_m": 25.0, "mean_slope_deg": 2.4, "dist_nearest_river_km": 0.7, "impervious_surface_pct": 40.0, "historical_flood_count": 11, "rain_3d_sum": 45.0, "rain_7d_sum": 105.0, "rain_15d_sum": 215.0, "days_since_last_flood": 115.0, "state_norm": "KERALA"},
+        "Wayanad": {"mean_elevation_m": 750.0, "mean_slope_deg": 12.0, "dist_nearest_river_km": 1.8, "impervious_surface_pct": 8.0, "historical_flood_count": 10, "rain_3d_sum": 60.0, "rain_7d_sum": 140.0, "rain_15d_sum": 280.0, "days_since_last_flood": 180.0, "state_norm": "KERALA"},
+        "Kannur": {"mean_elevation_m": 35.0, "mean_slope_deg": 3.1, "dist_nearest_river_km": 1.0, "impervious_surface_pct": 30.0, "historical_flood_count": 8, "rain_3d_sum": 50.0, "rain_7d_sum": 115.0, "rain_15d_sum": 225.0, "days_since_last_flood": 125.0, "state_norm": "KERALA"},
+        "Kasaragod": {"mean_elevation_m": 40.0, "mean_slope_deg": 3.5, "dist_nearest_river_km": 1.3, "impervious_surface_pct": 22.0, "historical_flood_count": 7, "rain_3d_sum": 55.0, "rain_7d_sum": 120.0, "rain_15d_sum": 235.0, "days_since_last_flood": 135.0, "state_norm": "KERALA"}
+    }
+    for district, weather_data in live_weather.items():
+        base = static_features.get(district, {}).copy()
+        base["rainfall_mm"] = weather_data["rainfall_mm"]
+
+        risk_score = 0
+        is_high_risk = False
+
+        # Feed dynamic live features directly through the trained XGBoost model if present
+        if xgb_model and model_columns:
+            try:
+                df = pd.DataFrame([base])
+                df_encoded = pd.get_dummies(df, columns=['state_norm'])
+                for col in model_columns:
+                    if col not in df_encoded.columns:
+                        df_encoded[col] = 0.0
+                df_final = df_encoded[model_columns].astype(float)
+                prob = float(xgb_model.predict_proba(df_final)[0][1])
+                risk_score = round(prob * 100)
+                is_high_risk = prob >= 0.8925
+            except Exception as ml_err:
+                print(f"Prediction fallback for {district}: {ml_err}")
+                risk_score = min(int(weather_data["rainfall_mm"] * 1.5), 100)
+                is_high_risk = risk_score > 70
+        else:
+            risk_score = min(int(weather_data["rainfall_mm"] * 1.5), 100)
+            is_high_risk = risk_score > 70
+
+        kerala_live_cache["districts"][district] = {
+            "rainfall_mm": weather_data["rainfall_mm"],
+            "river_discharge_m3s": weather_data["river_discharge_m3s"],
+            "risk_score": risk_score,
+            "is_high_risk": is_high_risk,
+            "alert_level": "CRITICAL" if risk_score > 80 else "WARNING" if risk_score > 50 else "NORMAL"
+        }
+
+    kerala_live_cache["reservoirs"] = live_dams
+    kerala_live_cache["last_updated"] = timestamp
+    print("✅ Kerala Live Cache successfully populated.")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     load_ml_assets()
     scheduler.add_job(fetch_satellite_sar_data, 'interval', minutes=1)
+    
+    # 1. Schedule Kerala pipeline to refresh weather & river discharge every 1 hour
+    scheduler.add_job(run_kerala_flood_pipeline, 'interval', hours=1)
     scheduler.start()
+
+    # 2. Trigger an immediate background run on startup so cache populates right away
+    asyncio.create_task(run_kerala_flood_pipeline())
+
     yield
     scheduler.shutdown()
-
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
@@ -82,6 +158,7 @@ app = FastAPI(
     version="1.0.0",
     lifespan=lifespan
 )
+
 
 class ConnectionManager:
     def __init__(self):
@@ -161,6 +238,17 @@ async def root():
 @app.get("/health")
 async def health_check():
     return {"system_status": "healthy", "database": "connected"}
+
+@app.get("/api/dashboard/live-kerala", tags=["Kerala Flood Model"])
+async def get_live_kerala_dashboard():
+    """
+    Returns the cached ML predictions, Live River Discharge, and Reservoir Levels.
+    Responds in <10ms because it reads directly from RAM.
+    """
+    if not kerala_live_cache.get("last_updated"):
+        return {"message": "Data pipeline initializing, please try again in a few seconds."}
+    
+    return kerala_live_cache
 
 @app.post("/api/reports")
 async def create_sos_report(
@@ -525,6 +613,95 @@ async def update_fcm_token(
     db.commit()
     return {"status": "success", "message": "FCM token updated successfully."}
 
+@app.post("/api/reports/lite", tags=["Emergency Alerts"])
+async def create_sos_report_lite(
+    lat: float = Query(..., description="Latitude"),
+    lng: float = Query(..., description="Longitude"),
+    desc: str = Query("Emergency SOS", description="Brief distress message"),
+    user_id: int = Query(1, description="Citizen user ID"),
+    db: Session = Depends(get_db)
+):
+    """
+    Ultra-lightweight endpoint optimized for EDGE (2G) networks.
+    Eliminates heavy JSON body overhead to fit into a single TCP packet.
+    """
+    spatial_point = f"SRID=4326;POINT({lng} {lat})"
+    
+    new_report = models.Report(
+        description=f"[EDGE 2G] {desc}",
+        location=spatial_point,
+        user_id=user_id
+    )
+    
+    db.add(new_report)
+    db.commit()
+    db.refresh(new_report)
+    
+    # Run the PostGIS spatial matching engine to alert nearby volunteers within 5km
+    assigned_volunteer_id = allocate_resources_for_sos(
+        ticket_id=new_report.id,
+        sos_description=new_report.description,
+        latitude=lat,
+        longitude=lng,
+        db=db
+    )
+    
+    # Broadcast live pin to the operations dashboard
+    await manager.broadcast({
+        "type": "new_sos_pending",
+        "ticket_id": new_report.id,
+        "description": new_report.description,
+        "latitude": lat,
+        "longitude": lng,
+        "status": "pending",
+        "assigned_volunteer_id": assigned_volunteer_id
+    })
+    
+    # Return minimal bytes to ensure the mobile client gets an instant ACK
+    return {"id": new_report.id, "ok": True}
+
+@app.post("/api/reports/sms-webhook", tags=["Emergency Alerts"])
+async def receive_offline_sms_sos(
+    From: str = Form(...), 
+    Body: str = Form(...), 
+    db: Session = Depends(get_db)
+):
+    """
+    Webhook for Twilio/Exotel. 
+    Receives an offline SMS like: "SOS 28.61 77.20 Trapped on roof"
+    """
+    parts = Body.strip().split(" ")
+    
+    if len(parts) >= 3 and parts[0].upper() == "SOS":
+        try:
+            lat = float(parts[1])
+            lng = float(parts[2])
+            desc = " ".join(parts[3:]) if len(parts) > 3 else "Offline SMS SOS Request"
+            
+            spatial_point = f"SRID=4326;POINT({lng} {lat})"
+            
+            # Create the report (Assigning to a default system user ID=1 for offline unauthenticated texts)
+            new_report = models.Report(
+                description=f"[VIA SMS] {desc}",
+                location=spatial_point,
+                user_id=1 
+            )
+            
+            db.add(new_report)
+            db.commit()
+            db.refresh(new_report)
+            
+            # Instantly trigger the PostGIS allocation engine to find nearby volunteers
+            allocate_resources_for_sos(new_report.id, desc, lat, lng, db)
+            
+            # Return XML so the telecom provider knows the webhook succeeded
+            return Response(content="<Response><Message>SOS Received</Message></Response>", media_type="application/xml")
+            
+        except ValueError:
+            return Response(content="<Response><Message>Invalid coordinates</Message></Response>", media_type="application/xml")
+            
+    return Response(content="<Response></Response>", media_type="application/xml")
+
 
 # --- FIREBASE SETUP & EMERGENCY ROUTER ---
 
@@ -583,4 +760,3 @@ async def trigger_masked_call(payload: MaskedCallAlertRequest):
 
 # Register all extra routers to the main app instance
 app.include_router(emergency_router)
-app.include_router(agents.router)
