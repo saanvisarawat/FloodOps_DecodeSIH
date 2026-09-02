@@ -9,11 +9,6 @@ from geoalchemy2 import Geometry
 
 from .database import Base
 
-
-# ==========================================
-# ENUMS & EXISTING CORE MODELS
-# ==========================================
-
 class UserRole(str, enum.Enum):
     citizen = "citizen"
     volunteer = "volunteer"
@@ -64,11 +59,6 @@ class Shelter(Base):
     capacity = Column(Integer)
     current_occupancy = Column(Integer, default=0)
     location = Column(Geometry(geometry_type='POINT', srid=4326))
-
-
-# ==========================================
-# AGENTS & ML PREDICTION MODELS
-# ==========================================
 
 class PredictionRecord(Base):
     __tablename__ = "predictions"

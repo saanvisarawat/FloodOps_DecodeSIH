@@ -1,14 +1,10 @@
 import httpx
 from bs4 import BeautifulSoup
-
-# This cache stores the latest data so the frontend gets instant responses
 kerala_live_cache = {
     "last_updated": None,
     "districts": {},
     "reservoirs": []
 }
-
-# Complete coordinates for all 14 Kerala districts
 KERALA_DISTRICTS = {
     "Thiruvananthapuram": {"lat": 8.52, "lon": 76.93},
     "Kollam": {"lat": 8.89, "lon": 76.61},
@@ -35,13 +31,10 @@ async def fetch_open_meteo_data():
     async with httpx.AsyncClient() as client:
         for district, coords in KERALA_DISTRICTS.items():
             try:
-                # 1. Fetch Daily Rainfall
                 weather_res = await client.get(
                     weather_url,
                     params={"latitude": coords["lat"], "longitude": coords["lon"], "daily": "precipitation_sum", "timezone": "auto"}
                 )
-                
-                # 2. Fetch GloFAS River Discharge
                 flood_res = await client.get(
                     flood_url,
                     params={"latitude": coords["lat"], "longitude": coords["lon"], "daily": "river_discharge"}
@@ -63,7 +56,6 @@ async def scrape_kseb_dam_levels():
     ]
     
     try:
-        # Crucial: Pretend to be a real browser to bypass government firewalls
         headers = {
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
         }

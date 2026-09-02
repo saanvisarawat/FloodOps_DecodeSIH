@@ -29,6 +29,7 @@ from sqlalchemy.orm import Session
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 load_dotenv()
+N8N_WEBHOOK_URL = os.getenv("N8N_WEBHOOK_URL")
 
 import google.generativeai as genai
 import chromadb
@@ -86,8 +87,6 @@ async def run_kerala_flood_pipeline():
 
     live_weather = await fetch_open_meteo_data()
     live_dams = await scrape_kseb_dam_levels()
-
-    # Static district features for all 14 Kerala districts
     static_features = {
         "Thiruvananthapuram": {"mean_elevation_m": 45.0, "mean_slope_deg": 3.2, "dist_nearest_river_km": 1.2, "impervious_surface_pct": 35.0, "historical_flood_count": 5, "rain_3d_sum": 20.0, "rain_7d_sum": 65.0, "rain_15d_sum": 140.0, "days_since_last_flood": 200.0, "state_norm": "KERALA"},
         "Kollam": {"mean_elevation_m": 25.0, "mean_slope_deg": 2.5, "dist_nearest_river_km": 0.9, "impervious_surface_pct": 28.0, "historical_flood_count": 6, "rain_3d_sum": 25.0, "rain_7d_sum": 70.0, "rain_15d_sum": 150.0, "days_since_last_flood": 180.0, "state_norm": "KERALA"},
@@ -110,8 +109,6 @@ async def run_kerala_flood_pipeline():
 
         risk_score = 0
         is_high_risk = False
-
-        # Feed dynamic live features directly through the trained XGBoost model if present
         if xgb_model and model_columns:
             try:
                 df = pd.DataFrame([base])
@@ -147,12 +144,8 @@ async def run_kerala_flood_pipeline():
 async def lifespan(app: FastAPI):
     load_ml_assets()
     scheduler.add_job(fetch_satellite_sar_data, 'interval', minutes=1)
-    
-    # 1. Schedule Kerala pipeline to refresh weather & river discharge every 1 hour
     scheduler.add_job(run_kerala_flood_pipeline, 'interval', hours=1)
     scheduler.start()
-
-    # 2. Trigger an immediate background run on startup so cache populates right away
     asyncio.create_task(run_kerala_flood_pipeline())
 
     yield
@@ -337,6 +330,24 @@ async def verify_report(
             "description": report.description,
             "status": report.status
         })
+        n8n_url = os.getenv("N8N_WEBHOOK_URL")
+        if n8n_url:
+            async def call_n8n():
+                async with httpx.AsyncClient() as client:
+                    try:
+                        await client.post(
+                            n8n_url,
+                            json={
+                                "ticket_id": report.id,
+                                "description": report.description,
+                                "status": "verified"
+                            }
+                        )
+                        print("✅ Successfully triggered n8n Twilio workflow.")
+                    except Exception as e:
+                        print(f"⚠️ Failed to trigger n8n webhook: {e}")
+            
+            asyncio.create_task(call_n8n())
         
     db.commit()
     return {
@@ -387,11 +398,8 @@ async def create_sos_reports_bulk(
 def get_all_reports(db: Session = Depends(get_db)):
     return db.query(models.Report).filter(models.Report.status == "verified").all()
 
-# --- OFFLINE MAPPING ENDPOINTS ---
-
 @app.get("/api/shelters/geojson")
 def get_shelters_geojson(db: Session = Depends(get_db)):
-    # Extract actual Longitude (X) and Latitude (Y) from PostGIS geometry
     results = db.query(
         models.Shelter,
         func.ST_X(models.Shelter.location).label('lng'),
@@ -422,7 +430,6 @@ def get_shelters_geojson(db: Session = Depends(get_db)):
 
 @app.post("/api/dev/seed-shelters", tags=["Development"])
 def seed_dummy_shelters(db: Session = Depends(get_db)):
-    # Dummy locations scattered around New Delhi
     dummy_data = [
         {"name": "Connaught Place Safe Zone", "lat": 28.6304, "lng": 77.2177, "cap": 500},
         {"name": "India Gate Relief Camp", "lat": 28.6129, "lng": 77.2295, "cap": 1200},
@@ -643,8 +650,6 @@ async def create_sos_report_lite(
     db.add(new_report)
     db.commit()
     db.refresh(new_report)
-    
-    # Run the PostGIS spatial matching engine to alert nearby volunteers within 5km
     assigned_volunteer_id = allocate_resources_for_sos(
         ticket_id=new_report.id,
         sos_description=new_report.description,
@@ -652,8 +657,6 @@ async def create_sos_report_lite(
         longitude=lng,
         db=db
     )
-    
-    # Broadcast live pin to the operations dashboard
     await manager.broadcast({
         "type": "new_sos_pending",
         "ticket_id": new_report.id,
@@ -663,8 +666,6 @@ async def create_sos_report_lite(
         "status": "pending",
         "assigned_volunteer_id": assigned_volunteer_id
     })
-    
-    # Return minimal bytes to ensure the mobile client gets an instant ACK
     return {"id": new_report.id, "ok": True}
 
 @app.post("/api/reports/sms-webhook", tags=["Emergency Alerts"])
@@ -686,8 +687,6 @@ async def receive_offline_sms_sos(
             desc = " ".join(parts[3:]) if len(parts) > 3 else "Offline SMS SOS Request"
             
             spatial_point = f"SRID=4326;POINT({lng} {lat})"
-            
-            # Create the report (Assigning to a default system user ID=1 for offline unauthenticated texts)
             new_report = models.Report(
                 description=f"[VIA SMS] {desc}",
                 location=spatial_point,
@@ -697,11 +696,7 @@ async def receive_offline_sms_sos(
             db.add(new_report)
             db.commit()
             db.refresh(new_report)
-            
-            # Instantly trigger the PostGIS allocation engine to find nearby volunteers
             allocate_resources_for_sos(new_report.id, desc, lat, lng, db)
-            
-            # Return XML so the telecom provider knows the webhook succeeded
             return Response(content="<Response><Message>SOS Received</Message></Response>", media_type="application/xml")
             
         except ValueError:
@@ -709,15 +704,10 @@ async def receive_offline_sms_sos(
             
     return Response(content="<Response></Response>", media_type="application/xml")
 
-
-# --- FIREBASE SETUP & EMERGENCY ROUTER ---
-
 import firebase_admin
 from firebase_admin import credentials, messaging
 from fastapi import APIRouter, HTTPException
 import logging
-
-# Initialize Firebase ONLY if it hasn't been initialized yet
 if not firebase_admin._apps:
     try:
         cred_path = os.getenv("FIREBASE_CRED_PATH")
@@ -764,15 +754,10 @@ async def trigger_masked_call(payload: MaskedCallAlertRequest):
     except Exception as e:
         logger.error(f"Error dispatching masked call alert: {e}")
         raise HTTPException(status_code=500, detail="Failed to dispatch call payload")
-
-# Register all extra routers to the main app instance
 app.include_router(emergency_router)
-
-# --- GEMINI VOICE AGENT TOOLS & CONFIG ---
 
 def find_nearest_shelter(lat: float, lng: float) -> str:
     """Use this tool whenever the user asks for a shelter, safe zone, relief camp, or where to evacuate."""
-    # Replace with your actual PostGIS query; returning mock data for testing
     return "Govt Higher Secondary School, Aluva West, Ernakulam. Landmark: Near Aluva Metro Station."
 
 def query_safety_manuals(question: str) -> str:
@@ -815,7 +800,6 @@ async def voice_agent_endpoint(
         return {"error": "SARVAM_API_KEY is not set in the .env file"}
 
     async with httpx.AsyncClient() as client:
-        # Send raw audio to Sarvam STT using the saaras:v3 model
         stt_resp = await client.post(
             "https://api.sarvam.ai/speech-to-text",
             headers={"api-subscription-key": SARVAM_API_KEY},
@@ -825,11 +809,7 @@ async def voice_agent_endpoint(
             },
             files={"file": (audio_file.filename, await audio_file.read(), audio_file.content_type)}
         )
-        
-        # Extract the transcript from the response
         transcript = stt_resp.json().get("transcript", "")
-        
-        # Log to your VS Code terminal for verification
         print(f"📍 Coordinates: {lat}, {lng}")
         print(f"🎙️ User Spoke: {transcript}")
         
@@ -841,8 +821,6 @@ async def voice_agent_endpoint(
         
         gemini_response = await chat.send_message_async(agent_input)
         agent_answer = gemini_response.text
-        
-       # 3. Convert the agent's text answer back to speech using Sarvam TTS
         tts_resp = await client.post(
             "https://api.sarvam.ai/text-to-speech",
             headers={
@@ -857,19 +835,48 @@ async def voice_agent_endpoint(
                 "pace": 1.1
             }
         )
-        
-        # 4. Decode the base64 audio and stream it directly back to the app
         audio_list = tts_resp.json().get("audios")
         
         if not audio_list:
             return {"error": "TTS synthesis failed", "details": tts_resp.text}
              
         audio_bytes = base64.b64decode(audio_list[0])
-        
-        
-    # Return a standard Response with a disposition header for clean downloading
         return Response(
             content=audio_bytes, 
             media_type="audio/wav",
             headers={"Content-Disposition": "attachment; filename=response.wav"}
         )
+
+
+        import xgboost as xgb
+import pickle
+import pandas as pd
+import os
+@app.post("/api/ml/predict-kerala")
+def predict_kerala_flood(data: dict):
+    try:
+        model_path = "ml_models/flood_xgb_model.json"
+        columns_path = "ml_models/model_columns.pkl"
+        model = xgb.Booster()
+        model.load_model(model_path)
+        
+        with open(columns_path, "rb") as f:
+            model_columns = pickle.load(f)
+        input_data = {col: [0.0] for col in model_columns}
+        for key, value in data.items():
+            if key in input_data:
+                input_data[key] = [value]
+                
+        df = pd.DataFrame(input_data)
+        dmatrix = xgb.DMatrix(df)
+        
+        prediction = model.predict(dmatrix)
+        score = float(prediction[0])
+        
+        return {
+            "status": "success",
+            "flood_risk_score": score,
+            "risk_level": "HIGH" if score > 0.5 else "SAFE"
+        }
+    except Exception as e:
+        return {"status": "error", "message": str(e)}

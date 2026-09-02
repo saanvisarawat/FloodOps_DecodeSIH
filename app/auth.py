@@ -7,8 +7,6 @@ from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from .database import get_db
 from . import models
-
-# Load secret from environment variables to prevent security flaws in production
 SECRET_KEY = os.getenv("JWT_SECRET_KEY", "floodops_super_secret_hackathon_key_2026")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 1440  # Tokens last 24 hours

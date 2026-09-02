@@ -14,30 +14,21 @@ def run_floodops_agents(db: Session, district: str, incident_data: str):
     execution_chain = []
     
     try:
-        # 1. Risk Analyst
         prompt_1 = f"Analyze flood data for {district}: {incident_data}. Output a strict threat level assessment in 2 sentences."
         response_1 = llm.generate_content(prompt_1).text
         execution_chain.append({"agent": "Risk Analyst", "output": response_1})
-
-        # 2. Resource Allocator
         prompt_2 = f"Based on this analyst report: {response_1}, allocate specific rescue units, boats, and shelters for {district}."
         response_2 = llm.generate_content(prompt_2).text
         execution_chain.append({"agent": "Resource Allocator", "output": response_2})
-
-        # 3. Communications Specialist (Now wired to our DB infrastructure)
         prompt_3 = (
             f"Turn this allocation plan into a rapid public SMS alert: {response_2}. "
             "Respond ONLY with a valid JSON object containing exactly these keys: "
             "'alert_level' (CRITICAL, HIGH, or MODERATE), 'message' (the 1-sentence SMS), and 'helpline' (a generic 4-digit number like 1070)."
         )
         response_3 = llm.generate_content(prompt_3).text
-        
-        # Clean the JSON response just in case Gemini wraps it in markdown blocks
         clean_json_str = response_3.replace("```json", "").replace("```", "").strip()
         comms_data = json.loads(clean_json_str)
         execution_chain.append({"agent": "Communications", "output": comms_data})
-
-        # actively trigger our existing alert system!
         new_alert = AlertRecord(
             district=district,
             alert_level=comms_data.get("alert_level", "HIGH"),
@@ -45,13 +36,9 @@ def run_floodops_agents(db: Session, district: str, incident_data: str):
             helpline=comms_data.get("helpline", "1070")
         )
         db.add(new_alert)
-
-        # 4. Chief Coordinator
         prompt_4 = f"Summarize the operation for {district} into a 3-bullet executive summary based on the allocations."
         final_summary = llm.generate_content(prompt_4).text
         execution_chain.append({"agent": "Coordinator", "output": final_summary})
-
-        # Save the master log
         new_log = AgentRunLog(
             run_id=run_id,
             district=district,

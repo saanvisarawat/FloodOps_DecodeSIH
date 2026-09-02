@@ -2,10 +2,6 @@ from pydantic import BaseModel, ConfigDict
 from typing import Optional, List, Dict, Any
 from datetime import datetime
 
-# ==========================================
-# EXISTING CORE SCHEMAS
-# ==========================================
-
 class ReportCreate(BaseModel):
     description: str
     latitude: float
@@ -55,11 +51,6 @@ class VolunteerLocationUpdate(BaseModel):
     longitude: float
     status: str = "available"  # available / busy / offline
     skills: Optional[str] = None  # e.g., "boat,medical,swimming"
-
-
-# ==========================================
-# NEW MULTI-AGENT & PREDICTION SCHEMAS
-# ==========================================
 
 class PredictionResponse(BaseModel):
     id: int
