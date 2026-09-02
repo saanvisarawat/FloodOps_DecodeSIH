@@ -3,6 +3,12 @@ import os
 from contextlib import asynccontextmanager
 from typing import List
 
+import base64
+import io
+from fastapi.responses import StreamingResponse
+
+import httpx
+
 import asyncio
 from .data_ingestion import (
     kerala_live_cache,
@@ -11,7 +17,7 @@ from .data_ingestion import (
 )
 
 from dotenv import load_dotenv
-from fastapi import Depends, FastAPI, HTTPException, Query, WebSocket, WebSocketDisconnect, Form, Response
+from fastapi import Depends, APIRouter, FastAPI, HTTPException, Query, WebSocket, WebSocketDisconnect, Form, Response, UploadFile, File
 from fastapi.security import OAuth2PasswordRequestForm
 import joblib
 import numpy as np
@@ -28,6 +34,8 @@ import google.generativeai as genai
 import chromadb
 from . import auth, models, schemas
 from .database import engine, get_db
+
+SARVAM_API_KEY = os.getenv("SARVAM_API_KEY")
 
 scheduler = AsyncIOScheduler()
 
@@ -79,8 +87,7 @@ async def run_kerala_flood_pipeline():
     live_weather = await fetch_open_meteo_data()
     live_dams = await scrape_kseb_dam_levels()
 
-    # Static district features (Elevation, slope, river proximity per teammate brief)
- # Static district features for all 14 Kerala districts
+    # Static district features for all 14 Kerala districts
     static_features = {
         "Thiruvananthapuram": {"mean_elevation_m": 45.0, "mean_slope_deg": 3.2, "dist_nearest_river_km": 1.2, "impervious_surface_pct": 35.0, "historical_flood_count": 5, "rain_3d_sum": 20.0, "rain_7d_sum": 65.0, "rain_15d_sum": 140.0, "days_since_last_flood": 200.0, "state_norm": "KERALA"},
         "Kollam": {"mean_elevation_m": 25.0, "mean_slope_deg": 2.5, "dist_nearest_river_km": 0.9, "impervious_surface_pct": 28.0, "historical_flood_count": 6, "rain_3d_sum": 25.0, "rain_7d_sum": 70.0, "rain_15d_sum": 150.0, "days_since_last_flood": 180.0, "state_norm": "KERALA"},
@@ -760,3 +767,109 @@ async def trigger_masked_call(payload: MaskedCallAlertRequest):
 
 # Register all extra routers to the main app instance
 app.include_router(emergency_router)
+
+# --- GEMINI VOICE AGENT TOOLS & CONFIG ---
+
+def find_nearest_shelter(lat: float, lng: float) -> str:
+    """Use this tool whenever the user asks for a shelter, safe zone, relief camp, or where to evacuate."""
+    # Replace with your actual PostGIS query; returning mock data for testing
+    return "Govt Higher Secondary School, Aluva West, Ernakulam. Landmark: Near Aluva Metro Station."
+
+def query_safety_manuals(question: str) -> str:
+    """Use this tool to retrieve official flood survival protocols, what to pack, hazard handling, or wet electronics guidance."""
+    global collection
+    if not collection:
+        return "Always disconnect electrical mains immediately. Never power on wet electronics, laptops, or appliances until completely dry and inspected. Pack essential medicines, dry food, drinking water, and identity documents in waterproof bags."
+    
+    results = collection.query(query_texts=[question], n_results=2)
+    documents = results.get("documents", [[]])[0]
+    return " ".join(documents) if documents else "Move to higher ground and stay away from electrical installations."
+
+system_instruction = """
+You are FloodOps, an emergency response voice agent assisting citizens during severe flood crises. You speak directly to panicked users via audio, so your tone must be calm, direct, and concise (under 3 to 4 sentences).
+
+CAPABILITIES & RULES:
+1. SHELTERS & EVACUATION: If the user asks where to go, for a shelter, or safe camp, call `find_nearest_shelter`. State the shelter name and specific area. You MUST explicitly end your sentence with: "An offline routing map to this shelter has been provided on your app screen to guide you safely."
+2. SAFETY PROTOCOLS & HAZARDS: Use `query_safety_manuals` or your knowledge base to answer safety questions:
+   - Wet Electronics & Laptops: Instruct them never to turn on wet devices, disconnect battery/power immediately if safe, and let them dry completely in a dry area.
+   - What to Carry: Advise them to pack essential medicines, non-perishable food, water bottles, and emergency documents sealed in plastic covers.
+   - Rising Water / Trapped: Advise them to switch off main breakers, move to higher ground or the highest level, and avoid enclosed attics unless there is roof access.
+3. VOICE-FIRST FORMATTING: Never use asterisks, bullet points, Markdown headings, URLs, or emojis. Every output must be plain, readable prose intended to be converted directly to speech audio.
+"""
+
+voice_agent = None
+if google_api_key and not google_api_key.startswith("your"):
+    voice_agent = genai.GenerativeModel(
+        model_name="gemini-flash-latest",
+        tools=[find_nearest_shelter, query_safety_manuals],
+        system_instruction=system_instruction
+    )
+
+@app.post("/api/voice/agent")
+async def voice_agent_endpoint(
+    lat: float = Form(...), 
+    lng: float = Form(...), 
+    audio_file: UploadFile = File(...)
+):
+    if not SARVAM_API_KEY:
+        return {"error": "SARVAM_API_KEY is not set in the .env file"}
+
+    async with httpx.AsyncClient() as client:
+        # Send raw audio to Sarvam STT using the saaras:v3 model
+        stt_resp = await client.post(
+            "https://api.sarvam.ai/speech-to-text",
+            headers={"api-subscription-key": SARVAM_API_KEY},
+            data={
+                "model": "saaras:v3", 
+                "mode": "translate"
+            },
+            files={"file": (audio_file.filename, await audio_file.read(), audio_file.content_type)}
+        )
+        
+        # Extract the transcript from the response
+        transcript = stt_resp.json().get("transcript", "")
+        
+        # Log to your VS Code terminal for verification
+        print(f"📍 Coordinates: {lat}, {lng}")
+        print(f"🎙️ User Spoke: {transcript}")
+        
+        if not voice_agent:
+            return {"status": "Agent_Failed", "error": "Gemini API key not configured."}
+            
+        chat = voice_agent.start_chat(enable_automatic_function_calling=True)
+        agent_input = f"User GPS: ({lat}, {lng}). Spoken message: '{transcript}'"
+        
+        gemini_response = await chat.send_message_async(agent_input)
+        agent_answer = gemini_response.text
+        
+       # 3. Convert the agent's text answer back to speech using Sarvam TTS
+        tts_resp = await client.post(
+            "https://api.sarvam.ai/text-to-speech",
+            headers={
+                "api-subscription-key": SARVAM_API_KEY, 
+                "Content-Type": "application/json"
+            },
+            json={
+                "inputs": [agent_answer],
+                "target_language_code": "en-IN", 
+                "speaker": "shubh",
+                "model": "bulbul:v3",
+                "pace": 1.1
+            }
+        )
+        
+        # 4. Decode the base64 audio and stream it directly back to the app
+        audio_list = tts_resp.json().get("audios")
+        
+        if not audio_list:
+            return {"error": "TTS synthesis failed", "details": tts_resp.text}
+             
+        audio_bytes = base64.b64decode(audio_list[0])
+        
+        
+    # Return a standard Response with a disposition header for clean downloading
+        return Response(
+            content=audio_bytes, 
+            media_type="audio/wav",
+            headers={"Content-Disposition": "attachment; filename=response.wav"}
+        )
