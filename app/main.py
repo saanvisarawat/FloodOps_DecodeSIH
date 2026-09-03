@@ -159,6 +159,22 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+from fastapi.middleware.cors import CORSMiddleware
+
+# No CORS config previously existed, so any browser-based client (Flutter
+# web, a local admin dashboard, etc.) had every POST/PUT silently blocked —
+# the browser's OPTIONS preflight got a bare 405 with no
+# Access-Control-Allow-Origin header, so the real request never went out.
+# Wide open for local development; scope `allow_origins` down before
+# deploying this publicly.
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 class ConnectionManager:
     def __init__(self):
@@ -430,12 +446,16 @@ def get_shelters_geojson(db: Session = Depends(get_db)):
 
 @app.post("/api/dev/seed-shelters", tags=["Development"])
 def seed_dummy_shelters(db: Session = Depends(get_db)):
+    # Kerala flood-relief shelters — Aluva, Chengannur, Pandalam, Chalakudy
+    # and Ranni were among the hardest-hit towns in the 2018 Kerala floods,
+    # so these mirror real relief-camp locations for the demo rather than
+    # the placeholder Delhi landmarks this used to seed.
     dummy_data = [
-        {"name": "Connaught Place Safe Zone", "lat": 28.6304, "lng": 77.2177, "cap": 500},
-        {"name": "India Gate Relief Camp", "lat": 28.6129, "lng": 77.2295, "cap": 1200},
-        {"name": "Yamuna Sports Complex Shelter", "lat": 28.6550, "lng": 77.3072, "cap": 2500},
-        {"name": "Saket Community Hall", "lat": 28.5245, "lng": 77.2066, "cap": 300},
-        {"name": "Dwarka Sector 10 School", "lat": 28.5815, "lng": 77.0628, "cap": 850}
+        {"name": "Govt Higher Secondary School, Aluva West", "lat": 10.1075, "lng": 76.3516, "cap": 500},
+        {"name": "Chengannur Relief Camp", "lat": 9.3182, "lng": 76.6141, "cap": 800},
+        {"name": "Pandalam Community Hall", "lat": 9.2263, "lng": 76.6721, "cap": 350},
+        {"name": "Chalakudy Govt LP School Shelter", "lat": 10.3073, "lng": 76.3356, "cap": 600},
+        {"name": "Ranni Taluk Relief Camp", "lat": 9.3833, "lng": 76.7833, "cap": 450},
     ]
     
     added = 0
@@ -458,6 +478,10 @@ def seed_dummy_shelters(db: Session = Depends(get_db)):
 
 @app.post("/api/auth/register")
 def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    existing = db.query(models.User).filter(models.User.email == user.email).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="An account with this email already exists.")
+
     hashed_pw = auth.hash_password(user.password)
     new_user = models.User(
         full_name=user.full_name,
