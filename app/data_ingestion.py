@@ -1,10 +1,12 @@
 import httpx
 from bs4 import BeautifulSoup
+
 kerala_live_cache = {
     "last_updated": None,
     "districts": {},
     "reservoirs": []
 }
+
 KERALA_DISTRICTS = {
     "Thiruvananthapuram": {"lat": 8.52, "lon": 76.93},
     "Kollam": {"lat": 8.89, "lon": 76.61},
@@ -31,24 +33,56 @@ async def fetch_open_meteo_data():
     async with httpx.AsyncClient() as client:
         for district, coords in KERALA_DISTRICTS.items():
             try:
+                # Add past_days=15 to calculate the historical rolling sums
                 weather_res = await client.get(
                     weather_url,
-                    params={"latitude": coords["lat"], "longitude": coords["lon"], "daily": "precipitation_sum", "timezone": "auto"}
+                    params={
+                        "latitude": coords["lat"], 
+                        "longitude": coords["lon"], 
+                        "daily": "precipitation_sum", 
+                        "past_days": 15,
+                        "forecast_days": 1,
+                        "timezone": "auto"
+                    }
                 )
                 flood_res = await client.get(
                     flood_url,
-                    params={"latitude": coords["lat"], "longitude": coords["lon"], "daily": "river_discharge"}
+                    params={
+                        "latitude": coords["lat"], 
+                        "longitude": coords["lon"], 
+                        "daily": "river_discharge",
+                        "past_days": 15,
+                        "forecast_days": 1
+                    }
                 )
                 
-                rain = weather_res.json().get("daily", {}).get("precipitation_sum", [0])[0]
-                discharge = flood_res.json().get("daily", {}).get("river_discharge", [0])[0]
+                precip_history = weather_res.json().get("daily", {}).get("precipitation_sum", [0.0] * 16)
+                discharge_history = flood_res.json().get("daily", {}).get("river_discharge", [0.0] * 16)
                 
-                results[district] = {"rainfall_mm": rain, "river_discharge_m3s": discharge}
+                # Replace None with 0.0 in case the API drops a missing data point
+                precip_history = [float(x) if x is not None else 0.0 for x in precip_history]
+                discharge_history = [float(x) if x is not None else 0.0 for x in discharge_history]
+                
+                # Output exactly the 8 dynamic keys your model_columns.pkl expects
+                results[district] = {
+                    "rainfall_mm": precip_history[-1],
+                    "rainfall_mm_3d_sum": sum(precip_history[-3:]),
+                    "rainfall_mm_7d_sum": sum(precip_history[-7:]),
+                    "rainfall_mm_15d_sum": sum(precip_history[-15:]),
+                    "river_discharge": discharge_history[-1],
+                    "river_discharge_3d_sum": sum(discharge_history[-3:]),
+                    "river_discharge_7d_sum": sum(discharge_history[-7:]),
+                    "river_discharge_15d_sum": sum(discharge_history[-15:])
+                }
             except Exception as e:
                 print(f"Failed to fetch Meteo data for {district}: {e}")
-                results[district] = {"rainfall_mm": 0, "river_discharge_m3s": 0}
+                results[district] = {
+                    "rainfall_mm": 0.0, "rainfall_mm_3d_sum": 0.0, "rainfall_mm_7d_sum": 0.0, "rainfall_mm_15d_sum": 0.0,
+                    "river_discharge": 0.0, "river_discharge_3d_sum": 0.0, "river_discharge_7d_sum": 0.0, "river_discharge_15d_sum": 0.0
+                }
                 
     return results
+
 async def scrape_kseb_dam_levels():
     scraped_dams = [
         {"dam_name": "Idukki", "current_level_m": 239.5, "capacity_pct": 78.2, "status": "NORMAL", "outflow_m3s": 0},

@@ -483,47 +483,47 @@ def login_user(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = D
 @app.post("/api/predict/risk")
 async def predict_flood_risk(
     payload: schemas.RiskPredictionRequest,
-    current_user: models.User = Depends(auth.get_current_user)
+    current_user: models.User = Depends(auth.get_current_user),
 ):
     if not xgb_model or not model_columns:
-        raise HTTPException(status_code=503, detail="ML models are not loaded on the server.")
+        raise HTTPException(status_code=503, detail="ML models are not loaded.")
 
     input_data = pd.DataFrame([payload.model_dump()])
-    input_encoded = pd.get_dummies(input_data, columns=['state_norm'])
+    input_final = input_data[model_columns].astype(float)
+
+    # 1. Extract Index 0: Probability of FLOOD
+    probability = float(xgb_model.predict_proba(input_final)[0][0])
     
-    for col in model_columns:
-        if col not in input_encoded.columns:
-            input_encoded[col] = 0
-            
-    input_final = input_encoded[model_columns].astype(float)
-    
-    probability = xgb_model.predict_proba(input_final)[0][1]
     best_threshold = 0.8925
     is_high_risk = bool(probability >= best_threshold)
-    
+
     top_factors = []
     if shap_explainer:
         try:
             shap_values = shap_explainer(input_final)
-            vals = shap_values.values[0] if len(shap_values.values.shape) == 2 else shap_values.values[0, :, 1]
+            vals = (
+                shap_values.values[0]
+                if len(shap_values.values.shape) == 2
+                else shap_values.values[0, :, 1]
+            )
+            
+            # 2. Invert SHAP values so they explain the flood, not the safety
+            vals = -vals
             
             feature_contributions = sorted(
-                zip(model_columns, vals),
-                key=lambda x: x[1],
-                reverse=True
+                zip(model_columns, vals), key=lambda x: x[1], reverse=True
             )
             top_factors = [feat for feat, val in feature_contributions if val > 0][:2]
         except Exception as shap_err:
-            print(f"Warning: SHAP explanation calculation failed: {shap_err}")
+            print(f"Warning: SHAP calculation failed: {shap_err}")
 
     return {
-        "risk_score": round(float(probability) * 100),
-        "risk_probability": round(float(probability), 4),
+        "risk_score": round(probability * 100),
+        "risk_probability": round(probability, 4),
         "is_high_risk": is_high_risk,
         "threshold_used": best_threshold,
-        "top_factors": top_factors
+        "top_factors": top_factors,
     }
-
 @app.post("/api/chat")
 async def chat_with_ragbot(
     req: schemas.ChatRequest,

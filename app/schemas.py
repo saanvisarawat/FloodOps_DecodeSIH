@@ -29,18 +29,21 @@ class BulkReportItem(BaseModel):
 class BulkReportUpload(BaseModel):
     reports: List[BulkReportItem]
 
+# --- UPDATED XGBOOST SCHEMA ---
 class RiskPredictionRequest(BaseModel):
     rainfall_mm: float
-    rain_3d_sum: float
-    rain_7d_sum: float
-    rain_15d_sum: float
-    mean_elevation_m: float
-    mean_slope_deg: float
+    river_discharge: float
+    elevation_m: float
+    slope_deg: float
     dist_nearest_river_km: float
-    impervious_surface_pct: float
+    rainfall_mm_3d_sum: float
+    rainfall_mm_7d_sum: float
+    rainfall_mm_15d_sum: float
+    river_discharge_3d_sum: float
+    river_discharge_7d_sum: float
+    river_discharge_15d_sum: float
     historical_flood_count: float
-    days_since_last_flood: float
-    state_norm: str
+# ------------------------------
 
 class ChatRequest(BaseModel):
     message: str
