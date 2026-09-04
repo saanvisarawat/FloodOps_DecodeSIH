@@ -1,5 +1,6 @@
 import os
 from datetime import datetime, timedelta
+from typing import Optional
 from jose import JWTError, jwt
 import bcrypt
 from fastapi import Depends, HTTPException, status
@@ -12,6 +13,13 @@ ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 1440  # Tokens last 24 hours
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/auth/login")
+# auto_error=False so an anonymous request reaches the endpoint (token is
+# just None) instead of FastAPI itself raising 401 before we get a say —
+# used by citizen-facing routes (chat, risk prediction, SOS
+# create/verify/bulk) per this app's own design: citizens never need an
+# account, but a logged-in user should still be recognized/attributed
+# when a token IS present.
+oauth2_scheme_optional = OAuth2PasswordBearer(tokenUrl="api/auth/login", auto_error=False)
 
 def hash_password(password: str):
     pwd_bytes = password.encode('utf-8')[:72]
@@ -47,6 +55,26 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     if user is None:
         raise credentials_exception
     return user
+
+def get_current_user_optional(
+    token: Optional[str] = Depends(oauth2_scheme_optional),
+    db: Session = Depends(get_db),
+) -> Optional[models.User]:
+    """Same JWT validation as get_current_user, but returns None instead
+    of raising 401 when there's no token or it's invalid — for
+    citizen-facing routes that must work for a guest but still attribute
+    the request to a real account when one is logged in."""
+    if token is None:
+        return None
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        email: str = payload.get("sub")
+        if email is None:
+            return None
+    except JWTError:
+        return None
+    return db.query(models.User).filter(models.User.email == email).first()
+
 
 def require_official(current_user: models.User = Depends(get_current_user)):
     if current_user.role != models.UserRole.official:

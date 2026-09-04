@@ -6,8 +6,8 @@ import google.generativeai as genai
 from sqlalchemy.orm import Session
 from .models import AgentRunLog, AlertRecord
 
-genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
-llm = genai.GenerativeModel('gemini-1.5-flash')
+genai.configure(api_key=os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY"))
+llm = genai.GenerativeModel('gemini-3.5-flash')
 
 def run_floodops_agents(db: Session, district: str, incident_data: str):
     run_id = str(uuid.uuid4())

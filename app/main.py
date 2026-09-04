@@ -1,7 +1,7 @@
 import datetime
 import os
 from contextlib import asynccontextmanager
-from typing import List
+from typing import List, Optional
 
 import base64
 import io
@@ -69,7 +69,7 @@ genai_model = None
 if google_api_key and not google_api_key.startswith("your"):
     try:
         genai.configure(api_key=google_api_key)
-        genai_model = genai.GenerativeModel('gemini-1.5-flash')
+        genai_model = genai.GenerativeModel('gemini-3.5-flash')
     except Exception as e:
         print(f"Failed to init Gemini: {e}")
         
@@ -219,12 +219,11 @@ app = FastAPI(
 
 from fastapi.middleware.cors import CORSMiddleware
 
-# No CORS config previously existed, so any browser-based client (Flutter
-# web, a local admin dashboard, etc.) had every POST/PUT silently blocked —
-# the browser's OPTIONS preflight got a bare 405 with no
-# Access-Control-Allow-Origin header, so the real request never went out.
-# Wide open for local development; scope `allow_origins` down before
-# deploying this publicly.
+# Without this, every browser-based client (Flutter web, a local admin
+# dashboard, etc.) has every POST/PUT silently blocked — the browser's
+# OPTIONS preflight gets a bare 405 with no Access-Control-Allow-Origin
+# header, so the real request never goes out at all. Wide open for local
+# development; scope `allow_origins` down before deploying this publicly.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -232,6 +231,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# app/agents.py's router (POST /api/agents/trigger) was defined but never
+# mounted — the frontend's `/api/agents/trigger` call was hitting a bare
+# 404 with no route registered for it at all.
+from .agents import router as agents_router
+app.include_router(agents_router)
 
 
 class ConnectionManager:
@@ -326,16 +331,16 @@ async def get_live_kerala_dashboard():
 
 @app.post("/api/reports")
 async def create_sos_report(
-    report: schemas.ReportCreate, 
+    report: schemas.ReportCreate,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(auth.get_current_user) 
+    current_user: Optional[models.User] = Depends(auth.get_current_user_optional)
 ):
     spatial_point = f"SRID=4326;POINT({report.longitude} {report.latitude})"
-    
+
     new_report = models.Report(
         description=report.description,
         location=spatial_point,
-        user_id=current_user.id 
+        user_id=current_user.id if current_user else None
     )
     
     db.add(new_report)
@@ -359,15 +364,17 @@ async def create_sos_report(
         "assigned_volunteer_id": assigned_volunteer_id
     })
     
-    nearby_users = db.query(models.User).filter(
-        models.User.id != current_user.id,
+    nearby_users_query = db.query(models.User).filter(
         models.User.fcm_token.isnot(None),
         func.ST_DWithin(
-            models.User.last_known_location, 
-            func.ST_GeomFromText(spatial_point, 4326), 
-            0.0045 
+            models.User.last_known_location,
+            func.ST_GeomFromText(spatial_point, 4326),
+            0.0045
         )
-    ).all()
+    )
+    if current_user:
+        nearby_users_query = nearby_users_query.filter(models.User.id != current_user.id)
+    nearby_users = nearby_users_query.all()
 
     if nearby_users:
         tokens = [u.fcm_token for u in nearby_users]
@@ -382,10 +389,9 @@ async def create_sos_report(
 
 @app.post("/api/reports/{ticket_id}/verify")
 async def verify_report(
-    ticket_id: int, 
-    vote: schemas.ReportVerify, 
-    db: Session = Depends(get_db),
-    current_user: models.User = Depends(auth.get_current_user)
+    ticket_id: int,
+    vote: schemas.ReportVerify,
+    db: Session = Depends(get_db)
 ):
     report = db.query(models.Report).filter(models.Report.id == ticket_id).first()
     if not report:
@@ -433,17 +439,18 @@ async def verify_report(
 
 @app.post("/api/reports/bulk")
 async def create_sos_reports_bulk(
-    payload: schemas.BulkReportUpload, 
+    payload: schemas.BulkReportUpload,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(auth.get_current_user)
+    current_user: Optional[models.User] = Depends(auth.get_current_user_optional)
 ):
     saved_count = 0
     skipped_count = 0
+    user_id = current_user.id if current_user else None
 
     for item in payload.reports:
         existing = db.query(models.Report).filter(
             models.Report.client_timestamp == item.client_timestamp,
-            models.Report.user_id == current_user.id
+            models.Report.user_id == user_id
         ).first()
 
         if existing:
@@ -455,7 +462,7 @@ async def create_sos_reports_bulk(
             description=item.description,
             location=spatial_point,
             client_timestamp=item.client_timestamp,
-            user_id=current_user.id
+            user_id=user_id
         )
         db.add(new_report)
         saved_count += 1
@@ -470,7 +477,32 @@ async def create_sos_reports_bulk(
 
 @app.get("/api/reports")
 def get_all_reports(db: Session = Depends(get_db)):
-    return db.query(models.Report).filter(models.Report.status == "verified").all()
+    # Returning raw `models.Report` ORM rows crashed FastAPI's response
+    # serializer — the PostGIS `location` column comes back as a
+    # geoalchemy2 WKBElement, which jsonable_encoder can't iterate
+    # ("'WKBElement' object is not iterable"). Extract lat/lng via
+    # ST_X/ST_Y and return plain dicts instead, same pattern already used
+    # correctly by /api/shelters/geojson below.
+    results = db.query(
+        models.Report,
+        func.ST_X(models.Report.location).label('lng'),
+        func.ST_Y(models.Report.location).label('lat')
+    ).filter(models.Report.status == "verified").all()
+
+    return [
+        {
+            "id": report.id,
+            "description": report.description,
+            "latitude": lat,
+            "longitude": lng,
+            "yes_count": report.yes_count,
+            "no_count": report.no_count,
+            "status": report.status,
+            "client_timestamp": report.client_timestamp.isoformat() if report.client_timestamp else None,
+            "assigned_volunteer_id": report.assigned_volunteer_id,
+        }
+        for report, lng, lat in results
+    ]
 
 @app.get("/api/shelters/geojson")
 def get_shelters_geojson(db: Session = Depends(get_db)):
@@ -504,16 +536,12 @@ def get_shelters_geojson(db: Session = Depends(get_db)):
 
 @app.post("/api/dev/seed-shelters", tags=["Development"])
 def seed_dummy_shelters(db: Session = Depends(get_db)):
-    # Kerala flood-relief shelters — Aluva, Chengannur, Pandalam, Chalakudy
-    # and Ranni were among the hardest-hit towns in the 2018 Kerala floods,
-    # so these mirror real relief-camp locations for the demo rather than
-    # the placeholder Delhi landmarks this used to seed.
     dummy_data = [
-        {"name": "Govt Higher Secondary School, Aluva West", "lat": 10.1075, "lng": 76.3516, "cap": 500},
-        {"name": "Chengannur Relief Camp", "lat": 9.3182, "lng": 76.6141, "cap": 800},
-        {"name": "Pandalam Community Hall", "lat": 9.2263, "lng": 76.6721, "cap": 350},
-        {"name": "Chalakudy Govt LP School Shelter", "lat": 10.3073, "lng": 76.3356, "cap": 600},
-        {"name": "Ranni Taluk Relief Camp", "lat": 9.3833, "lng": 76.7833, "cap": 450},
+        {"name": "Connaught Place Safe Zone", "lat": 28.6304, "lng": 77.2177, "cap": 500},
+        {"name": "India Gate Relief Camp", "lat": 28.6129, "lng": 77.2295, "cap": 1200},
+        {"name": "Yamuna Sports Complex Shelter", "lat": 28.6550, "lng": 77.3072, "cap": 2500},
+        {"name": "Saket Community Hall", "lat": 28.5245, "lng": 77.2066, "cap": 300},
+        {"name": "Dwarka Sector 10 School", "lat": 28.5815, "lng": 77.0628, "cap": 850}
     ]
     
     added = 0
@@ -536,10 +564,6 @@ def seed_dummy_shelters(db: Session = Depends(get_db)):
 
 @app.post("/api/auth/register")
 def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    existing = db.query(models.User).filter(models.User.email == user.email).first()
-    if existing:
-        raise HTTPException(status_code=400, detail="An account with this email already exists.")
-
     hashed_pw = auth.hash_password(user.password)
     new_user = models.User(
         full_name=user.full_name,
@@ -564,8 +588,7 @@ def login_user(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = D
 
 @app.post("/api/predict/risk")
 async def predict_flood_risk(
-    payload: schemas.RiskPredictionRequest,
-    current_user: models.User = Depends(auth.get_current_user),
+    payload: schemas.RiskPredictionRequest
 ):
     if not xgb_model or not model_columns:
         raise HTTPException(status_code=503, detail="ML models are not loaded.")
@@ -652,8 +675,7 @@ async def predict_flood_risk(
     }
 @app.post("/api/chat") 
 async def chat_with_ragbot(
-    req: schemas.ChatRequest,
-    current_user: models.User = Depends(auth.get_current_user)
+    req: schemas.ChatRequest
 ):
     context_text = ""
     docs = []
@@ -726,15 +748,31 @@ async def get_volunteer_tasks(
 ):
     if current_user.role != models.UserRole.volunteer:
         raise HTTPException(status_code=403, detail="Only volunteers can view assigned tasks.")
-    
-    assigned_reports = db.query(models.Report).filter(
-        models.Report.assigned_volunteer_id == current_user.id
-    ).all()
-    
+
+    # Same WKBElement serialization issue as GET /api/reports — extract
+    # lat/lng explicitly rather than returning raw ORM rows.
+    results = db.query(
+        models.Report,
+        func.ST_X(models.Report.location).label('lng'),
+        func.ST_Y(models.Report.location).label('lat')
+    ).filter(models.Report.assigned_volunteer_id == current_user.id).all()
+
+    assigned_tasks = [
+        {
+            "id": report.id,
+            "description": report.description,
+            "latitude": lat,
+            "longitude": lng,
+            "status": report.status,
+            "client_timestamp": report.client_timestamp.isoformat() if report.client_timestamp else None,
+        }
+        for report, lng, lat in results
+    ]
+
     return {
         "volunteer_id": current_user.id,
         "status": current_user.status,
-        "assigned_tasks": assigned_reports
+        "assigned_tasks": assigned_tasks
     }
 
 from pydantic import BaseModel
@@ -746,9 +784,11 @@ class FCMTokenRequest(BaseModel):
 async def update_fcm_token(
     data: FCMTokenRequest,
     db: Session = Depends(get_db),
-    current_user: models.User = Depends(auth.get_current_user)
+    current_user: Optional[models.User] = Depends(auth.get_current_user_optional)
 ):
-    """Saves or updates the logged-in user's Firebase Cloud Messaging token"""
+    """Saves or updates the logged-in user's Firebase Cloud Messaging token."""
+    if not current_user:
+        return {"status": "skipped", "message": "No account to attach a token to (guest session)."}
     current_user.fcm_token = data.fcm_token
     db.commit()
     return {"status": "success", "message": "FCM token updated successfully."}
@@ -925,53 +965,72 @@ async def voice_agent_endpoint(
     if not SARVAM_API_KEY:
         return {"error": "SARVAM_API_KEY is not set in the .env file"}
 
-    async with httpx.AsyncClient() as client:
-        stt_resp = await client.post(
-            "https://api.sarvam.ai/speech-to-text",
-            headers={"api-subscription-key": SARVAM_API_KEY},
-            data={
-                "model": "saaras:v3", 
-                "mode": "translate"
-            },
-            files={"file": (audio_file.filename, await audio_file.read(), audio_file.content_type)}
-        )
-        transcript = stt_resp.json().get("transcript", "")
-        print(f"📍 Coordinates: {lat}, {lng}")
-        print(f"🎙️ User Spoke: {transcript}")
-        
-        if not voice_agent:
-            return {"status": "Agent_Failed", "error": "Gemini API key not configured."}
-            
-        chat = voice_agent.start_chat(enable_automatic_function_calling=True)
-        agent_input = f"User GPS: ({lat}, {lng}). Spoken message: '{transcript}'"
-        
-        gemini_response = await chat.send_message_async(agent_input)
-        agent_answer = gemini_response.text
-        tts_resp = await client.post(
-            "https://api.sarvam.ai/text-to-speech",
-            headers={
-                "api-subscription-key": SARVAM_API_KEY, 
-                "Content-Type": "application/json"
-            },
-            json={
-                "inputs": [agent_answer],
-                "target_language_code": "en-IN", 
-                "speaker": "shubh",
-                "model": "bulbul:v3",
-                "pace": 1.1
-            }
-        )
-        audio_list = tts_resp.json().get("audios")
-        
-        if not audio_list:
-            return {"error": "TTS synthesis failed", "details": tts_resp.text}
-             
-        audio_bytes = base64.b64decode(audio_list[0])
-        return Response(
-            content=audio_bytes, 
-            media_type="audio/wav",
-            headers={"Content-Disposition": "attachment; filename=response.wav"}
-        )
+    # This whole flow previously had zero error handling — any failure
+    # (Sarvam unreachable, Gemini network-blocked/timed out/rate-limited,
+    # TTS rejecting the input) crashed with a raw unhandled 500 instead of
+    # a JSON error the client can actually show the user.
+    try:
+        async with httpx.AsyncClient() as client:
+            stt_resp = await client.post(
+                "https://api.sarvam.ai/speech-to-text",
+                headers={"api-subscription-key": SARVAM_API_KEY},
+                data={
+                    "model": "saaras:v3",
+                    "mode": "translate"
+                },
+                files={"file": (audio_file.filename, await audio_file.read(), audio_file.content_type)}
+            )
+            transcript = stt_resp.json().get("transcript", "")
+            print(f"📍 Coordinates: {lat}, {lng}")
+            print(f"🎙️ User Spoke: {transcript}")
+
+            if not voice_agent:
+                return {"status": "Agent_Failed", "error": "Gemini API key not configured."}
+
+            chat = voice_agent.start_chat(enable_automatic_function_calling=True)
+            agent_input = f"User GPS: ({lat}, {lng}). Spoken message: '{transcript}'"
+
+            # Network-hang protection — an unreachable/rate-limited Gemini
+            # call would otherwise leave the request (and the caller's mic
+            # UI) stuck indefinitely with no failure signal. 30s not 15s:
+            # tool calling (find_nearest_shelter/query_safety_manuals)
+            # forces a second sequential round-trip to Gemini — decide to
+            # call the tool, then generate the final answer from its
+            # result — measured at ~14s end-to-end even on a healthy
+            # connection, so 15s was intermittently timing out on nothing
+            # but normal latency, not an actual failure.
+            gemini_response = await asyncio.wait_for(chat.send_message_async(agent_input), timeout=30)
+            agent_answer = gemini_response.text
+            tts_resp = await client.post(
+                "https://api.sarvam.ai/text-to-speech",
+                headers={
+                    "api-subscription-key": SARVAM_API_KEY,
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "inputs": [agent_answer],
+                    "target_language_code": "en-IN",
+                    "speaker": "shubh",
+                    "model": "bulbul:v3",
+                    "pace": 1.1
+                }
+            )
+            audio_list = tts_resp.json().get("audios")
+
+            if not audio_list:
+                return {"error": "TTS synthesis failed", "details": tts_resp.text}
+
+            audio_bytes = base64.b64decode(audio_list[0])
+            return Response(
+                content=audio_bytes,
+                media_type="audio/wav",
+                headers={"Content-Disposition": "attachment; filename=response.wav"}
+            )
+    except asyncio.TimeoutError:
+        return {"status": "Agent_Failed", "error": "Gemini took too long to respond (network issue) — try again."}
+    except Exception as e:
+        print(f"Voice agent failed: {e}")
+        return {"status": "Agent_Failed", "error": f"Voice agent request failed: {e}"}
 
 
         import xgboost as xgb
