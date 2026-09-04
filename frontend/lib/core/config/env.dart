@@ -25,11 +25,11 @@ class Env {
   /// that case.
   static const String apiBaseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://192.168.1.3:8000',
+    defaultValue: 'https://floodops-decodedish-3mrj.onrender.com',
   );
 
   static const String wsBaseUrl = String.fromEnvironment(
     'WS_BASE_URL',
-    defaultValue: 'ws://192.168.1.3:8000',
+    defaultValue: 'wss://floodops-decodedish-3mrj.onrender.com',
   );
 }
