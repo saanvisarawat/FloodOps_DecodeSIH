@@ -28,6 +28,9 @@ from sqlalchemy import func
 from sqlalchemy.orm import Session
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
 load_dotenv()
 N8N_WEBHOOK_URL = os.getenv("N8N_WEBHOOK_URL")
 
@@ -215,6 +218,14 @@ app = FastAPI(
     description="Core backend for the FloodOps disaster response platform",
     version="1.0.0",
     lifespan=lifespan
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows requests from your Vercel frontend
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
