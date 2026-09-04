@@ -222,8 +222,10 @@ from fastapi.middleware.cors import CORSMiddleware
 # Without this, every browser-based client (Flutter web, a local admin
 # dashboard, etc.) has every POST/PUT silently blocked — the browser's
 # OPTIONS preflight gets a bare 405 with no Access-Control-Allow-Origin
-# header, so the real request never goes out at all. Wide open for local
-# development; scope `allow_origins` down before deploying this publicly.
+# header, so the real request never goes out at all. allow_credentials
+# must stay False here: browsers reject a wildcard allow_origins paired
+# with allow_credentials=True outright, which silently breaks every
+# request again in a way that's much harder to spot than a 405.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -237,7 +239,6 @@ app.add_middleware(
 # 404 with no route registered for it at all.
 from .agents import router as agents_router
 app.include_router(agents_router)
-
 
 class ConnectionManager:
     def __init__(self):
