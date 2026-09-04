@@ -79,7 +79,6 @@ try:
 except Exception as e:
     print(f"Chroma DB not found or empty: {e}")
     collection = None
-
 async def run_kerala_flood_pipeline():
     """Background Job: Pulls live weather & dams, executes ML model, updates cache."""
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -113,8 +112,6 @@ async def run_kerala_flood_pipeline():
 
     for district, weather_data in live_weather.items():
         base = static_features.get(district, {}).copy()
-        
-        # Ingest live dynamic features from Open-Meteo
         rain_today = float(weather_data.get("rainfall_mm", 0.0))
         discharge = float(weather_data.get("river_discharge_m3s", weather_data.get("river_discharge", 0.0)))
         cumulative_15d = float(weather_data.get("rainfall_mm_15d_sum", base.get("rain_15d_sum", 0.0)))
@@ -125,7 +122,7 @@ async def run_kerala_flood_pipeline():
 
         vuln_factor = district_vulnerability.get(district, 1.0)
         prob = 0.0
-
+        
         # 1. Primary Path: Attempt ML Model Inference
         if xgb_model and model_columns:
             try:
@@ -145,38 +142,62 @@ async def run_kerala_flood_pipeline():
                 print(f"ML Pipeline execution skipped for {district}: {ml_err}")
                 prob = 0.0
 
-        # 2. Two-Way Heuristic Circuit Breaker
-        # PROTECTION A: Dry Weather Veto (Enforces SAFE when sunny/dry)
-        if rain_today < 10.0 and cumulative_15d < 60.0:
-            # Physically impossible to flood; crush false positive bias
-            risk_score = int(max(2, min(round((rain_today * 0.5 + cumulative_15d * 0.1) * vuln_factor), 15)))
-            prob = round(risk_score / 100.0, 4)
+        # 2. Continuous Monotonic Calibration Layer
+        effective_rain = rain_today + (cumulative_15d * 0.15)
+        elevation = base.get("mean_elevation_m", 50.0)
+        history = base.get("historical_flood_count", 5)
+        
+        elevation_damping = max(0.7, min(1.3, 1.0 + (50.0 - elevation) / 300.0))
+        history_boost = min(history * 0.5, 6.0)
 
-        # PROTECTION B: Heavy Rain Override (Enforces CRITICAL on severe precipitation)
-        elif prob < 0.8925 and (rain_today >= 50.0 or cumulative_15d >= 180.0):
-            normalized_rain = (rain_today * 0.4) + (cumulative_15d * 0.25)
-            calculated_score = normalized_rain * vuln_factor
-            risk_score = int(min(max(calculated_score, 10), 98))
-            prob = round(risk_score / 100.0, 4)
+        # BAND 1: Base / Safe Zone (0 - 15mm)
+        if effective_rain < 15.0:
+            score = 2.0 + (effective_rain * 0.8) * vuln_factor
+            risk_score = int(max(2, min(score, 14)))
+            top_factors = ["elevation_m", "river_discharge"]
 
-        # Normal operation
+        # BAND 2: Advisory Zone (15 - 50mm)
+        elif effective_rain < 50.0:
+            t = (effective_rain - 15.0) / 35.0  # Normalize 0.0 -> 1.0
+            score = 15.0 + (t * 23.0) + history_boost
+            risk_score = int(min(max(score * elevation_damping, 15), 38))
+            top_factors = ["elevation_m", "rainfall_mm_15d_sum"]
+
+        # BAND 3: Warning Zone (50 - 120mm) - Bridges the 39% to 74% gap
+        elif effective_rain < 120.0:
+            t = (effective_rain - 50.0) / 70.0
+            score = 39.0 + (t * 35.0) + history_boost
+            risk_score = int(min(max(score * elevation_damping, 39), 74))
+            top_factors = ["rainfall_mm", "rainfall_mm_15d_sum"]
+
+        # BAND 4: Critical Zone (120mm+)
         else:
-            risk_score = round(prob * 100)
+            t = min((effective_rain - 120.0) / 130.0, 1.0)
+            score = 75.0 + (t * 23.0)
+            risk_score = int(min(max(score * vuln_factor, 75), 98))
+            top_factors = ["rainfall_mm_15d_sum", "rainfall_mm"]
 
-        is_high_risk = prob >= 0.8925
+        # Extreme override safeguards (Retaining previous critical catches)
+        if prob >= 0.8925 or (discharge >= 500.0 and elevation <= 30.0):
+            risk_score = int(max(risk_score, 85))
+            top_factors = ["river_discharge", "rainfall_mm"]
+
+        prob = round(risk_score / 100.0, 4)
+        is_high_risk = prob >= 0.75
 
         kerala_live_cache["districts"][district] = {
             "rainfall_mm": rain_today,
             "river_discharge_m3s": discharge,
             "risk_score": risk_score,
+            "risk_probability": prob,
             "is_high_risk": is_high_risk,
-            "alert_level": "CRITICAL" if risk_score > 80 else "WARNING" if risk_score > 50 else "NORMAL"
+            "alert_level": "CRITICAL" if risk_score >= 75 else "WARNING" if risk_score >= 39 else "NORMAL",
+            "top_factors": top_factors
         }
 
     kerala_live_cache["reservoirs"] = live_dams
     kerala_live_cache["last_updated"] = timestamp
     print("✅ Kerala Live Cache successfully populated.")
-   
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     load_ml_assets()
@@ -527,47 +548,71 @@ async def predict_flood_risk(
 
     input_data = pd.DataFrame([payload.model_dump()])
     input_final = input_data[model_columns].astype(float)
-
-    # 1. Primary Model Inference
+    
     if hasattr(xgb_model, "classes_") and 1 in xgb_model.classes_:
         flood_idx = list(xgb_model.classes_).index(1)
-        probability = float(xgb_model.predict_proba(input_final)[0][flood_idx])
+        prob = float(xgb_model.predict_proba(input_final)[0][flood_idx])
     else:
-        probability = float(xgb_model.predict_proba(input_final)[0][1])
+        prob = float(xgb_model.predict_proba(input_final)[0][1])
 
-    best_threshold = 0.8925
-
-    # 2. Two-Way Heuristic Circuit Breaker Check
+    best_threshold = 0.75 # Lowered slightly to match the new continuous Warning/Critical boundary
     rain_today = payload.rainfall_mm
     cumulative_15d = payload.rainfall_mm_15d_sum
     
-    # Estimate terrain vulnerability for custom Swagger inputs
-    vuln_factor = 1.4 if payload.elevation_m < 15.0 else (0.8 if payload.elevation_m > 500.0 else 1.0)
+    # Continuous Monotonic Calibration Layer
+    effective_rain = rain_today + (cumulative_15d * 0.15)
+    
+    # Vulnerability & terrain factors
+    vuln_factor = 1.25 if payload.elevation_m < 15.0 else (0.85 if payload.elevation_m > 500.0 else 1.0)
+    elevation_damping = max(0.7, min(1.3, 1.0 + (50.0 - payload.elevation_m) / 300.0))
+    history_boost = min(payload.historical_flood_count * 0.5, 6.0)
 
-    # PROTECTION A: The Dry Weather Veto
-    if rain_today < 10.0 and cumulative_15d < 60.0:
-        risk_score = int(max(2, min(round((rain_today * 0.5 + cumulative_15d * 0.1) * vuln_factor), 15)))
-        probability = round(risk_score / 100.0, 4)
+    top_factors = []
 
-    # PROTECTION B: The Heavy Rain Override
-    elif probability < best_threshold and (rain_today >= 50.0 or cumulative_15d >= 180.0 or (payload.river_discharge >= 500.0 and payload.elevation_m <= 30.0)):
-        normalized_rain = (rain_today * 0.4) + (cumulative_15d * 0.25)
-        calculated_score = normalized_rain * vuln_factor
-        risk_score = int(min(max(calculated_score, 85), 98))
-        probability = round(risk_score / 100.0, 4)
+    # BAND 1: Base / Safe Zone (0 - 15mm)
+    if effective_rain < 15.0:
+        score = 2.0 + (effective_rain * 0.8) * vuln_factor
+        risk_score = int(max(2, min(score, 14)))
+        top_factors = ["elevation_m", "river_discharge"]
 
+    # BAND 2: Advisory Zone (15 - 50mm)
+    elif effective_rain < 50.0:
+        t = (effective_rain - 15.0) / 35.0
+        score = 15.0 + (t * 23.0) + history_boost
+        risk_score = int(min(max(score * elevation_damping, 15), 38))
+        top_factors = ["elevation_m", "rainfall_mm_15d_sum"]
+
+    # BAND 3: Warning Zone (50 - 120mm) - Eliminates the jump!
+    elif effective_rain < 120.0:
+        t = (effective_rain - 50.0) / 70.0
+        score = 39.0 + (t * 35.0) + history_boost
+        risk_score = int(min(max(score * elevation_damping, 39), 74))
+        top_factors = ["rainfall_mm", "rainfall_mm_15d_sum"]
+
+    # BAND 4: Critical Zone (120mm+)
+    else:
+        t = min((effective_rain - 120.0) / 130.0, 1.0)
+        score = 75.0 + (t * 23.0)
+        risk_score = int(min(max(score * vuln_factor, 75), 98))
+        top_factors = ["rainfall_mm_15d_sum", "rainfall_mm"]
+
+    # Extreme override safeguards (Catches high discharge or raw ML certainty)
+    if prob >= 0.8925 or (payload.river_discharge >= 500.0 and payload.elevation_m <= 30.0):
+        risk_score = int(max(risk_score, 85))
+        top_factors = ["river_discharge", "rainfall_mm"]
+
+    probability = round(risk_score / 100.0, 4)
     is_high_risk = bool(probability >= best_threshold)
     
-    # 3. SHAP Explainability or Heuristic Fallback
-    top_factors = []
-    
-    # Only run SHAP if the veto didn't crush the score
+    # SHAP Explainability fallback
     if shap_explainer and probability > 0.15: 
         try:
             shap_values = shap_explainer(input_final)
             vals = -shap_values.values[0] if len(shap_values.values.shape) == 2 else -shap_values.values[0, :, 1]
             feature_contributions = sorted(zip(model_columns, vals), key=lambda x: x[1], reverse=True)
-            top_factors = [feat for feat, val in feature_contributions if val > 0][:2]
+            shap_top = [feat for feat, val in feature_contributions if val > 0][:2]
+            if shap_top:
+                top_factors = shap_top
         except Exception:
             pass
             
@@ -575,13 +620,13 @@ async def predict_flood_risk(
         top_factors = ["rainfall_mm_15d_sum", "river_discharge"] if payload.river_discharge > 300 else ["rainfall_mm", "elevation_m"]
 
     return {
-        "risk_score": round(probability * 100),
-        "risk_probability": round(probability, 4),
+        "risk_score": risk_score,
+        "risk_probability": probability,
         "is_high_risk": is_high_risk,
         "threshold_used": best_threshold,
         "top_factors": top_factors,
     }
-@app.post("/api/chat")
+@app.post("/api/chat") 
 async def chat_with_ragbot(
     req: schemas.ChatRequest,
     current_user: models.User = Depends(auth.get_current_user)
