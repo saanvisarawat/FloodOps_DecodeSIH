@@ -1,3 +1,4 @@
+import asyncio
 import httpx
 from bs4 import BeautifulSoup
 
@@ -95,15 +96,15 @@ async def fetch_open_meteo_data():
     flood_url = "https://flood-api.open-meteo.com/v1/flood"
     results = {}
     
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(timeout=15.0) as client:
         for district, coords in KERALA_DISTRICTS.items():
             try:
                 weather_res = await client.get(
                     weather_url,
                     params={
-                        "latitude": coords["lat"], 
-                        "longitude": coords["lon"], 
-                        "daily": "precipitation_sum", 
+                        "latitude": coords["lat"],
+                        "longitude": coords["lon"],
+                        "daily": "precipitation_sum",
                         "past_days": 15,
                         "forecast_days": 1,
                         "timezone": "auto"
@@ -112,20 +113,32 @@ async def fetch_open_meteo_data():
                 flood_res = await client.get(
                     flood_url,
                     params={
-                        "latitude": coords["lat"], 
-                        "longitude": coords["lon"], 
+                        "latitude": coords["lat"],
+                        "longitude": coords["lon"],
                         "daily": "river_discharge",
                         "past_days": 15,
                         "forecast_days": 1
                     }
                 )
-                
-                precip_history = weather_res.json().get("daily", {}).get("precipitation_sum", [0.0] * 16)
-                discharge_history = flood_res.json().get("daily", {}).get("river_discharge", [0.0] * 16)
-                
+                weather_res.raise_for_status()
+                flood_res.raise_for_status()
+
+                daily_weather = weather_res.json().get("daily") or {}
+                daily_flood = flood_res.json().get("daily") or {}
+                precip_history = daily_weather.get("precipitation_sum") or [0.0] * 16
+                discharge_history = daily_flood.get("river_discharge") or [0.0] * 16
+
                 precip_history = [float(x) if x is not None else 0.0 for x in precip_history]
                 discharge_history = [float(x) if x is not None else 0.0 for x in discharge_history]
-                
+
+                if not any(precip_history):
+                    # A 200 with an empty/all-null precipitation series — seen when a
+                    # 14-district back-to-back burst gets silently rate-limited by
+                    # Open-Meteo without a non-2xx status. Treat it as a failure so it
+                    # falls through to the static per-district baseline below instead
+                    # of reporting zero rain (and therefore floor-band risk) everywhere.
+                    raise ValueError(f"empty precipitation series for {district}")
+
                 results[district] = {
                     "rainfall_mm": precip_history[-1],
                     "rainfall_mm_3d_sum": sum(precip_history[-3:]),
@@ -140,10 +153,16 @@ async def fetch_open_meteo_data():
             except Exception as e:
                 print(f"Failed to fetch Meteo data for {district}: {e}")
                 results[district] = {
-                    "rainfall_mm": 0.0, "rainfall_mm_3d_sum": 0.0, "rainfall_mm_7d_sum": 0.0, "rainfall_mm_15d_sum": 0.0,
+                    "rainfall_mm": 0.0, "rainfall_mm_3d_sum": 0.0, "rainfall_mm_7d_sum": 0.0,
+                    # rainfall_mm_15d_sum intentionally omitted: main.py falls back to
+                    # this district's static baseline (base["rain_15d_sum"]) only when
+                    # the key is absent — forcing it to 0.0 here defeated that fallback
+                    # and was why every district floored to the same risk score during
+                    # a live-data outage.
                     "river_discharge": 0.0, "river_discharge_m3s": 0.0, "river_discharge_3d_sum": 0.0, "river_discharge_7d_sum": 0.0, "river_discharge_15d_sum": 0.0
                 }
-                
+            await asyncio.sleep(0.15)  # stagger requests to avoid bursting Open-Meteo
+
     return results
 
 async def scrape_kseb_dam_levels():

@@ -2,6 +2,8 @@ from pydantic import BaseModel, ConfigDict
 from typing import Optional, List, Dict, Any
 from datetime import datetime
 
+from .models import UserRole
+
 class ReportCreate(BaseModel):
     description: str
     latitude: float
@@ -15,6 +17,7 @@ class UserCreate(BaseModel):
     full_name: str
     email: str
     password: str
+    role: UserRole = UserRole.citizen
 
 class UserLogin(BaseModel):
     email: str

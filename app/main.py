@@ -569,7 +569,8 @@ def register_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     new_user = models.User(
         full_name=user.full_name,
         email=user.email,
-        hashed_password=hashed_pw
+        hashed_password=hashed_pw,
+        role=user.role
     )
     db.add(new_user)
     db.commit()
