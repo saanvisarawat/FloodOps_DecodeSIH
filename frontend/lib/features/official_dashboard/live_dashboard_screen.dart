@@ -111,15 +111,31 @@ class _LiveDashboardScreenState extends ConsumerState<LiveDashboardScreen> {
                     dot: true,
                   ),
                   const Spacer(),
-                  TextButton.icon(
-                    onPressed: () => context.push('/pending-alerts'),
-                    icon: const Icon(Icons.campaign_outlined, size: 18, color: AppColors.dangerStrong),
-                    label: Text('Pending Alerts', style: AppTypography.label(color: AppColors.dangerStrong)),
-                  ),
-                  TextButton.icon(
-                    onPressed: () => context.push('/manual-risk-predictor'),
-                    icon: const Icon(Icons.analytics_outlined, size: 18, color: AppColors.accent),
-                    label: Text('Scenario Predictor', style: AppTypography.label(color: AppColors.accent)),
+                  Expanded(
+                    flex: 3,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      reverse: true,
+                      child: Row(
+                        children: [
+                          TextButton.icon(
+                            onPressed: () => context.push('/sos-dashboard'),
+                            icon: const Icon(Icons.emergency_outlined, size: 18, color: AppColors.info),
+                            label: Text('SOS Dashboard', style: AppTypography.label(color: AppColors.info)),
+                          ),
+                          TextButton.icon(
+                            onPressed: () => context.push('/pending-alerts'),
+                            icon: const Icon(Icons.campaign_outlined, size: 18, color: AppColors.dangerStrong),
+                            label: Text('Pending Alerts', style: AppTypography.label(color: AppColors.dangerStrong)),
+                          ),
+                          TextButton.icon(
+                            onPressed: () => context.push('/manual-risk-predictor'),
+                            icon: const Icon(Icons.analytics_outlined, size: 18, color: AppColors.accent),
+                            label: Text('Scenario Predictor', style: AppTypography.label(color: AppColors.accent)),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),

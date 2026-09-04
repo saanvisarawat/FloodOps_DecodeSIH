@@ -685,6 +685,24 @@ class DioFloodOpsApi implements FloodOpsApi {
   }
 
   @override
+  Future<List<AdminReport>> getAllReportsAdmin() async {
+    final res = await _dio.get('/api/officials/reports');
+    return (res.data as List).map((e) => AdminReport.fromJson(e as Map<String, dynamic>)).toList();
+  }
+
+  @override
+  Future<List<AdminVolunteer>> getAllVolunteersAdmin() async {
+    final res = await _dio.get('/api/officials/volunteers');
+    return (res.data as List).map((e) => AdminVolunteer.fromJson(e as Map<String, dynamic>)).toList();
+  }
+
+  @override
+  Future<AdminReport> assignReportToVolunteer(int reportId, int volunteerId) async {
+    final res = await _dio.post('/api/officials/reports/$reportId/assign', data: {'volunteer_id': volunteerId});
+    return AdminReport.fromJson(res.data as Map<String, dynamic>);
+  }
+
+  @override
   void dispose() {
     _dashboardChannel?.sink.close();
     _dashboardController?.close();

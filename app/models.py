@@ -75,9 +75,14 @@ class AlertRecord(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     district: Mapped[str] = mapped_column(index=True)
-    alert_level: Mapped[str] 
+    alert_level: Mapped[str]
     message: Mapped[str]
     helpline: Mapped[Optional[str]] = mapped_column(nullable=True)
+    status: Mapped[str] = mapped_column(default="pending")
+    risk_score: Mapped[Optional[int]] = mapped_column(nullable=True)
+    created_at: Mapped[datetime.datetime] = mapped_column(DateTime, default=datetime.datetime.utcnow)
+    resolved_by: Mapped[Optional[int]] = mapped_column(ForeignKey("users.id"), nullable=True)
+    resolved_at: Mapped[Optional[datetime.datetime]] = mapped_column(DateTime, nullable=True)
 
 
 class AgentRunLog(Base):

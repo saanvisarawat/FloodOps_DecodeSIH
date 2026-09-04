@@ -67,8 +67,36 @@ class AlertResponse(BaseModel):
     district: str
     alert_level: str
     message: str
-    
+    status: str = "pending"
+    risk_score: Optional[int] = None
+    created_at: datetime
+    resolved_by: Optional[int] = None
+    resolved_at: Optional[datetime] = None
+
     model_config = ConfigDict(from_attributes=True)
+
+class ReportAdminResponse(BaseModel):
+    id: int
+    description: str
+    latitude: float
+    longitude: float
+    status: str
+    yes_count: int
+    no_count: int
+    client_timestamp: Optional[datetime] = None
+    assigned_volunteer_id: Optional[int] = None
+    assigned_volunteer_name: Optional[str] = None
+
+class VolunteerAdminResponse(BaseModel):
+    id: int
+    full_name: str
+    status: str
+    skills: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
+
+class AssignReportRequest(BaseModel):
+    volunteer_id: int
 
 class AgentRunLogResponse(BaseModel):
     id: int

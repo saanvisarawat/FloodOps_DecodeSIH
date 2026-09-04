@@ -11,6 +11,7 @@ import 'models/dashboard_event_models.dart';
 import 'models/kerala_live_models.dart';
 import 'models/voice_models.dart';
 import 'models/alert_models.dart';
+import 'models/admin_report_models.dart';
 
 export 'models/auth_models.dart';
 export 'models/report_models.dart';
@@ -23,6 +24,7 @@ export 'models/dashboard_event_models.dart';
 export 'models/kerala_live_models.dart';
 export 'models/voice_models.dart';
 export 'models/alert_models.dart';
+export 'models/admin_report_models.dart';
 
 /// The single contract every screen in this app talks to. Every mocked
 /// endpoint here mirrors a real FastAPI route documented in
@@ -96,6 +98,14 @@ abstract class FloodOpsApi {
   Future<List<PendingAlert>> getPendingAlerts();
   Future<PendingAlert> approveAlert(int alertId);
   Future<PendingAlert> rejectAlert(int alertId);
+
+  // 13. Official SOS dashboard — every citizen report regardless of status,
+  // plus manual dispatch to a specific volunteer (fallback for when
+  // allocate_resources_for_sos found nobody available within 5km at
+  // creation time). Official-only.
+  Future<List<AdminReport>> getAllReportsAdmin();
+  Future<List<AdminVolunteer>> getAllVolunteersAdmin();
+  Future<AdminReport> assignReportToVolunteer(int reportId, int volunteerId);
 
   void dispose();
 }

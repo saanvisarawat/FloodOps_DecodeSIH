@@ -36,6 +36,47 @@ class MockFloodOpsApi implements FloodOpsApi {
     ),
   ];
 
+  final List<AdminVolunteer> _adminVolunteers = [
+    const AdminVolunteer(id: 101, fullName: 'Arjun Nair', status: 'available', skills: 'boat,medical', latitude: 9.9816, longitude: 76.2999),
+    const AdminVolunteer(id: 102, fullName: 'Divya Menon', status: 'busy', skills: 'swimming', latitude: 10.0159, longitude: 76.3419),
+    const AdminVolunteer(id: 103, fullName: 'Rahul Pillai', status: 'offline', skills: 'medical,boat', latitude: 9.4981, longitude: 76.3388),
+  ];
+
+  final List<AdminReport> _adminReports = [
+    AdminReport(
+      id: 501,
+      description: 'Family of 4 stranded on rooftop, water rising fast.',
+      latitude: 9.9312,
+      longitude: 76.2673,
+      status: 'pending',
+      yesCount: 6,
+      noCount: 0,
+      clientTimestamp: DateTime.now().subtract(const Duration(minutes: 8)),
+    ),
+    AdminReport(
+      id: 502,
+      description: 'Elderly couple needs evacuation, no boat access by road.',
+      latitude: 10.0159,
+      longitude: 76.3419,
+      status: 'dispatched',
+      yesCount: 4,
+      noCount: 1,
+      clientTimestamp: DateTime.now().subtract(const Duration(minutes: 25)),
+      assignedVolunteerId: 102,
+      assignedVolunteerName: 'Divya Menon',
+    ),
+    AdminReport(
+      id: 503,
+      description: 'Road washed out near bridge, requesting alternate route info.',
+      latitude: 9.4981,
+      longitude: 76.3388,
+      status: 'verified',
+      yesCount: 11,
+      noCount: 2,
+      clientTimestamp: DateTime.now().subtract(const Duration(hours: 2)),
+    ),
+  ];
+
   final StreamController<MaskedCallPayload> _incomingCallController =
       StreamController<MaskedCallPayload>.broadcast();
 
@@ -658,6 +699,33 @@ class MockFloodOpsApi implements FloodOpsApi {
 
   @override
   Future<PendingAlert> rejectAlert(int alertId) => _resolve(alertId, PendingAlertStatus.rejected);
+
+  @override
+  Future<List<AdminReport>> getAllReportsAdmin() async {
+    await _delay();
+    return List.unmodifiable(_adminReports);
+  }
+
+  @override
+  Future<List<AdminVolunteer>> getAllVolunteersAdmin() async {
+    await _delay();
+    return List.unmodifiable(_adminVolunteers);
+  }
+
+  @override
+  Future<AdminReport> assignReportToVolunteer(int reportId, int volunteerId) async {
+    await _delay();
+    final reportIndex = _adminReports.indexWhere((r) => r.id == reportId);
+    if (reportIndex == -1) throw Exception('Report not found');
+    final volunteer = _adminVolunteers.firstWhere((v) => v.id == volunteerId, orElse: () => throw Exception('Volunteer not found'));
+    final updated = _adminReports[reportIndex].copyWith(
+      status: 'dispatched',
+      assignedVolunteerId: volunteer.id,
+      assignedVolunteerName: volunteer.fullName,
+    );
+    _adminReports[reportIndex] = updated;
+    return updated;
+  }
 
   @override
   void dispose() {

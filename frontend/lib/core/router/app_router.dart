@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../features/agent_hub/agent_hub_screen.dart';
 import '../../features/alerts/alerts_screen.dart';
 import '../../features/alerts/pending_alerts_screen.dart';
+import '../../features/official/official_sos_dashboard_screen.dart';
 import '../../features/auth/login_screen.dart';
 import '../../features/auth/register_screen.dart';
 import '../../features/dashboard/shell_screen.dart';
@@ -47,6 +48,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(path: '/voice-agent', builder: (context, state) => const VoiceAgentScreen()),
     GoRoute(path: '/alerts', builder: (context, state) => const AlertsScreen()),
     GoRoute(path: '/pending-alerts', builder: (context, state) => const PendingAlertsScreen()),
+    GoRoute(path: '/sos-dashboard', builder: (context, state) => const OfficialSosDashboardScreen()),
     GoRoute(path: '/shelters-near-me', builder: (context, state) => const SheltersNearMeScreen()),
     GoRoute(
       path: '/masked-call',

@@ -34,7 +34,7 @@ N8N_WEBHOOK_URL = os.getenv("N8N_WEBHOOK_URL")
 import google.generativeai as genai
 import chromadb
 from . import auth, models, schemas
-from .database import engine, get_db
+from .database import engine, get_db, SessionLocal
 
 SARVAM_API_KEY = os.getenv("SARVAM_API_KEY")
 
@@ -79,6 +79,8 @@ try:
 except Exception as e:
     print(f"Chroma DB not found or empty: {e}")
     collection = None
+_previous_high_risk: dict[str, bool] = {}
+
 async def run_kerala_flood_pipeline():
     """Background Job: Pulls live weather & dams, executes ML model, updates cache."""
     timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -194,6 +196,21 @@ async def run_kerala_flood_pipeline():
             "alert_level": "CRITICAL" if risk_score >= 75 else "WARNING" if risk_score >= 39 else "NORMAL",
             "top_factors": top_factors
         }
+
+        if is_high_risk and not _previous_high_risk.get(district, False):
+            pending_db = SessionLocal()
+            try:
+                pending_db.add(models.AlertRecord(
+                    district=district,
+                    alert_level="CRITICAL" if risk_score >= 75 else "WARNING",
+                    message=f"Model-detected {'critical' if risk_score >= 75 else 'warning'} flood risk in {district} (score {risk_score}).",
+                    status="pending",
+                    risk_score=risk_score,
+                ))
+                pending_db.commit()
+            finally:
+                pending_db.close()
+        _previous_high_risk[district] = is_high_risk
 
     kerala_live_cache["reservoirs"] = live_dams
     kerala_live_cache["last_updated"] = timestamp
@@ -776,6 +793,140 @@ async def get_volunteer_tasks(
         "status": current_user.status,
         "assigned_tasks": assigned_tasks
     }
+
+def _require_responder(current_user: models.User):
+    if current_user.role not in (models.UserRole.volunteer, models.UserRole.official):
+        raise HTTPException(status_code=403, detail="Only volunteers or officials can review alerts.")
+
+def _require_official(current_user: models.User):
+    if current_user.role != models.UserRole.official:
+        raise HTTPException(status_code=403, detail="Only officials can access this.")
+
+@app.get("/api/alerts/pending", response_model=List[schemas.AlertResponse], tags=["Alerts"])
+async def get_pending_alerts(db: Session = Depends(get_db), current_user: models.User = Depends(auth.get_current_user)):
+    _require_responder(current_user)
+    return db.query(models.AlertRecord).filter(models.AlertRecord.status == "pending").order_by(models.AlertRecord.created_at.desc()).all()
+
+@app.post("/api/alerts/{alert_id}/approve", response_model=schemas.AlertResponse, tags=["Alerts"])
+async def approve_alert(alert_id: int, db: Session = Depends(get_db), current_user: models.User = Depends(auth.get_current_user)):
+    _require_responder(current_user)
+    alert = db.query(models.AlertRecord).filter(models.AlertRecord.id == alert_id).first()
+    if not alert:
+        raise HTTPException(status_code=404, detail="Alert not found")
+    if alert.status != "pending":
+        raise HTTPException(status_code=400, detail=f"Alert already {alert.status}")
+    alert.status = "approved"
+    alert.resolved_by = current_user.id
+    alert.resolved_at = datetime.datetime.utcnow()
+    db.commit()
+    db.refresh(alert)
+    await manager.broadcast({
+        "type": "high_risk_alert",
+        "district": alert.district,
+        "risk_score": alert.risk_score,
+        "alert_level": alert.alert_level,
+        "timestamp": alert.resolved_at.isoformat()
+    })
+    return alert
+
+@app.post("/api/alerts/{alert_id}/reject", response_model=schemas.AlertResponse, tags=["Alerts"])
+async def reject_alert(alert_id: int, db: Session = Depends(get_db), current_user: models.User = Depends(auth.get_current_user)):
+    _require_responder(current_user)
+    alert = db.query(models.AlertRecord).filter(models.AlertRecord.id == alert_id).first()
+    if not alert:
+        raise HTTPException(status_code=404, detail="Alert not found")
+    if alert.status != "pending":
+        raise HTTPException(status_code=400, detail=f"Alert already {alert.status}")
+    alert.status = "rejected"
+    alert.resolved_by = current_user.id
+    alert.resolved_at = datetime.datetime.utcnow()
+    db.commit()
+    db.refresh(alert)
+    return alert
+
+def _report_to_admin_response(report: models.Report, lat: float, lng: float, volunteer_name: Optional[str]) -> schemas.ReportAdminResponse:
+    return schemas.ReportAdminResponse(
+        id=report.id,
+        description=report.description,
+        latitude=lat,
+        longitude=lng,
+        status=report.status,
+        yes_count=report.yes_count,
+        no_count=report.no_count,
+        client_timestamp=report.client_timestamp,
+        assigned_volunteer_id=report.assigned_volunteer_id,
+        assigned_volunteer_name=volunteer_name,
+    )
+
+@app.get("/api/officials/reports", response_model=List[schemas.ReportAdminResponse], tags=["Officials"])
+async def get_all_reports_admin(db: Session = Depends(get_db), current_user: models.User = Depends(auth.get_current_user)):
+    # The citizen-facing GET /api/reports only ever returns status=="verified"
+    # rows — officials need full situational awareness (pending/dispatched/
+    # verified/rejected alike), not just the ones that already cleared
+    # community voting.
+    _require_official(current_user)
+    results = db.query(
+        models.Report,
+        func.ST_X(models.Report.location).label('lng'),
+        func.ST_Y(models.Report.location).label('lat')
+    ).order_by(models.Report.client_timestamp.desc()).all()
+
+    volunteer_ids = {report.assigned_volunteer_id for report, _, _ in results if report.assigned_volunteer_id}
+    volunteers_by_id = {}
+    if volunteer_ids:
+        for v in db.query(models.User).filter(models.User.id.in_(volunteer_ids)).all():
+            volunteers_by_id[v.id] = v.full_name
+
+    return [
+        _report_to_admin_response(report, lat, lng, volunteers_by_id.get(report.assigned_volunteer_id))
+        for report, lng, lat in results
+    ]
+
+@app.get("/api/officials/volunteers", response_model=List[schemas.VolunteerAdminResponse], tags=["Officials"])
+async def get_all_volunteers_admin(db: Session = Depends(get_db), current_user: models.User = Depends(auth.get_current_user)):
+    _require_official(current_user)
+    results = db.query(
+        models.User,
+        func.ST_X(models.User.last_known_location).label('lng'),
+        func.ST_Y(models.User.last_known_location).label('lat')
+    ).filter(models.User.role == models.UserRole.volunteer).all()
+    return [
+        schemas.VolunteerAdminResponse(id=u.id, full_name=u.full_name, status=u.status, skills=u.skills, latitude=lat, longitude=lng)
+        for u, lng, lat in results
+    ]
+
+@app.post("/api/officials/reports/{report_id}/assign", response_model=schemas.ReportAdminResponse, tags=["Officials"])
+async def assign_report_to_volunteer(
+    report_id: int,
+    payload: schemas.AssignReportRequest,
+    db: Session = Depends(get_db),
+    current_user: models.User = Depends(auth.get_current_user)
+):
+    # Manual dispatch fallback for when allocate_resources_for_sos found no
+    # available volunteer within 5km at creation time (or an official wants
+    # to override/reassign it themselves).
+    _require_official(current_user)
+    report = db.query(models.Report).filter(models.Report.id == report_id).first()
+    if not report:
+        raise HTTPException(status_code=404, detail="Report not found")
+    volunteer = db.query(models.User).filter(
+        models.User.id == payload.volunteer_id,
+        models.User.role == models.UserRole.volunteer
+    ).first()
+    if not volunteer:
+        raise HTTPException(status_code=404, detail="Volunteer not found")
+
+    report.assigned_volunteer_id = volunteer.id
+    report.status = "dispatched"
+    volunteer.status = "busy"
+    db.commit()
+    db.refresh(report)
+
+    loc = db.query(
+        func.ST_X(models.Report.location), func.ST_Y(models.Report.location)
+    ).filter(models.Report.id == report_id).first()
+    lng, lat = loc
+    return _report_to_admin_response(report, lat, lng, volunteer.full_name)
 
 from pydantic import BaseModel
 
