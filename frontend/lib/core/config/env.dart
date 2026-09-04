@@ -17,19 +17,18 @@ class Env {
     defaultValue: false,
   );
 
-  /// 192.168.1.3 is this dev machine's LAN IP — reachable from a physical
-  /// device on the same Wi-Fi, and from the host machine itself (Chrome/
-  /// Windows desktop builds). Targeting the Android emulator instead
-  /// needs 10.0.2.2 (it can't see the host's LAN IP or localhost) —
-  /// override with --dart-define=API_BASE_URL=http://10.0.2.2:8000 in
-  /// that case.
+  /// Defaults to the deployed Render backend, reachable from anywhere
+  /// (physical devices, emulators, web/desktop builds) with no LAN/IP
+  /// config needed. Override with --dart-define=API_BASE_URL=... to
+  /// point at a local dev server instead (e.g. http://10.0.2.2:8000 for
+  /// the Android emulator talking to a machine on the same network).
   static const String apiBaseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'https://floodops-decodedish-3mrj.onrender.com',
+    defaultValue: 'https://floodops-decodesih-3mrj.onrender.com',
   );
 
   static const String wsBaseUrl = String.fromEnvironment(
     'WS_BASE_URL',
-    defaultValue: 'wss://floodops-decodedish-3mrj.onrender.com',
+    defaultValue: 'wss://floodops-decodesih-3mrj.onrender.com',
   );
 }
