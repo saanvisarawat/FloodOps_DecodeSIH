@@ -18,7 +18,14 @@ class LocationService {
 
     var permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
+      // On web, an ignored/stuck browser permission prompt never resolves
+      // or rejects on its own — without this timeout every caller (the
+      // volunteer duty toggle included) would hang indefinitely waiting
+      // on it instead of falling back gracefully.
+      permission = await Geolocator.requestPermission().timeout(
+        const Duration(seconds: 15),
+        onTimeout: () => LocationPermission.denied,
+      );
     }
     if (permission == LocationPermission.denied ||
         permission == LocationPermission.deniedForever) {
@@ -27,7 +34,7 @@ class LocationService {
 
     return Geolocator.getCurrentPosition(
       locationSettings: const LocationSettings(accuracy: LocationAccuracy.high),
-    );
+    ).timeout(const Duration(seconds: 10));
   }
 
   /// Checks permission/service state without throwing, so a screen can
