@@ -994,14 +994,15 @@ async def voice_agent_endpoint(
 
             # Network-hang protection — an unreachable/rate-limited Gemini
             # call would otherwise leave the request (and the caller's mic
-            # UI) stuck indefinitely with no failure signal. 30s not 15s:
+            # UI) stuck indefinitely with no failure signal. 45s not 30s:
             # tool calling (find_nearest_shelter/query_safety_manuals)
-            # forces a second sequential round-trip to Gemini — decide to
-            # call the tool, then generate the final answer from its
-            # result — measured at ~14s end-to-end even on a healthy
-            # connection, so 15s was intermittently timing out on nothing
-            # but normal latency, not an actual failure.
-            gemini_response = await asyncio.wait_for(chat.send_message_async(agent_input), timeout=30)
+            # forces a second sequential round-trip to Gemini, measured
+            # directly at ~17.5s for that alone with no other overhead —
+            # add Render's own egress latency plus the sequential Sarvam
+            # STT/TTS calls elsewhere in this same request and 30s was
+            # intermittently timing out on normal end-to-end latency, not
+            # an actual failure.
+            gemini_response = await asyncio.wait_for(chat.send_message_async(agent_input), timeout=45)
             agent_answer = gemini_response.text
             tts_resp = await client.post(
                 "https://api.sarvam.ai/text-to-speech",
