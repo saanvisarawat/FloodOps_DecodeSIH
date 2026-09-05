@@ -168,6 +168,17 @@ class _AlertTile extends StatelessWidget {
           AppColors.warning,
           Icons.hourglass_bottom_rounded,
         ),
+      VolunteerAssignedEvent(:final ticketId, :final assignedVolunteerName) => (
+          Icons.groups_rounded,
+          AppColors.info,
+          'Volunteer Assigned',
+          assignedVolunteerName != null
+              ? '$assignedVolunteerName was dispatched to ticket $ticketId.'
+              : 'A volunteer was dispatched to ticket $ticketId.',
+          'Dispatched',
+          AppColors.info,
+          Icons.groups_rounded,
+        ),
     };
     return AppCard(
       child: Row(
