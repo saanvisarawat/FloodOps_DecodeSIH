@@ -177,7 +177,12 @@ class _SosDashboardBodyState extends ConsumerState<_SosDashboardBody> {
                                 style: AppTypography.caption(color: AppColors.textTertiary)),
                             if (report.clientTimestamp != null) ...[
                               const SizedBox(width: 10),
-                              Text(DateFormat.MMMd().add_Hm().format(report.clientTimestamp!),
+                              // client_timestamp arrives as a UTC-aware
+                              // ISO timestamp (Report.client_timestamp is a
+                              // `DateTime(timezone=True)` column) — without
+                              // .toLocal() this rendered the raw UTC clock
+                              // instead of the official's own local time.
+                              Text(DateFormat.MMMd().add_Hm().format(report.clientTimestamp!.toLocal()),
                                   style: AppTypography.caption(color: AppColors.textTertiary)),
                             ],
                           ],

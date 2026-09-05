@@ -922,6 +922,20 @@ async def assign_report_to_volunteer(
     db.commit()
     db.refresh(report)
 
+    # allocate_resources_for_sos's auto-assignment path already broadcasts
+    # this at creation time; a manual dispatch (the fallback for exactly
+    # the case where that auto-assignment found nobody) needs to broadcast
+    # it too, or the reporting citizen — who only ever learns about
+    # allocation from that first response/broadcast — never finds out a
+    # volunteer was later dispatched to them.
+    await manager.broadcast({
+        "type": "volunteer_assigned",
+        "ticket_id": report.id,
+        "assigned_volunteer_id": volunteer.id,
+        "assigned_volunteer_name": volunteer.full_name,
+        "status": report.status
+    })
+
     loc = db.query(
         func.ST_X(models.Report.location), func.ST_Y(models.Report.location)
     ).filter(models.Report.id == report_id).first()

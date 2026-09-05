@@ -12,7 +12,8 @@ class SosOutcome {
   final SosOutcomeKind kind;
   final String? ticketId;
   final String? message;
-  const SosOutcome(this.kind, {this.ticketId, this.message});
+  final String? assignedVolunteerId;
+  const SosOutcome(this.kind, {this.ticketId, this.message, this.assignedVolunteerId});
 }
 
 final offlineQueueCountProvider = FutureProvider<int>((ref) async {
@@ -45,7 +46,11 @@ class SosController extends Notifier<bool> {
         final api = ref.read(floodOpsApiProvider);
         final report = await api.createReport(request);
         state = false;
-        return SosOutcome(SosOutcomeKind.submitted, ticketId: report.ticketId);
+        return SosOutcome(
+          SosOutcomeKind.submitted,
+          ticketId: report.ticketId,
+          assignedVolunteerId: report.assignedVolunteerId,
+        );
       } else {
         final queue = ref.read(offlineQueueServiceProvider);
         await queue.enqueue(request);

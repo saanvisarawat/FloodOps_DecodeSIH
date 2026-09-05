@@ -72,6 +72,8 @@ class _LiveDashboardScreenState extends ConsumerState<LiveDashboardScreen> {
             pin.verified = e.confirmCount >= 3;
             pin.confirmCount = e.confirmCount;
           }
+        case VolunteerAssignedEvent _:
+          break;
         case HighRiskAlertEvent _:
           break;
       }
@@ -331,17 +333,25 @@ class _EventTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (icon, color, title, subtitle) = switch (event) {
-      NewSosPendingEvent(:final ticketId, :final description) => (
+      NewSosPendingEvent(:final ticketId, :final description, :final assignedVolunteerId) => (
           Icons.add_alert_outlined,
           AppColors.dangerStrong,
           'New SOS pending — $ticketId',
-          description,
+          assignedVolunteerId != null
+              ? '$description  ·  Volunteer #$assignedVolunteerId dispatched'
+              : description,
         ),
       SosVerifiedEvent(:final ticketId, :final confirmCount) => (
           Icons.verified_outlined,
           AppColors.accent,
           'Verified — $ticketId ($confirmCount/3)',
           null,
+        ),
+      VolunteerAssignedEvent(:final ticketId, :final assignedVolunteerName) => (
+          Icons.person_pin_circle_outlined,
+          AppColors.info,
+          'Volunteer dispatched — $ticketId',
+          assignedVolunteerName != null ? 'Assigned to $assignedVolunteerName' : null,
         ),
       HighRiskAlertEvent(:final district, :final riskScore, :final alertLevel) => (
           Icons.warning_amber_rounded,

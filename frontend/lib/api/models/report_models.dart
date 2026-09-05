@@ -59,6 +59,7 @@ class ReportSummary {
   final ReportStatus status;
   final DateTime reportedAt;
   final String? reporterAlias;
+  final String? assignedVolunteerId;
 
   const ReportSummary({
     required this.ticketId,
@@ -71,12 +72,14 @@ class ReportSummary {
     required this.status,
     required this.reportedAt,
     this.reporterAlias,
+    this.assignedVolunteerId,
   });
 
   ReportSummary copyWith({
     int? confirmCount,
     int? falseAlarmCount,
     ReportStatus? status,
+    String? assignedVolunteerId,
   }) =>
       ReportSummary(
         ticketId: ticketId,
@@ -89,6 +92,7 @@ class ReportSummary {
         status: status ?? this.status,
         reportedAt: reportedAt,
         reporterAlias: reporterAlias,
+        assignedVolunteerId: assignedVolunteerId ?? this.assignedVolunteerId,
       );
 
   factory ReportSummary.fromJson(Map<String, dynamic> json) => ReportSummary(
@@ -102,6 +106,7 @@ class ReportSummary {
         status: ReportStatusX.fromWire(json['status'] as String),
         reportedAt: DateTime.parse(json['reported_at'] as String),
         reporterAlias: json['reporter_alias'] as String?,
+        assignedVolunteerId: json['assigned_volunteer_id']?.toString(),
       );
 }
 

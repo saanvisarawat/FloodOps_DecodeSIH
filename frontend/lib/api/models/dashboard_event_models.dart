@@ -20,6 +20,18 @@ sealed class DashboardEvent {
           confirmCount: (json['confirm_count'] as num?)?.toInt() ?? 0,
           timestamp: ts,
         ),
+      // Fired by POST /api/officials/reports/{id}/assign — the manual
+      // dispatch fallback for when allocate_resources_for_sos found nobody
+      // available at creation time. That auto-assignment path doesn't need
+      // this event: it's already reflected in new_sos_pending's own
+      // assigned_volunteer_id, synchronously, in the same request that
+      // filed the report.
+      'volunteer_assigned' => VolunteerAssignedEvent(
+          ticketId: json['ticket_id'].toString(),
+          assignedVolunteerId: json['assigned_volunteer_id']?.toString(),
+          assignedVolunteerName: json['assigned_volunteer_name'] as String?,
+          timestamp: ts,
+        ),
       'high_risk_alert' => HighRiskAlertEvent(
           district: json['district'] as String? ?? '',
           riskScore: (json['risk_score'] as num?)?.toInt() ?? 0,
@@ -32,6 +44,7 @@ sealed class DashboardEvent {
           longitude: (json['longitude'] as num?)?.toDouble() ?? 0,
           description: json['description'] as String? ?? '',
           district: json['district'] as String? ?? '',
+          assignedVolunteerId: json['assigned_volunteer_id']?.toString(),
           timestamp: ts,
         ),
     };
@@ -44,6 +57,7 @@ class NewSosPendingEvent extends DashboardEvent {
   final double longitude;
   final String description;
   final String district;
+  final String? assignedVolunteerId;
 
   const NewSosPendingEvent({
     required this.ticketId,
@@ -51,6 +65,25 @@ class NewSosPendingEvent extends DashboardEvent {
     required this.longitude,
     required this.description,
     required this.district,
+    this.assignedVolunteerId,
+    required DateTime timestamp,
+  }) : super(timestamp);
+}
+
+/// A volunteer was manually dispatched to an already-filed report (the
+/// official SOS dashboard's "Dispatch a Volunteer" action) — lets the
+/// reporting citizen's own dashboard update the moment it happens, instead
+/// of only ever knowing the allocation outcome from the instant their SOS
+/// was first filed.
+class VolunteerAssignedEvent extends DashboardEvent {
+  final String ticketId;
+  final String? assignedVolunteerId;
+  final String? assignedVolunteerName;
+
+  const VolunteerAssignedEvent({
+    required this.ticketId,
+    this.assignedVolunteerId,
+    this.assignedVolunteerName,
     required DateTime timestamp,
   }) : super(timestamp);
 }

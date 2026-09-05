@@ -20,6 +20,7 @@ import '../../providers/kerala_live_provider.dart';
 import '../../providers/service_providers.dart';
 import '../../providers/shell_nav_provider.dart';
 import '../../providers/sos_provider.dart';
+import '../../providers/stream_providers.dart';
 import '../../widgets/app_bottom_sheet.dart';
 import '../../widgets/app_card.dart';
 import '../../widgets/app_button.dart';
@@ -72,7 +73,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   /// Polls the same GET /api/reports data the Verification feed already
   /// uses (no new backend call) to keep the post-submit status card's
   /// verification count live for a short window after sending an SOS.
-  void _startSosStatusTracking(String ticketId) {
+  void _startSosStatusTracking(String ticketId, {String? assignedVolunteerId}) {
     _sosPollTimer?.cancel();
     setState(() {
       _activeSos = ReportSummary(
@@ -85,6 +86,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
         falseAlarmCount: 0,
         status: ReportStatus.pending,
         reportedAt: DateTime.now(),
+        // Allocation runs synchronously as part of submitting the SOS, so
+        // the create-report response already says whether a volunteer was
+        // dispatched immediately — no need to wait for a poll to show it.
+        assignedVolunteerId: assignedVolunteerId,
       );
     });
     var attempts = 0;
@@ -112,6 +117,26 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   void _dismissSosStatus() {
     _sosPollTimer?.cancel();
     setState(() => _activeSos = null);
+  }
+
+  /// Manual dispatch (the official SOS dashboard's "Dispatch a Volunteer"
+  /// action, used when no volunteer was available at creation time) can
+  /// happen well after the 30s poll window above has already given up —
+  /// this catches that update live over the same /ws/dashboard socket the
+  /// Command Center uses, for as long as this citizen still has their SOS
+  /// status card open.
+  void _handleDashboardEvent(DashboardEvent event) {
+    if (event is! VolunteerAssignedEvent) return;
+    if (_activeSos == null || event.ticketId != _activeSos!.ticketId) return;
+    if (_activeSos!.assignedVolunteerId != null) return;
+    setState(() {
+      _activeSos = _activeSos!.copyWith(assignedVolunteerId: event.assignedVolunteerId);
+    });
+    _showSnack(
+      event.assignedVolunteerName != null
+          ? 'Volunteer ${event.assignedVolunteerName} has been assigned to your SOS.'
+          : 'A volunteer has been assigned to your SOS.',
+    );
   }
 
   Future<void> _loadLists() async {
@@ -175,7 +200,9 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       case SosOutcomeKind.submitted:
         _showSnack('SOS sent — ticket ${outcome.ticketId}. Help is on the way.');
         _loadLists();
-        if (outcome.ticketId != null) _startSosStatusTracking(outcome.ticketId!);
+        if (outcome.ticketId != null) {
+          _startSosStatusTracking(outcome.ticketId!, assignedVolunteerId: outcome.assignedVolunteerId);
+        }
         break;
       case SosOutcomeKind.queuedOffline:
         _showSnack(
@@ -268,6 +295,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
           _showSnack('Back online — synced $synced queued SOS report${synced == 1 ? '' : 's'}.');
         }
       }
+    });
+
+    ref.listen(dashboardEventStreamProvider, (previous, next) {
+      next.whenData(_handleDashboardEvent);
     });
 
     final queueCount = queueCountAsync.value ?? 0;
@@ -575,6 +606,7 @@ class _SosStatusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final verified = sos.status == ReportStatus.verified;
+    final volunteerAssigned = sos.assignedVolunteerId != null;
     return AppCard(
       color: AppColors.surfaceRaised,
       child: Column(
@@ -608,10 +640,10 @@ class _SosStatusCard extends StatelessWidget {
             label: verified ? 'Verified by ${sos.confirmCount} nearby users' : 'Verification ${sos.confirmCount}/3',
           ),
           const SizedBox(height: 6),
-          const _StatusLine(
-            icon: Icons.groups_rounded,
-            color: AppColors.info,
-            label: 'Nearby volunteers alerted',
+          _StatusLine(
+            icon: volunteerAssigned ? Icons.groups_rounded : Icons.hourglass_bottom_rounded,
+            color: volunteerAssigned ? AppColors.info : AppColors.warning,
+            label: volunteerAssigned ? 'Volunteer assigned and on the way' : 'Searching for a nearby volunteer…',
           ),
         ],
       ),

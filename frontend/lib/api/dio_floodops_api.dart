@@ -151,6 +151,10 @@ class DioFloodOpsApi implements FloodOpsApi {
     // Real response is `{message, ticket_id, assigned_volunteer_id,
     // nearby_users_alerted}` — it doesn't echo the report back, so the
     // rest of this summary is reconstructed from what we sent.
+    // Allocation runs synchronously server-side as part of handling this
+    // request, so assigned_volunteer_id here already reflects the real
+    // outcome — the citizen learns whether a volunteer was found in the
+    // very same response, no extra round trip needed.
     final summary = ReportSummary(
       ticketId: data['ticket_id'].toString(),
       description: request.description,
@@ -162,6 +166,7 @@ class DioFloodOpsApi implements FloodOpsApi {
       status: ReportStatus.pending,
       reportedAt: request.clientTimestamp,
       reporterAlias: 'You',
+      assignedVolunteerId: data['assigned_volunteer_id']?.toString(),
     );
     _reportsCache[summary.ticketId] = summary;
     return summary;
@@ -284,6 +289,7 @@ class DioFloodOpsApi implements FloodOpsApi {
         status: statusWire == 'verified' ? ReportStatus.verified : ReportStatus.pending,
         reportedAt: tsRaw == null ? DateTime.now() : (DateTime.tryParse(tsRaw) ?? DateTime.now()),
         reporterAlias: null,
+        assignedVolunteerId: json['assigned_volunteer_id']?.toString(),
       );
     } catch (_) {
       return null;
